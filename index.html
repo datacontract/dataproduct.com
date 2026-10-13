@@ -221,26 +221,48 @@
     .tree { padding: 24px; font-family: var(--mono); font-size: 14px; line-height: 1.9; }
     .tree .dir { color: var(--how); }
     .tree .f { color: var(--muted); }
-    .tree .row.ind1 { padding-left: 28px; } .tree .row.ind2 { padding-left: 48px; }
+    .tree .row.ind1 { padding-left: 28px; } .tree .row.ind2 { padding-left: 48px; } .tree .row.ind3 { padding-left: 68px; }
+    .tree button.row { display: block; width: 100%; text-align: left; background: none; border: 0; font: inherit; color: #374151; cursor: pointer; }
+    .tree button.row:hover { background: #f3f4f6; }
+    .tree button.row.sel { background: #ecfeff; color: #0e7490; font-weight: 600; box-shadow: inset 2px 0 0 #0891b2; }
+    .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+    .facts span { font-size: 14px; color: #4b5563; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 999px; padding: 6px 14px; }
+    .facts b { color: #111827; }
+    .facts code { font-size: 12.5px; color: #0e7490; }
+    .skills-grid { grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .skills-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) !important; } }
+    .viewer { padding: 24px 28px; min-height: 420px; }
+    .viewer .path { font-family: var(--mono); font-size: 12.5px; color: #6b7280; }
+    .viewer h3 { font-size: 22px; margin: 6px 0 8px; }
+    .viewer .desc { color: #4b5563; }
+    .viewer .lbl { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin: 20px 0 8px; }
+    .viewer .tools { display: flex; flex-wrap: wrap; gap: 6px; }
+    .viewer .tools code { font-size: 12.5px; background: #ecfeff; color: #0e7490; border-radius: 6px; padding: 3px 8px; }
+    .viewer ol { margin: 0; padding-left: 22px; color: #374151; display: grid; gap: 4px; font-size: 15px; }
+    .viewer ol code, .viewer .rule code, .viewer .desc code { font-size: 13px; }
+    .viewer .rule { margin-top: 20px; padding: 12px 16px; border-radius: 10px; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 14px; }
+    .viewer pre { margin: 0; background: #111827; color: #e5e7eb; border-radius: 10px; padding: 14px 16px; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; overflow-x: auto; }
     .tree .row { display: block; cursor: default; border-radius: 6px; padding: 0 8px; transition: background .2s; }
     .tree .row:hover { background: var(--panel-2); }
-    .tree .row[data-tip]:hover::after { content: attr(data-tip); color: var(--text); font-family: var(--sans); font-size: 13px; margin-left: 12px; }
-    .loop { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
-    .loop-ring { position: relative; width: 100%; max-width: 280px; aspect-ratio: 1; margin: 0 auto; }
-    .loop-ring svg { width: 100%; height: 100%; }
-    .loop-step { position: absolute; transform: translate(-50%, -50%); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-family: var(--mono); font-size: 13px; text-align: center; transition: all .3s; white-space: nowrap; }
-    .loop-step.active { border-color: var(--how); box-shadow: 0 0 0 4px rgba(8,145,178,.15); }
-    .loop-step.ok { border-color: var(--product); color: var(--product); }
-    .loop-step.fail { border-color: var(--bad); color: var(--bad); }
-    .loop-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; font-size: 14px; color: var(--muted); pointer-events: none; padding: 30%; }
-    .loop-center b { font-size: 22px; color: var(--text); display: block; }
-    .loop-log { font-family: var(--mono); font-size: 12.5px; color: var(--muted); min-height: 84px; background: var(--bg-2); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--line); }
-    .loop-log div { white-space: pre-wrap; }
 
     /* marketplace */
     .caps { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 56px; }
     @media (min-width: 900px) { .caps { grid-template-columns: 1fr 1fr; } }
     .caps h3 { font-size: 15px; font-family: var(--mono); color: var(--muted); font-weight: 600; margin-bottom: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    .mp { margin-top: 40px; }
+    .mp-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .mp-bar input { flex: 1; border: 0; outline: 0; font: inherit; font-size: 15px; color: #111827; background: none; min-width: 0; }
+    .mp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .mp-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; transition: opacity .25s, border-color .25s, box-shadow .25s; }
+    .mp-card p { font-size: 14px; color: #4b5563; margin: 8px 0 12px; line-height: 1.5; }
+    .mp-card.used { border-color: #a5b4fc; box-shadow: 0 0 0 3px #eef2ff; }
+    .mp-card.dim { opacity: .3; }
+    .mp-top { display: flex; align-items: center; gap: 8px; }
+    .mp-name { font-weight: 600; }
+    .mp-used { margin-left: auto; font-size: 11px; font-weight: 600; color: #4f46e5; background: #eef2ff; border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+    .mp-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+    .mp-meta span { font-size: 12px; color: #6b7280; background: #f3f4f6; border-radius: 6px; padding: 2px 8px; }
+    .mp-meta .ok { color: #047857; background: #ecfdf5; }
     .cap-row { display: flex; flex-direction: column; gap: 4px; padding: 14px 0; border-bottom: 1px solid #f3f4f6; }
     .cap-row b { font-weight: 600; }
     .cap-row code { font-size: 13px; color: var(--data); }
@@ -464,38 +486,29 @@
         <div class="reveal">
           <span class="eyebrow c-how"><svg width="22" height="22"><use href="#i-skills"/></svg>Input 2 · the how</span>
           <h2 class="h2">Skills: your conventions.</h2>
-          <p class="lead">Skills, templates, and hooks in a Git repository. Any coding agent can use them, so every data product is built the same way.</p>
+          <p class="lead">A Git repository of skills, templates, and hooks that any coding agent reads. Click a file.</p>
+        </div>
+        <div class="facts reveal">
+          <span><b>3</b> skills</span><span><b>1</b> hook</span><span><b>12</b> templates</span>
+          <span>Agents: <b>Claude Code, Codex, Copilot</b></span>
+          <span>Tools: <code>entropy-data</code> <code>dbt</code> <code>dbt-ol</code> <code>datacontract</code></span>
+          <span>Stack: <b>Snowflake + dbt</b></span>
         </div>
         <div class="skills-grid">
-          <div class="card tree reveal" aria-label="Skills repository">
-            <span class="row dir">dataproduct-builder-dbt/</span>
-            <span class="row f ind1" data-tip="Rules every agent reads first">AGENTS.md</span>
+          <div class="card tree reveal" role="tablist" aria-label="Skills repository">
+            <span class="row dir">dataproduct-builder-demo/</span>
+            <button class="row f ind1" data-file="agents">AGENTS.md</button>
             <span class="row dir ind1">skills/</span>
-            <span class="row f ind2" data-tip="Lays out the dbt project">dataproduct-bootstrap/</span>
-            <span class="row f ind2" data-tip="Builds the pipeline from the contract">dataproduct-implement/</span>
-            <span class="row f ind2" data-tip="Tests data against the contract">datacontract-test/</span>
+            <button class="row f ind2" data-file="bootstrap">dataproduct-bootstrap/</button>
+            <button class="row f ind3" data-file="templates">templates/</button>
+            <button class="row f ind2 sel" data-file="implement">dataproduct-implement/</button>
+            <button class="row f ind2" data-file="test">datacontract-test/</button>
             <span class="row dir ind1">hooks/</span>
-            <span class="row f ind2" data-tip="Double check at the end of every prompt">on-stop.sh</span>
-            <span class="row dir ind1">templates/</span>
-            <span class="row f ind2" data-tip="Snowflake naming conventions">snowflake-naming.md</span>
-            <p class="note" style="margin-top:16px;font-family:var(--sans)">Hover a file. Open example: <a href="https://github.com/entropy-data/dataproduct-builder-dbt">dbt Data Product Builder</a></p>
+            <button class="row f ind2" data-file="hook">datacontract_lint.sh</button>
+            <button class="row f ind1" data-file="plugins">.claude-plugin/ .codex-plugin/ .github/</button>
+            <p class="note" style="margin-top:16px;font-family:var(--sans)">Open on GitHub: <a href="https://github.com/entropy-data/dataproduct-builder-demo">dataproduct-builder-demo</a>, or the full <a href="https://github.com/entropy-data/dataproduct-builder-dbt">dataproduct-builder-dbt</a> for more platforms.</p>
           </div>
-          <div class="card loop reveal">
-            <div>
-              <h3 style="font-size:20px">Feedback loops: done means green</h3>
-              <p class="note" style="margin-top:6px;font-size:14px">With the <a href="https://github.com/datacontract/datacontract-cli">Data Contract CLI</a>, the agent tests against the contract until everything is green.</p>
-            </div>
-            <div class="loop-ring" id="loopRing">
-              <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="74" fill="none" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="4 6"/><circle id="loopArc" cx="100" cy="100" r="74" fill="none" stroke="#0891b2" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 465" transform="rotate(-90 100 100)"/></svg>
-              <div class="loop-step" data-i="0" style="left:50%;top:13%">lint contract</div>
-              <div class="loop-step" data-i="1" style="left:87%;top:50%">dbt run</div>
-              <div class="loop-step" data-i="2" style="left:50%;top:87%">datacontract test</div>
-              <div class="loop-step" data-i="3" style="left:13%;top:50%">iterate</div>
-              <div class="loop-center"><b id="loopIter">ready</b><span id="loopSub">press run</span></div>
-            </div>
-            <div class="loop-log" id="loopLog"><div class="mut">$ waiting for the agent…</div></div>
-            <button class="btn primary" id="loopBtn">▶ Run the loop</button>
-          </div>
+          <div class="card viewer reveal" id="viewer" aria-live="polite"></div>
         </div>
       </div>
     </section>
@@ -506,22 +519,53 @@
         <div class="reveal">
           <span class="eyebrow c-data"><svg width="22" height="22"><use href="#i-market"/></svg>Input 3 · the data to build on</span>
           <h2 class="h2">Build on other data products.</h2>
-          <p class="lead">What the agent needs from a <a href="https://www.entropy-data.com">data marketplace</a>.</p>
+          <p class="lead">The agent searches the <a href="https://www.entropy-data.com">data marketplace</a> for data products to build on, reads their contracts, and requests access. Search like the agent does.</p>
         </div>
-        <div class="caps">
-          <div class="reveal">
-            <h3>Before building</h3>
-            <div class="cap-row"><b>Discover data products</b><code>entropy-data search query "brands sales"</code></div>
-            <div class="cap-row"><b>Read their contracts</b><code>entropy-data dataproducts get shelf-warmers</code></div>
-            <div class="cap-row"><b>Resolve semantics</b><code>sku → ontology/product#sku</code></div>
-            <div class="cap-row"><b>Request access</b><code>purpose: build slow-selling-brands</code></div>
+        <div class="mp reveal">
+          <div class="mp-bar"><svg width="18" height="18" style="color:#4f46e5"><use href="#i-market"/></svg><input id="mpSearch" type="search" placeholder="Search data products, e.g. sku, stock, price" aria-label="Search data products"><span class="note" id="mpCount"></span></div>
+          <div class="mp-grid" id="mpGrid">
+            <div class="mp-card used" data-q="articles latest product catalog current articles with brand, category, and list price. sku, brand">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Articles Latest</span><span class="mp-used">used below</span></div>
+              <p>Current articles with brand, category, and list price.</p>
+              <div class="mp-meta"><span>Product catalog</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card used" data-q="shelf warmers fulfillment articles without a sale in the last six months. sku, stock">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Shelf Warmers</span><span class="mp-used">used below</span></div>
+              <p>Articles without a sale in the last six months.</p>
+              <div class="mp-meta"><span>Fulfillment</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card" data-q="orders checkout all orders and line items, updated hourly. order, sku">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Orders</span></div>
+              <p>All orders and line items, updated hourly.</p>
+              <div class="mp-meta"><span>Checkout</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card" data-q="customers crm customer master data. contains personal data. customer">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Customers</span></div>
+              <p>Customer master data. Contains personal data.</p>
+              <div class="mp-meta"><span>CRM</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card" data-q="stock levels warehouse daily stock per article and warehouse. sku, stock">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Stock Levels</span></div>
+              <p>Daily stock per article and warehouse.</p>
+              <div class="mp-meta"><span>Warehouse</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card" data-q="returns fulfillment returned items with reason codes. order, sku">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Returns</span></div>
+              <p>Returned items with reason codes.</p>
+              <div class="mp-meta"><span>Fulfillment</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card" data-q="web sessions marketing sessions and page views from the web shop. customer">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Web Sessions</span></div>
+              <p>Sessions and page views from the web shop.</p>
+              <div class="mp-meta"><span>Marketing</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
+            <div class="mp-card" data-q="price history pricing list price changes per article. sku, price">
+              <div class="mp-top"><svg width="22" height="22" style="color:#4f46e5"><use href="#i-dp"/></svg><span class="mp-name">Price History</span></div>
+              <p>List price changes per article.</p>
+              <div class="mp-meta"><span>Pricing</span><span>Snowflake</span><span class="ok">contract</span></div>
+            </div>
           </div>
-          <div class="reveal" style="transition-delay:.1s">
-            <h3>When done</h3>
-            <div class="cap-row"><b>Publish the data product</b><code><a href="https://github.com/datacontract/dataproduct-cli">dataproduct</a> publish dataproduct.odps.yaml</code></div>
-            <div class="cap-row"><b>Publish test results</b><code>entropy-data datacontracts test slow-selling-brands</code></div>
-            <div class="cap-row"><b>Publish lineage</b><code>OpenLineage events from dbt</code></div>
-          </div>
+          <p class="note" style="margin-top:14px">Illustrative marketplace. The two highlighted data products are the ones the agent builds on below.</p>
         </div>
       </div>
     </section>
@@ -844,47 +888,53 @@
     scrollies.forEach(function (s) { s.fn(reduce ? 1 : 0); });
     onScroll();
 
-    // ---------- feedback loop ----------
-    var loopBtn = document.getElementById('loopBtn'), loopLog = document.getElementById('loopLog'), loopArc = document.getElementById('loopArc');
-    var loopSteps = document.querySelectorAll('.loop-step'), loopIter = document.getElementById('loopIter'), loopSub = document.getElementById('loopSub');
-    var LOOP = [
-      [0, 'ok', '$ datacontract lint            ✓ follows best practices', 1],
-      [1, 'ok', '$ dbt run                      ✓ models built', 1],
-      [2, 'fail', '$ datacontract test            ✗ 10/11: latest_sold_date is timestamp, expected date', 1],
-      [3, 'ok', '↻ cast latest_sold_date to date in output_port.sql', 1],
-      [0, 'ok', '$ datacontract lint            ✓', 2],
-      [1, 'ok', '$ dbt run                      ✓ models built', 2],
-      [2, 'ok', '$ datacontract test            ✓ 11/11 passed', 2]
-    ];
-    loopBtn.addEventListener('click', function () {
-      loopBtn.disabled = true; loopLog.innerHTML = '';
-      loopSteps.forEach(function (s) { s.className = 'loop-step'; });
-      var i = 0;
-      (function next() {
-        if (i >= LOOP.length) {
-          loopIter.textContent = 'done'; loopSub.textContent = 'all green, it knows when it is done';
-          loopArc.setAttribute('stroke', '#059669'); loopBtn.disabled = false; loopBtn.textContent = '↺ Run again';
-          return;
-        }
-        var s = LOOP[i];
-        loopSteps.forEach(function (el) { el.classList.remove('active'); });
-        if (s[0] === 0) loopSteps.forEach(function (el) { el.classList.remove('ok', 'fail'); });
-        var el = loopSteps[s[0]];
-        el.classList.add('active');
-        loopIter.textContent = 'pass ' + s[3]; loopSub.textContent = 'checking…';
-        loopArc.setAttribute('stroke', '#0891b2');
-        loopArc.setAttribute('stroke-dasharray', ((s[0] + 1) / 4 * 465) + ' 465');
-        setTimeout(function () {
-          el.classList.remove('active'); el.classList.add(s[1]);
-          if (s[1] === 'fail') { loopArc.setAttribute('stroke', '#dc2626'); loopSub.textContent = 'not done yet'; }
-          var d = document.createElement('div');
-          d.textContent = s[2]; d.style.color = s[1] === 'fail' ? 'var(--bad)' : (s[0] === 3 ? 'var(--how)' : 'var(--product)');
-          loopLog.appendChild(d);
-          while (loopLog.children.length > 4) loopLog.removeChild(loopLog.firstChild);
-          i++; setTimeout(next, reduce ? 0 : 350);
-        }, reduce ? 0 : 750);
-      })();
-    });
+    // ---------- marketplace search ----------
+    var mpCards = document.querySelectorAll('.mp-card'), mpCount = document.getElementById('mpCount');
+    function mpFilter(q) {
+      q = q.trim().toLowerCase(); var n = 0;
+      mpCards.forEach(function (c) { var hit = !q || c.dataset.q.indexOf(q) > -1; c.classList.toggle('dim', !hit); if (hit) n++; });
+      mpCount.textContent = q ? n + ' of ' + mpCards.length : mpCards.length + ' data products';
+    }
+    document.getElementById('mpSearch').addEventListener('input', function (e) { mpFilter(e.target.value); });
+    mpFilter('');
+
+    // ---------- skills explorer ----------
+    var FILES = {
+      agents: { path: 'AGENTS.md', title: 'Routing manifest', desc: 'Read first by every coding agent. Maps a request to the skill to follow, and sets the house rules.',
+        steps: ['New data product from scratch → <code>dataproduct-bootstrap</code>', 'Implement a published data product → <code>dataproduct-implement</code>', 'Test contracts against Snowflake → <code>datacontract-test</code>'], stepsLbl: 'Routing',
+        rule: 'Don\'t skip the pre-checks. Don\'t overwrite files silently. Don\'t commit secrets. Don\'t push.' },
+      bootstrap: { path: 'skills/dataproduct-bootstrap/SKILL.md', title: 'Bootstrap a data product', desc: 'Scaffolds a new Snowflake dbt data product in one go, following the conventions.',
+        tools: ['dbt', 'entropy-data'],
+        steps: ['Pre-checks: empty directory, no dbt project yet', 'Gather all parameters in one batched question', 'Scaffold the project from the templates', 'Final report'],
+        rule: 'Greenfield only. Adding models to an existing project is <code>dataproduct-implement</code>.' },
+      templates: { path: 'skills/dataproduct-bootstrap/templates/', title: 'Templates', desc: 'The files every data product starts with. Change them once, every new data product follows.',
+        pre: 'dbt_project.yml\nprofiles.yml.example\ndata-product.odps.yaml\nopenlineage.yml\nmodels/\n  input_ports/_models.yml\n  staging/_models.yml\n  intermediate/_models.yml\n  output_ports/v1/_models.yml\n  output_ports/v1/contract.odcs.yaml\n.github/workflows/data-product.yml\nREADME.md' },
+      implement: { path: 'skills/dataproduct-implement/SKILL.md', title: 'Implement a data product', desc: 'Turns a data product from Entropy Data into a working dbt pipeline, and proves it works.',
+        tools: ['entropy-data', 'dbt', 'dbt-ol', 'datacontract'],
+        steps: ['Pre-checks', 'Resolve the data product', 'Fetch the data contract', 'Translate the ODCS schema to dbt models', 'Wire input ports and project columns', '<code>dbt parse</code>', '<code>dbt-ol run</code>, ships lineage', '<code>dbt test</code>', '<code>datacontract test</code>', 'Stamp the data product as builder-managed', 'Final report'],
+        rule: 'The contract is the source of truth for the schema, not for the logic.' },
+      test: { path: 'skills/datacontract-test/SKILL.md', title: 'Test the data contracts', desc: 'Runs <code>datacontract test</code> against the live Snowflake data.',
+        tools: ['datacontract'],
+        steps: ['Pre-checks', 'Select the contracts', 'Select the server', 'Run the test', 'Report'],
+        rule: 'Output ports: am I still producing what I promised? Input ports: is upstream still producing what I trusted?' },
+      hook: { path: 'hooks/datacontract_lint.sh', title: 'Lint on every edit', desc: 'After each edit to an <code>*.odcs.yaml</code> file, the hook runs <code>datacontract lint</code>. A failing lint goes straight back to the agent.',
+        tools: ['datacontract'],
+        pre: '"PostToolUse": [{\n  "matcher": "Edit|Write|MultiEdit",\n  "command": "hooks/datacontract_lint.sh"\n}]' },
+      plugins: { path: '.claude-plugin/  .codex-plugin/  .github/', title: 'One repo, any agent', desc: 'Plugin manifests for Claude Code, OpenAI Codex, and GitHub Copilot. Install once, every data product uses the same skills.',
+        pre: '/plugin marketplace add https://github.com/entropy-data/dataproduct-builder-demo\n/plugin install dataproduct-builder-demo@dataproduct-builder-demo' }
+    };
+    var viewer = document.getElementById('viewer');
+    function showFile(key) {
+      var f = FILES[key], h = '<div class="path">' + f.path + '</div><h3>' + f.title + '</h3><p class="desc">' + f.desc + '</p>';
+      if (f.tools) h += '<div class="lbl">Tools</div><div class="tools">' + f.tools.map(function (t) { return '<code>' + t + '</code>'; }).join('') + '</div>';
+      if (f.steps) h += '<div class="lbl">' + (f.stepsLbl || 'Steps') + '</div><ol>' + f.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>';
+      if (f.pre) h += '<div class="lbl">' + (key === 'templates' ? 'Files' : key === 'plugins' ? 'Install in Claude Code' : 'hooks.json') + '</div><pre>' + f.pre + '</pre>';
+      if (f.rule) h += '<div class="rule">' + f.rule + '</div>';
+      viewer.innerHTML = h;
+      document.querySelectorAll('.tree button.row').forEach(function (b) { b.classList.toggle('sel', b.dataset.file === key); });
+    }
+    document.querySelectorAll('.tree button.row').forEach(function (b) { b.addEventListener('click', function () { showFile(b.dataset.file); }); });
+    showFile('implement');
 
     // ---------- tabs ----------
     var tabs = document.querySelectorAll('.tab');
