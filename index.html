@@ -222,6 +222,7 @@
     .tree .dir { color: var(--how); }
     .tree .f { color: var(--muted); }
     .tree .row.ind1 { padding-left: 28px; } .tree .row.ind2 { padding-left: 48px; } .tree .row.ind3 { padding-left: 68px; }
+    @media (min-width: 900px) { .tree { position: sticky; top: 100px; } }
     .tree button.row { display: block; width: 100%; text-align: left; background: none; border: 0; font: inherit; color: #374151; cursor: pointer; }
     .tree button.row:hover { background: #f3f4f6; }
     .tree button.row.sel { background: #ecfeff; color: #0e7490; font-weight: 600; box-shadow: inset 2px 0 0 #0891b2; }
@@ -238,7 +239,9 @@
     .viewer .lbl { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; margin: 20px 0 8px; }
     .viewer .tools { display: flex; flex-wrap: wrap; gap: 6px; }
     .viewer .tools code { font-size: 12.5px; background: #ecfeff; color: #0e7490; border-radius: 6px; padding: 3px 8px; }
-    .viewer ol { margin: 0; padding-left: 22px; color: #374151; display: grid; gap: 4px; font-size: 15px; }
+    .viewer ol { margin: 0; padding-left: 22px; color: #374151; display: grid; gap: 8px; font-size: 15px; }
+    .viewer ol b { font-weight: 600; color: #111827; }
+    .viewer ol span { display: block; font-size: 13.5px; color: #6b7280; line-height: 1.5; }
     .viewer ol code, .viewer .rule code, .viewer .desc code { font-size: 13px; }
     .viewer .rule { margin-top: 20px; padding: 12px 16px; border-radius: 10px; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 14px; }
     .viewer pre { margin: 0; background: #111827; color: #e5e7eb; border-radius: 10px; padding: 14px 16px; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; overflow-x: auto; }
@@ -953,17 +956,34 @@
         rule: 'Don\'t skip the pre-checks. Don\'t overwrite files silently. Don\'t commit secrets. Don\'t push.' },
       bootstrap: { path: 'skills/dataproduct-bootstrap/SKILL.md', title: 'Bootstrap a data product', desc: 'Scaffolds a new Snowflake dbt data product in one go, following the conventions.',
         tools: ['dbt', 'entropy-data'],
-        steps: ['Pre-checks: empty directory, no dbt project yet', 'Gather all parameters in one batched question', 'Scaffold the project from the templates', 'Final report'],
+        steps: [['Pre-checks', 'The directory is empty. If a <code>dbt_project.yml</code> exists, stop.'],
+          ['Gather parameters', 'One batched question: id, name, purpose, owning team, Snowflake database, schema, table.'],
+          ['Scaffold the project', 'Copy the templates: dbt project, ODPS and ODCS files, OpenLineage config, CI workflow.'],
+          ['Final report', 'A table of every created file, and the next step: <code>dataproduct-implement</code>.']],
         rule: 'Greenfield only. Adding models to an existing project is <code>dataproduct-implement</code>.' },
       templates: { path: 'skills/dataproduct-bootstrap/templates/', title: 'Templates', desc: 'The files every data product starts with. Change them once, every new data product follows.',
         pre: 'dbt_project.yml\nprofiles.yml.example\ndata-product.odps.yaml\nopenlineage.yml\nmodels/\n  input_ports/_models.yml\n  staging/_models.yml\n  intermediate/_models.yml\n  output_ports/v1/_models.yml\n  output_ports/v1/contract.odcs.yaml\n.github/workflows/data-product.yml\nREADME.md' },
       implement: { path: 'skills/dataproduct-implement/SKILL.md', title: 'Implement a data product', desc: 'Turns a data product from Entropy Data into a working dbt pipeline, and proves it works.',
         tools: ['entropy-data', 'dbt', 'dbt-ol', 'datacontract'],
-        steps: ['Pre-checks', 'Resolve the data product', 'Fetch the data contract', 'Translate the ODCS schema to dbt models', 'Wire input ports and project columns', '<code>dbt parse</code>', '<code>dbt-ol run</code>, ships lineage', '<code>dbt test</code>', '<code>datacontract test</code>', 'Stamp the data product as builder-managed', 'Final report'],
+        steps: [['Pre-checks', 'dbt project exists, all four CLIs are installed, <code>entropy-data connection test</code> succeeds.'],
+          ['Resolve the data product', '<code>entropy-data dataproducts get</code>: name, owner, output ports.'],
+          ['Fetch the data contract', '<code>entropy-data datacontracts get</code>, saved under <code>models/output_ports/v1/</code>.'],
+          ['Translate the schema to dbt', 'One model per contract table, columns cast to Snowflake types, tests from the contract.'],
+          ['Wire the input ports', 'Each approved access becomes a dbt source, with the upstream contract as a trust snapshot.'],
+          ['<code>dbt parse</code>', 'Fix obvious mistakes before anything runs.'],
+          ['<code>dbt-ol run</code>', 'Materializes the tables in Snowflake and ships lineage to Entropy Data.'],
+          ['<code>dbt test</code>', 'not_null, unique, and accepted_values from the contract.'],
+          ['<code>datacontract test</code>', 'Checks the live Snowflake data against every rule in the contract.'],
+          ['Stamp as builder-managed', 'Marks the data product in Entropy Data as built with this plugin.'],
+          ['Final report', 'Status of every artifact: created, updated, passed, failed.']],
         rule: 'The contract is the source of truth for the schema, not for the logic.' },
       test: { path: 'skills/datacontract-test/SKILL.md', title: 'Test the data contracts', desc: 'Runs <code>datacontract test</code> against the live Snowflake data.',
         tools: ['datacontract'],
-        steps: ['Pre-checks', 'Select the contracts', 'Select the server', 'Run the test', 'Report'],
+        steps: [['Pre-checks', '<code>datacontract</code> is installed, contracts exist, Snowflake credentials are set.'],
+          ['Select the contracts', 'Output-port and input-port contracts, grouped by role.'],
+          ['Select the server', 'One server per contract, <code>production</code> by default.'],
+          ['Run the test', '<code>datacontract test &lt;contract&gt; --server &lt;server&gt;</code>'],
+          ['Report', 'One row per contract, failing rules by field.']],
         rule: 'Output ports: am I still producing what I promised? Input ports: is upstream still producing what I trusted?' },
       hook: { path: 'hooks/datacontract_lint.sh', title: 'Lint on every edit', desc: 'After each edit to an <code>*.odcs.yaml</code> file, the hook runs <code>datacontract lint</code>. A failing lint goes straight back to the agent.',
         tools: ['datacontract'],
@@ -975,7 +995,7 @@
     function showFile(key) {
       var f = FILES[key], h = '<div class="path">' + f.path + '</div><h3>' + f.title + '</h3><p class="desc">' + f.desc + '</p>';
       if (f.tools) h += '<div class="lbl">Tools</div><div class="tools">' + f.tools.map(function (t) { return '<code>' + t + '</code>'; }).join('') + '</div>';
-      if (f.steps) h += '<div class="lbl">' + (f.stepsLbl || 'Steps') + '</div><ol>' + f.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>';
+      if (f.steps) h += '<div class="lbl">' + (f.stepsLbl || 'Steps') + '</div><ol>' + f.steps.map(function (x) { return Array.isArray(x) ? '<li><b>' + x[0] + '</b><span>' + x[1] + '</span></li>' : '<li>' + x + '</li>'; }).join('') + '</ol>';
       if (f.pre) h += '<div class="lbl">' + (key === 'templates' ? 'Files' : key === 'plugins' ? 'Install in Claude Code' : 'hooks.json') + '</div><pre>' + f.pre + '</pre>';
       if (f.rule) h += '<div class="rule">' + f.rule + '</div>';
       viewer.innerHTML = h;
