@@ -353,14 +353,6 @@
     .mini-term { font-family: var(--mono); font-size: 12.5px; padding: 14px 16px; border-top: 1px solid var(--line); }
 
     /* cta */
-    .try { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
-    @media (min-width: 820px) { .try { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1100px) { .try { grid-template-columns: repeat(4, 1fr); } }
-    .try a { padding: 28px; text-decoration: none; transition: transform .25s, border-color .25s; display: block; }
-    .try a:hover { transform: translateY(-4px); border-color: var(--muted); }
-    .try h3 { font-size: 20px; margin: 10px 0 8px; }
-    .try p { color: var(--muted); font-size: 15px; }
-    .try .go { margin-top: 16px; font-family: var(--mono); font-size: 13px; }
 
     footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
     footer .foot-brand .logo { justify-content: center; font-size: 18px; }
@@ -373,6 +365,13 @@
       *, *::before, *::after { animation: none !important; transition: none !important; }
       .reveal, .bubble { opacity: 1; transform: none; }
     }
+    .diy { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+    @media (min-width: 900px) { .diy { grid-template-columns: repeat(3, 1fr); } }
+    .diy .card { padding: 28px; display: flex; flex-direction: column; min-width: 0; }
+    .diy h3 { font-size: 20px; margin: 10px 0 8px; }
+    .diy p { color: var(--muted); font-size: 15px; }
+    .diy pre { font-family: var(--mono); font-size: 12.5px; background: #f9fafb; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 16px 0 0; overflow-x: auto; }
+    .diy .go { margin-top: auto; padding-top: 16px; font-family: var(--mono); font-size: 13px; }
   </style>
 </head>
 <body>
@@ -403,6 +402,7 @@
           <button class="dd-btn" aria-expanded="false">Learn <svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/></svg></button>
           <div class="dd-menu">
             <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
+            <a href="https://www.entropy-data.com/learn/what-is-a-data-contract">What is a Data Contract?</a>
             <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
             <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a>
           </div>
@@ -412,6 +412,7 @@
           <div class="dd-menu">
             <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
             <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>
+            <a href="https://cli.datacontract.com">Data Contract CLI</a>
           </div>
         </div>
         <a class="cta" href="https://www.entropy-data.com">Data Product Marketplace</a>
@@ -730,18 +731,36 @@
       </div>
     </section>
 
-    <!-- ================= TRY ================= -->
-    <section class="block" id="try" style="padding-top:40px">
+    <!-- ================= DO IT YOURSELF ================= -->
+    <section class="block" id="diy" style="padding-top:40px">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow">Try it yourself</span>
-          <h2 class="h2">Try it.</h2>
+          <span class="eyebrow">Do it yourself</span>
+          <h2 class="h2">What it takes to build this yourself.</h2>
+          <p class="lead">Three steps, all open source or free. Then every new data product starts the same way: with a data contract.</p>
         </div>
-        <div class="try">
-          <a class="card reveal" href="https://demo.entropy-data.com/start" style="border-top:3px solid var(--data)"><span class="eyebrow c-data">Marketplace</span><h3>Entropy Data demo</h3><p>A data product marketplace built on data contracts and semantics.</p><div class="go c-data">demo.entropy-data.com →</div></a>
-          <a class="card reveal" href="https://github.com/datacontract/datacontract-editor" style="border-top:3px solid var(--what);transition-delay:.1s"><span class="eyebrow c-what">Contract</span><h3>Data Contract Editor</h3><p>Write ODCS contracts visually, open source.</p><div class="go c-what">github.com/datacontract →</div></a>
-          <a class="card reveal" href="https://github.com/datacontract/dataproduct-cli" style="border-top:3px solid var(--product)"><span class="eyebrow c-product">Data product</span><h3>Data Product CLI</h3><p>Create, lint, and publish ODPS data products from the command line.</p><div class="go c-product">github.com/datacontract →</div></a>
-          <a class="card reveal" href="https://github.com/entropy-data/dataproduct-builder-dbt" style="border-top:3px solid var(--how);transition-delay:.2s"><span class="eyebrow c-how">Skills</span><h3>dbt Data Product Builder</h3><p>Give your coding agent the skills to build data products with dbt.</p><div class="go c-how">github.com/entropy-data →</div></a>
+        <div class="diy">
+          <div class="card reveal" style="border-top:3px solid var(--data)">
+            <span class="eyebrow c-data">1 · The data to build on</span>
+            <h3>Set up Entropy Data as your data marketplace</h3>
+            <p>The free Community Edition runs anywhere Docker runs. Register your existing data products, so the agent can find them, read their contracts, and request access.</p>
+            <pre>docker compose up --detach</pre>
+            <a class="go c-data" href="https://github.com/entropy-data/entropy-data-ce">Community Edition on GitHub →</a>
+          </div>
+          <div class="card reveal" style="border-top:3px solid var(--how);transition-delay:.1s">
+            <span class="eyebrow c-how">2 · The how</span>
+            <h3>Customize the skills to your platform</h3>
+            <p>Fork the dbt Data Product Builder and adapt its skills to your data platform, naming conventions, and policies. Then install it in Claude Code, Codex, or Copilot.</p>
+            <pre>claude plugin marketplace add &lt;your fork&gt;</pre>
+            <a class="go c-how" href="https://github.com/entropy-data/dataproduct-builder-dbt">dbt Data Product Builder on GitHub →</a>
+          </div>
+          <div class="card reveal" style="border-top:3px solid var(--what);transition-delay:.2s">
+            <span class="eyebrow c-what">3 · The what</span>
+            <h3>Begin with your first data contract</h3>
+            <p>Write down what the data product must deliver, together with business, producers, and consumers, in the Data Contract Editor. Then tell your agent to implement it.</p>
+            <pre>Implement.</pre>
+            <a class="go c-what" href="https://editor.datacontract.com">Data Contract Editor →</a>
+          </div>
         </div>
       </div>
     </section>
@@ -753,10 +772,12 @@
         <p>Based on the talks by Simon Harrer and Jochen Christ, and on the Entropy Explains episode on building data products with AI.</p></div>
       <nav class="foot-links" aria-label="Footer">
         <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
+        <a href="https://www.entropy-data.com/learn/what-is-a-data-contract">What is a Data Contract?</a>
         <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
         <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
         <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a>
         <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>
+        <a href="https://cli.datacontract.com">Data Contract CLI</a>
         <a href="https://www.entropy-data.com">Data Product Marketplace</a>
         <a href="https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026">POA Summit 2026 talk</a>
         <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a>
@@ -952,18 +973,37 @@
     var handlers = { contract: contract, agent: agent };
     // progress only moves forward with scrolling; the Replay slider rewinds it
     var scrollies = Array.prototype.map.call(document.querySelectorAll('[data-scrolly]'), function (el) {
-      var sc = { el: el, fn: handlers[el.dataset.scrolly], pos: reduce ? 1 : 0, slider: el.querySelector('.scrub input') };
+      var sc = { el: el, fn: handlers[el.dataset.scrolly], pos: reduce ? 1 : 0, done: false, slider: el.querySelector('.scrub input') };
       if (sc.slider) sc.slider.addEventListener('input', function () { sc.pos = sc.slider.value / 1000; sc.fn(sc.pos); });
       return sc;
     });
+    // Once a step has played to the end, it shrinks to one screen, so scrolling passes over it in both
+    // directions without pausing. Scrolling never steps it again; only the Replay slider rewinds it.
+    function collapse(s) {
+      s.done = true;
+      var L = (typeof lenis !== 'undefined' && lenis) ? lenis : null;
+      // read the position before the page gets shorter: the browser clamps its own scroll position right away
+      var from = L ? L.animatedScroll : window.scrollY, to = L ? L.targetScroll : from;
+      var before = s.el.getBoundingClientRect();
+      s.el.style.height = '100vh';
+      var cut = before.height - s.el.getBoundingClientRect().height;
+      if (cut > 0 && before.top < 0) {  // the step is above the top of the screen: keep the view where it is
+        if (L) {
+          L.scrollTo(from - cut, { immediate: true, force: true });
+          if (to > from) L.scrollTo(to - cut, { force: true });  // and let the smooth scroll carry on
+        } else window.scrollTo(0, from - cut);
+      }
+    }
     var progressBar = document.getElementById('progress');
     var ticking = false;
     function onScroll() {
       ticking = false;
       var vh = window.innerHeight;
       scrollies.forEach(function (s) {
+        if (s.done) return;
         var r = s.el.getBoundingClientRect(), p = clamp(-r.top / (r.height - vh));
         if (p > s.pos) { s.pos = p; s.fn(p); if (s.slider) s.slider.value = Math.round(p * 1000); }
+        if (s.pos >= 1) collapse(s);
       });
       var h = document.documentElement.scrollHeight - vh;
       progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
