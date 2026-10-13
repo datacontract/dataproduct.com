@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Build Data Products with AI, Contract First | dataproduct.com</title>
   <meta name="description" content="How to build a data product with a coding agent: a data contract says what to build, skills say how, and a data marketplace provides the data to build on.">
+  <link rel="canonical" href="https://www.dataproduct.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="dataproduct.com">
+  <meta property="og:url" content="https://www.dataproduct.com/">
+  <meta property="og:title" content="Build a data product with AI, contract first">
+  <meta property="og:description" content="How to build a data product with a coding agent: a data contract says what to build, skills say how, and a data marketplace provides the data to build on.">
+  <meta property="og:image" content="https://www.dataproduct.com/media/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Build a data product with AI, contract first">
+  <meta name="twitter:description" content="How to build a data product with a coding agent: a data contract says what to build, skills say how, and a data marketplace provides the data to build on.">
+  <meta name="twitter:image" content="https://www.dataproduct.com/media/og.png">
+  <link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "dataproduct.com", "url": "https://www.dataproduct.com/", "publisher": {"@type": "Organization", "name": "Entropy Data", "url": "https://www.entropy-data.com", "logo": "https://www.dataproduct.com/media/logo_fuchsia_v2.svg"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "HowTo", "name": "Build a data product with AI, contract first", "description": "How to build a data product with a coding agent: a data contract says what to build, skills say how, and a data marketplace provides the data to build on.", "image": "https://www.dataproduct.com/media/og.png", "totalTime": "PT5M", "tool": [{"@type": "HowToTool", "name": "Claude Code"}, {"@type": "HowToTool", "name": "dbt"}, {"@type": "HowToTool", "name": "Snowflake"}, {"@type": "HowToTool", "name": "Data Contract CLI"}, {"@type": "HowToTool", "name": "Data Product CLI"}, {"@type": "HowToTool", "name": "Entropy Data"}], "step": [{"@type": "HowToStep", "position": 1, "name": "Write the data contract", "text": "Agree with the business on what the data product must deliver and capture it as an ODCS data contract, linked to the business ontology."}, {"@type": "HowToStep", "position": 2, "name": "Provide the skills", "text": "Install a skills repository that encodes your conventions for building data products, for example the dbt Data Product Builder."}, {"@type": "HowToStep", "position": 3, "name": "Connect the data marketplace", "text": "Give the agent access to a data marketplace so it can discover existing data products, read their contracts, and request access."}, {"@type": "HowToStep", "position": 4, "name": "Prompt the coding agent", "text": "Ask the coding agent to implement the data product from its data contract."}, {"@type": "HowToStep", "position": 5, "name": "Run, test, and publish", "text": "The agent runs the pipeline, tests the data against the contract, and publishes the data product with test results and lineage."}]}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a data product?", "acceptedAnswer": {"@type": "Answer", "text": "A data product is a unit of data, code, and metadata, owned by one team, that offers its data to others through output ports. Each output port is described by a data contract. Data products are defined in the Open Data Product Standard (ODPS)."}}, {"@type": "Question", "name": "What is a data contract?", "acceptedAnswer": {"@type": "Answer", "text": "A data contract is a YAML document in the Open Data Contract Standard (ODCS) that states everything guaranteed about a dataset: schema, semantics, data quality rules, SLAs, owner, terms of use, and where the data lives. The open-source Data Contract CLI tests real data against it."}}, {"@type": "Question", "name": "How do you build a data product with AI?", "acceptedAnswer": {"@type": "Answer", "text": "Give a coding agent such as Claude Code three inputs: a data contract that says what to build, a skills repository that says how to build it, and a data marketplace with the data to build on. Then prompt it to implement the data product. The agent requests access to input data products, generates a dbt project, runs the pipeline, tests the data against the contract, and publishes the data product with test results and lineage."}}, {"@type": "Question", "name": "What does contract-first mean?", "acceptedAnswer": {"@type": "Answer", "text": "Contract-first means agreeing on the data contract with the business and the consumers before any data is extracted or any pipeline is written. The contract becomes the specification the coding agent implements and the test the result must pass."}}, {"@type": "Question", "name": "Which standards and tools are used?", "acceptedAnswer": {"@type": "Answer", "text": "The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS) from the Linux Foundation, Apache Ossie for semantics, dbt and Snowflake for the pipeline, the Data Contract CLI and Data Product CLI for testing and publishing, and Entropy Data as the data marketplace."}}]}</script>
   <link rel="preload" href="fonts/inter-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-v12-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="media/logo_fuchsia_v2.svg" type="image/svg+xml">
@@ -41,7 +61,7 @@
       color: var(--text);
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-anchor: none; }
     body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: inherit; }
     h1, h2, h3 { line-height: 1.15; letter-spacing: -0.025em; margin: 0; color: var(--text); }
@@ -55,7 +75,7 @@
 
     /* ---------- Nav ---------- */
     .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 60; background: linear-gradient(90deg, #4f46e5, #c026d3); }
-    nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid #f3f4f6; }
+    nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #fff; border-bottom: 1px solid #f3f4f6; }
     nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 24px; }
     .logo { font-size: 20px; font-weight: 600; color: #111827; text-decoration: none; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
     .logo img { height: 32px; width: auto; }
@@ -283,7 +303,8 @@
 
     /* agent terminal */
     .term { background: #0b1120; border: 1px solid #111827; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(17,24,39,.3); }
-    .term-body { font-family: var(--mono); font-size: 13px; line-height: 1.7; padding: 16px 18px; height: min(60vh, 540px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+    .term-body { font-family: var(--mono); font-size: 13px; line-height: 1.7; padding: 16px 18px; height: min(60vh, 540px); overflow: hidden; }
+    .term-track { transition: transform .35s cubic-bezier(.2,.7,.2,1); will-change: transform; }
     @media (max-width: 979px) { .term-body { font-size: 11px; height: 26vh; } }
     .agent-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 980px) { .agent-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; } }
@@ -306,8 +327,8 @@
     .pl-pend { fill: #fffbeb; stroke: #fcd34d; } .plt-pend { fill: #b45309; font-size: 10px; }
     .pl-ok { fill: #ecfdf5; stroke: #6ee7b7; } .plt-ok { fill: #047857; font-size: 10px; }
     .pl-act { fill: #059669; stroke: none; } .plt-act { fill: #fff; font-size: 10px; }
-    .term-body .l { opacity: 0; transform: translateY(6px); transition: all .25s; white-space: pre-wrap; word-break: break-word; }
-    .term-body .l.show { opacity: 1; transform: none; }
+    .term-body .l { opacity: 0; transition: opacity .2s; white-space: pre-wrap; word-break: break-word; }
+    .term-body .l.show { opacity: 1; }
     .term-body .l.hidden { display: none; }
     .term .p { color: var(--agent); } .term .ok { color: var(--product); } .term .mut { color: var(--dim); } .term .cmd { color: #7dd3fc; } .term .wht { color: var(--text); }
     .caret { display: inline-block; width: 8px; height: 15px; background: var(--text); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
@@ -351,6 +372,14 @@
 
     .mini-term { font-family: var(--mono); font-size: 12.5px; padding: 14px 16px; border-top: 1px solid var(--line); }
 
+    .faq { max-width: 52rem; margin-top: 24px; border-top: 1px solid #e5e7eb; }
+    .faq details { border-bottom: 1px solid #e5e7eb; }
+    .faq summary { cursor: pointer; padding: 18px 0; font-weight: 600; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: #9ca3af; font-weight: 400; font-size: 20px; line-height: 1; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { padding: 0 0 18px; color: #4b5563; max-width: 46rem; }
+
     /* cta */
 
     footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
@@ -369,7 +398,7 @@
     .diy .card { padding: 28px; display: flex; flex-direction: column; min-width: 0; }
     .diy h3 { font-size: 20px; margin: 10px 0 8px; }
     .diy p { color: var(--muted); font-size: 15px; }
-    .diy pre { font-family: var(--mono); font-size: 12.5px; background: #f9fafb; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 16px 0 0; overflow-x: auto; }
+    .diy pre { white-space: pre-wrap; font-family: var(--mono); font-size: 12.5px; background: #f9fafb; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 16px 0 0; overflow-x: auto; }
     .diy .go { margin-top: auto; padding-top: 16px; font-family: var(--mono); font-size: 13px; }
   </style>
 </head>
@@ -779,9 +808,9 @@
           </div>
           <div class="card reveal" style="border-top:3px solid var(--how);transition-delay:.1s">
             <span class="eyebrow c-how">2 · The how</span>
-            <h3>Customize the skills to your platform</h3>
-            <p>Fork the dbt Data Product Builder and adapt its skills to your data platform, naming conventions, and policies. Then install it in Claude Code, Codex, or Copilot.</p>
-            <pre>claude plugin marketplace add &lt;your fork&gt;</pre>
+            <h3>Customize the skills with Claude Code</h3>
+            <p>Fork our skills repo as a base. Point Claude Code at one of your exemplary data products and let it adapt the skills to your platform, conventions, and policies.</p>
+            <pre>&gt; Adapt these skills to how we build data products. Use &lt;our best data product repo&gt; as the reference.</pre>
             <a class="go c-how" href="https://github.com/entropy-data/dataproduct-builder-dbt">dbt Data Product Builder on GitHub →</a>
           </div>
           <div class="card reveal" style="border-top:3px solid var(--what);transition-delay:.2s">
@@ -791,6 +820,21 @@
             <pre>Implement.</pre>
             <a class="go c-what" href="https://editor.datacontract.com">Data Contract Editor →</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="block" id="faq" style="padding-top:40px">
+      <div class="wrap">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="h2">Questions</h2>
+        <div class="faq">
+          <details><summary>What is a data product?</summary><p>A data product is a unit of data, code, and metadata, owned by one team, that offers its data to others through output ports. Each output port is described by a data contract. Data products are defined in the Open Data Product Standard (ODPS).</p></details>
+          <details><summary>What is a data contract?</summary><p>A data contract is a YAML document in the Open Data Contract Standard (ODCS) that states everything guaranteed about a dataset: schema, semantics, data quality rules, SLAs, owner, terms of use, and where the data lives. The open-source Data Contract CLI tests real data against it.</p></details>
+          <details><summary>How do you build a data product with AI?</summary><p>Give a coding agent such as Claude Code three inputs: a data contract that says what to build, a skills repository that says how to build it, and a data marketplace with the data to build on. Then prompt it to implement the data product. The agent requests access to input data products, generates a dbt project, runs the pipeline, tests the data against the contract, and publishes the data product with test results and lineage.</p></details>
+          <details><summary>What does contract-first mean?</summary><p>Contract-first means agreeing on the data contract with the business and the consumers before any data is extracted or any pipeline is written. The contract becomes the specification the coding agent implements and the test the result must pass.</p></details>
+          <details><summary>Which standards and tools are used?</summary><p>The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS) from the Linux Foundation, Apache Ossie for semantics, dbt and Snowflake for the pipeline, the Data Contract CLI and Data Product CLI for testing and publishing, and Entropy Data as the data marketplace.</p></details>
         </div>
       </div>
     </section>
@@ -929,13 +973,19 @@
     var bubbles = chatTrack.querySelectorAll('.bubble');
     var stepTop = STEPS.map(function (_, i) { return chatTrack.querySelector('.bubble[data-step="' + i + '"]'); });
     var lastStep = -1;
+    var chatM = null;
+    function measureChat() {
+      chatM = { panelH: chatPanel.clientHeight, trackH: chatTrack.scrollHeight, tops: stepTop.map(function (b) { return b.offsetTop; }) };
+    }
+    window.addEventListener('resize', function () { chatM = null; });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { chatM = null; docH = null; });
     function contract(p) {
-      var panelH = chatPanel.clientHeight, trackH = chatTrack.scrollHeight;
-      var maxT = Math.max(0, trackH - panelH + 36);
+      if (!chatM) measureChat();
+      var maxT = Math.max(0, chatM.trackH - chatM.panelH + 36);
       var t = maxT * clamp(p / 0.9);
       chatTrack.style.transform = 'translate3d(0,' + (-t) + 'px,0)';
-      var line = t + panelH * 0.6, k = 0;
-      for (var i = 0; i < STEPS.length; i++) if (stepTop[i].offsetTop <= line) k = i;
+      var line = t + chatM.panelH * 0.6, k = 0;
+      for (var i = 0; i < STEPS.length; i++) if (chatM.tops[i] <= line) k = i;
       if (p >= 0.9) k = STEPS.length - 1;
       if (k === lastStep) return;
       bubbles.forEach(function (b) {
@@ -975,17 +1025,19 @@
     ];
     var ORDER = ['prompt', 'contract', 'skills', 'dbt', 'search', 'req1', 'ok1', 'req2', 'ok2', 'models', 'lint', 'run', 'tests1', 'tests2', 'publish', 'results', 'lineage', 'done'];
     var termBody = document.getElementById('termBody'), clock = document.getElementById('agentClock');
-    termBody.innerHTML = LOG.map(function (l) { return '<div class="l">' + l[0] + '</div>'; }).join('') + '<div class="l show"><span class="caret"></span></div>';
-    var tLines = termBody.querySelectorAll('.l');
+    // all lines stay laid out (unrevealed ones are invisible); the track glides up instead of jumping
+    termBody.innerHTML = '<div class="term-track" id="termTrack">' + LOG.map(function (l) { return '<div class="l">' + l[0] + '</div>'; }).join('') + '</div>';
+    var termTrack = document.getElementById('termTrack'), tLines = termTrack.querySelectorAll('.l');
+    var caretEl = document.createElement('div'); caretEl.className = 'l show'; caretEl.innerHTML = '<span class="caret"></span>';
     var bvEls = document.querySelectorAll('#bvSvg .bv');
     var lastAgent = -1;
     function agent(p) {
       var n = Math.round(clamp((p - 0.04) / 0.86) * LOG.length);
       if (n === lastAgent) return; lastAgent = n;
-      for (var i = 0; i < LOG.length; i++) {
-        tLines[i].classList.toggle('show', i < n);
-        tLines[i].classList.toggle('hidden', i >= n);
-      }
+      for (var i = 0; i < LOG.length; i++) tLines[i].classList.toggle('show', i < n);
+      termTrack.insertBefore(caretEl, tLines[n] || null);
+      var cs = getComputedStyle(termBody), room = termBody.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      termTrack.style.transform = 'translate3d(0,' + (-Math.max(0, caretEl.offsetTop + caretEl.offsetHeight - termTrack.offsetTop - room)) + 'px,0)';
       clock.textContent = n === 0 ? '0:00' : LOG[n - 1][2];
       var cur = n === 0 ? -1 : ORDER.indexOf(LOG[n - 1][1]);
       bvEls.forEach(function (el) {
@@ -1008,11 +1060,12 @@
       // read the position before the page gets shorter: the browser clamps its own scroll position right away
       var from = window.scrollY;
       var before = s.el.getBoundingClientRect();
-      s.el.style.height = '100vh';
+      s.el.style.height = '100vh'; docH = null;
       var cut = before.height - s.el.getBoundingClientRect().height;
       if (cut > 0 && before.top < 0) window.scrollTo({ top: from - cut, behavior: 'instant' });  // the step is above the top of the screen: keep the view where it is
     }
-    var progressBar = document.getElementById('progress');
+    var progressBar = document.getElementById('progress'), docH = null;
+    window.addEventListener('resize', function () { docH = null; });
     var ticking = false;
     function onScroll() {
       ticking = false;
@@ -1023,7 +1076,8 @@
         if (p > s.pos) { s.pos = p; s.fn(p); if (s.slider) s.slider.value = Math.round(p * 1000); }
         if (s.pos >= 1) collapse(s);
       });
-      var h = document.documentElement.scrollHeight - vh;
+      if (docH === null) docH = document.documentElement.scrollHeight;
+      var h = docH - vh;
       progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
     }
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });

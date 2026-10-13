@@ -1,0 +1,38 @@
+# dataproduct.com
+
+> How to build a data product with AI, contract first. A coding agent (Claude Code, OpenAI Codex, GitHub Copilot) builds the data product from three inputs: a data contract that says what to build, a skills repository that says how, and a data marketplace with the data to build on.
+
+## The approach
+
+1. **Data contract (the what).** Business and consumers agree on what the data product must deliver. It is written as a YAML file in the Open Data Contract Standard (ODCS): purpose, schema, semantics, data quality, SLAs, owner, terms of use, and servers. Columns link to concepts in the business ontology.
+2. **Skills (the how).** A Git repository of skills, templates, and hooks encodes the company's conventions for building data products. Example: the dbt Data Product Builder with the skills dataproduct-bootstrap, dataproduct-implement, and datacontract-test.
+3. **Data marketplace (the data to build on).** The agent discovers existing data products, reads their data contracts, resolves semantics, and requests access. When done, it publishes the new data product, its test results, and its lineage.
+4. **Coding agent.** One prompt: "Implement the data product with its data contract." The agent generates a dbt project, runs the pipeline with OpenLineage (dbt-ol run), runs dbt tests and data contract tests, and publishes the data product.
+5. **Result.** A fully operationalized data product: a dbt project with input and output ports, a table in Snowflake, green contract tests, lineage, and a listing in the marketplace.
+
+## Example
+
+A category manager wants to know which brands barely sell. The data contract slow-selling-brands defines the columns brand, slow_selling_products, and latest_sold_date. The agent builds on the existing data products articles-latest and shelf-warmers, joins them on sku (both link to the same SKU concept), and materializes the result in Snowflake. 3/3 dbt tests and 11/11 data contract tests pass.
+
+## Standards
+
+- [Open Data Contract Standard (ODCS)](https://bitol-io.github.io/open-data-contract-standard/)
+- [Open Data Product Standard (ODPS)](https://www.entropy-data.com/learn/open-data-product-standard)
+- [Apache Ossie (semantics)](https://www.entropy-data.com/learn/what-is-apache-ossie)
+
+## Tools
+
+- [Data Contract CLI](https://github.com/datacontract/datacontract-cli): lint and test data contracts
+- [Data Product CLI](https://github.com/datacontract/dataproduct-cli): lint and publish ODPS data products
+- [Data Contract Editor](https://github.com/datacontract/datacontract-editor): write data contracts visually
+- [dbt Data Product Builder](https://github.com/entropy-data/dataproduct-builder-dbt): skills for coding agents
+- [Entropy Data](https://www.entropy-data.com): data product marketplace
+
+## Learn more
+
+- [What is a Data Product?](https://www.entropy-data.com/learn/what-is-a-data-product)
+- [Data Product Heuristics](https://www.datamesh-architecture.com/data-product-heuristics)
+- [Data Product Canvas](https://www.datamesh-architecture.com/data-product-canvas)
+- [Entropy Explains, episode 4: Building Data Products with AI](https://www.youtube.com/watch?v=dq72KvRs7OA)
+- [Talk: Building a Data Product Contract-first (with AI), POA Summit 2026](https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026)
+- [Talk: Data-first or Contract-first?](https://www.entropy-data.com/learn/talk-data-first-or-contract-first)
