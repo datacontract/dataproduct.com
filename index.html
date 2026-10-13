@@ -3,18 +3,1138 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>dataproduct.com</title>
+  <title>Build Data Products with AI, Contract First | dataproduct.com</title>
+  <meta name="description" content="How to build a data product with a coding agent: a data contract says what to build, skills say how, and a data marketplace provides the data to build on.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: system-ui, sans-serif; margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f8fafc; color: #0f172a; }
-    main { max-width: 40rem; padding: 2rem 1rem; text-align: center; }
-    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    p { font-size: 1.125rem; color: #475569; }
+    :root {
+      --bg: #0a0e1a;
+      --bg-2: #0f1526;
+      --panel: #131a2e;
+      --panel-2: #1a2340;
+      --line: #263154;
+      --text: #e8ecf6;
+      --muted: #9aa5c4;
+      --dim: #6b7699;
+      --what: #f5b544;
+      --how: #3dd6d0;
+      --data: #a78bfa;
+      --agent: #f472b6;
+      --product: #4ade80;
+      --bad: #f87171;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: "Inter", system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    h1, h2, h3 { line-height: 1.12; letter-spacing: -0.02em; margin: 0; }
+    p { margin: 0; }
+    code, .mono { font-family: var(--mono); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+    /* ---------- Nav ---------- */
+    .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 60; background: linear-gradient(90deg, var(--what), var(--how), var(--data), var(--agent), var(--product)); }
+    nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(10, 14, 26, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(38, 49, 84, 0.6); }
+    nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+    .logo { font-weight: 800; letter-spacing: -0.02em; text-decoration: none; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .logo-mark { width: 26px; height: 26px; border-radius: 7px; position: relative; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; }
+    .logo-mark::before { content: ""; position: absolute; inset: 6px; border-radius: 3px; background: linear-gradient(135deg, var(--what), var(--how) 50%, var(--data)); }
+    .logo .tld { color: var(--muted); font-weight: 600; }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color .2s, background .2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--text); background: var(--panel); }
+    .nav-links a.cta { color: var(--bg); background: var(--text); font-weight: 600; }
+    .nav-links a.cta:hover { background: #fff; color: var(--bg); }
+    .menu-btn { display: none; background: none; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 14px; cursor: pointer; }
+    @media (max-width: 960px) {
+      .menu-btn { display: block; }
+      .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; flex-direction: column; align-items: stretch; padding: 12px 16px 16px; background: rgba(10, 14, 26, 0.97); border-bottom: 1px solid var(--line); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px; }
+    }
+
+    /* ---------- Shared ---------- */
+    section { position: relative; }
+    .eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 10px; }
+    .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; }
+    .h2 { font-size: clamp(32px, 5vw, 60px); font-weight: 800; margin: 16px 0 20px; }
+    .lead { font-size: clamp(17px, 1.6vw, 20px); color: var(--muted); max-width: 680px; }
+    .block { padding: 140px 0; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .c-what { color: var(--what); } .c-how { color: var(--how); } .c-data { color: var(--data); } .c-agent { color: var(--agent); } .c-product { color: var(--product); }
+    .quote { font-size: clamp(22px, 3vw, 34px); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; max-width: 900px; }
+    .quote cite { display: block; font-style: normal; font-size: 15px; color: var(--muted); margin-top: 16px; font-weight: 500; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); font: inherit; font-weight: 600; font-size: 15px; padding: 12px 18px; border-radius: 10px; cursor: pointer; text-decoration: none; transition: transform .15s, border-color .2s, background .2s; }
+    .btn:hover { border-color: var(--muted); transform: translateY(-1px); }
+    .btn:disabled { opacity: .5; cursor: default; transform: none; }
+    .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .note { font-size: 13px; color: var(--dim); }
+
+    /* ---------- Hero ---------- */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding: 110px 0 60px; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: -20% -10% auto; height: 120%; background: radial-gradient(600px 400px at 15% 30%, rgba(245,181,68,.10), transparent 60%), radial-gradient(600px 400px at 85% 25%, rgba(167,139,250,.12), transparent 60%), radial-gradient(700px 500px at 50% 90%, rgba(61,214,208,.08), transparent 60%); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; position: relative; }
+    @media (min-width: 980px) { .hero-grid { grid-template-columns: 1.05fr 1fr; } }
+    .hero h1 { font-size: clamp(42px, 7vw, 88px); font-weight: 800; letter-spacing: -0.04em; }
+    .hero h1 .grad { background: linear-gradient(90deg, var(--what), var(--how) 45%, var(--data) 75%, var(--agent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero .lead { margin-top: 24px; }
+    .hero-actions { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .scroll-hint { margin-top: 48px; display: flex; align-items: center; gap: 12px; color: var(--dim); font-size: 14px; }
+    .scroll-hint .mouse { width: 22px; height: 34px; border: 2px solid var(--dim); border-radius: 12px; position: relative; }
+    .scroll-hint .mouse::after { content: ""; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--dim); animation: wheel 1.6s infinite; }
+    @keyframes wheel { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
+    .hero-svg { width: 100%; height: auto; overflow: visible; }
+    .flow { stroke-dasharray: 6 10; animation: flow 1.2s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -32; } }
+    .pulse { animation: pulse 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes pulse { 50% { transform: scale(1.06); } }
+    .node-label { font-family: var(--sans); font-weight: 700; font-size: 15px; fill: var(--text); }
+    .node-sub { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+
+    /* ---------- Three inputs overview ---------- */
+    .inputs { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 56px; }
+    @media (min-width: 820px) { .inputs { grid-template-columns: repeat(3, 1fr); } }
+    .input-card { padding: 28px; position: relative; overflow: hidden; transition: transform .3s, border-color .3s; text-decoration: none; display: block; }
+    .input-card:hover { transform: translateY(-4px); }
+    .input-card .num { font-family: var(--mono); font-size: 13px; color: var(--dim); }
+    .input-card h3 { font-size: 26px; margin: 10px 0 6px; }
+    .input-card .kind { font-family: var(--mono); font-size: 14px; margin-bottom: 14px; }
+    .input-card p { color: var(--muted); }
+    .input-card::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--accent); }
+    .input-card:hover { border-color: var(--accent); }
+
+    /* ---------- Conversation ---------- */
+    .chat { max-width: 640px; margin-top: 48px; display: flex; flex-direction: column; gap: 14px; }
+    .bubble { padding: 14px 18px; border-radius: 18px; max-width: 85%; font-size: 16px; opacity: 0; transform: translateY(16px) scale(.98); transition: all .6s cubic-bezier(.2,.7,.2,1); }
+    .bubble.in { opacity: 1; transform: none; }
+    .bubble .who { font-size: 12px; font-weight: 700; display: block; margin-bottom: 4px; letter-spacing: .02em; }
+    .bubble.left { background: var(--panel-2); border-bottom-left-radius: 6px; align-self: flex-start; }
+    .bubble.right { background: rgba(245,181,68,.12); border: 1px solid rgba(245,181,68,.3); border-bottom-right-radius: 6px; align-self: flex-end; }
+    .canvas-strip { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .canvas-cell { padding: 16px; border: 1px dashed var(--line); border-radius: 12px; font-size: 14px; color: var(--muted); min-height: 96px; }
+    .canvas-cell b { display: block; color: var(--text); font-size: 13px; margin-bottom: 6px; }
+    .canvas-cell.hl { border-style: solid; border-color: var(--what); background: rgba(245,181,68,.06); }
+
+    /* ---------- Scrollytelling ---------- */
+    .scrolly { position: relative; }
+    .sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: 60px; overflow: hidden; }
+    .sticky .wrap { width: 100%; }
+    .split { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; }
+    @media (min-width: 980px) { .split { grid-template-columns: 0.9fr 1.1fr; gap: 56px; } }
+
+    .parts { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 4px; }
+    .parts li { display: flex; gap: 12px; align-items: baseline; padding: 8px 12px; border-radius: 10px; color: var(--dim); transition: all .3s; border-left: 2px solid transparent; }
+    .parts li b { color: inherit; font-weight: 600; min-width: 110px; }
+    .parts li span { font-size: 14px; }
+    .parts li.on { color: var(--text); background: rgba(245,181,68,.08); border-left-color: var(--what); }
+    .parts li.done { color: var(--muted); }
+    @media (max-width: 979px) {
+      .parts { display: none; }
+      .scrolly .lead { font-size: 15px; }
+      .scrolly .h2 { font-size: 28px; margin: 8px 0 8px; }
+    }
+    .mobile-part { display: none; font-family: var(--mono); font-size: 13px; color: var(--what); margin-top: 8px; }
+    @media (max-width: 979px) { .mobile-part { display: block; } }
+
+    .editor { background: #0c1222; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7); }
+    .editor-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--bg-2); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .editor-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: inline-block; }
+    .editor-bar .title { margin-left: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .editor-bar .tag { white-space: nowrap; }
+    .editor-bar .tag { margin-left: auto; padding: 2px 8px; border-radius: 6px; background: rgba(245,181,68,.12); color: var(--what); }
+    .code { position: relative; font-family: var(--mono); font-size: 13px; line-height: 1.65; padding: 14px 0; margin: 0; white-space: pre; overflow: hidden; height: min(62vh, 560px); }
+    @media (max-width: 979px) { .code { font-size: 11px; height: 50vh; } }
+    .code .ln { display: block; padding: 0 16px; opacity: 0; transition: opacity .25s, background .3s; border-left: 2px solid transparent; }
+    .code .ln.show { opacity: .55; }
+    .code .ln.show.cur { opacity: 1; background: rgba(245,181,68,.07); border-left-color: var(--what); }
+    .code .ln.add { background: rgba(74,222,128,.10); border-left-color: var(--product); opacity: 1; }
+    .k { color: #7dd3fc; } .v { color: #e8ecf6; } .s { color: #fcd34d; } .n { color: #f9a8d4; } .cmt { color: var(--dim); } .sem { color: var(--data); }
+
+    /* semantics */
+    .sem-stage { position: relative; }
+    .sem-svg { width: 100%; height: auto; max-height: 70vh; }
+    .sem-svg .tbl rect.hd { fill: var(--panel-2); }
+    .sem-svg text { font-family: var(--mono); font-size: 13px; fill: var(--text); }
+    .sem-svg .col-hi { fill: var(--data); font-weight: 600; }
+    .sem-svg .link { fill: none; stroke: var(--data); stroke-width: 2; }
+    .sem-svg .join { fill: none; stroke: var(--product); stroke-width: 2.5; stroke-dasharray: 6 6; }
+
+    /* skills */
+    .skills-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 56px; align-items: start; }
+    @media (min-width: 900px) { .skills-grid { grid-template-columns: 1fr 1fr; } }
+    .tree { padding: 24px; font-family: var(--mono); font-size: 14px; line-height: 1.9; }
+    .tree .dir { color: var(--how); }
+    .tree .f { color: var(--muted); }
+    .tree .row.ind1 { padding-left: 28px; } .tree .row.ind2 { padding-left: 48px; }
+    .tree .row { display: block; cursor: default; border-radius: 6px; padding: 0 8px; transition: background .2s; }
+    .tree .row:hover { background: var(--panel-2); }
+    .tree .row[data-tip]:hover::after { content: attr(data-tip); color: var(--text); font-family: var(--sans); font-size: 13px; margin-left: 12px; }
+    .loop { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+    .loop-ring { position: relative; width: 100%; max-width: 360px; aspect-ratio: 1; margin: 0 auto; }
+    .loop-ring svg { width: 100%; height: 100%; }
+    .loop-step { position: absolute; transform: translate(-50%, -50%); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-family: var(--mono); font-size: 13px; text-align: center; transition: all .3s; white-space: nowrap; }
+    .loop-step.active { border-color: var(--how); box-shadow: 0 0 0 4px rgba(61,214,208,.15); }
+    .loop-step.ok { border-color: var(--product); color: var(--product); }
+    .loop-step.fail { border-color: var(--bad); color: var(--bad); }
+    .loop-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; font-size: 14px; color: var(--muted); pointer-events: none; padding: 30%; }
+    .loop-center b { font-size: 22px; color: var(--text); display: block; }
+    .loop-log { font-family: var(--mono); font-size: 12.5px; color: var(--muted); min-height: 84px; background: var(--bg-2); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--line); }
+    .loop-log div { white-space: pre-wrap; }
+
+    .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 40px; }
+    .chain .pill { padding: 12px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); font-weight: 600; font-size: 15px; }
+    .chain .arrow { color: var(--dim); font-family: var(--mono); font-size: 13px; }
+
+    /* marketplace */
+    .caps { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 56px; }
+    @media (min-width: 900px) { .caps { grid-template-columns: 1fr 1fr; } }
+    .caps h3 { font-size: 15px; font-family: var(--mono); color: var(--muted); font-weight: 600; margin-bottom: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    .cap { padding: 18px 20px; margin-bottom: 10px; cursor: pointer; transition: border-color .2s, background .2s; }
+    .cap:hover, .cap.open { border-color: var(--data); background: var(--panel-2); }
+    .cap .t { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+    .cap .t::after { content: "+"; font-family: var(--mono); color: var(--dim); transition: transform .2s; }
+    .cap.open .t::after { transform: rotate(45deg); }
+    .cap .d { max-height: 0; overflow: hidden; transition: max-height .35s ease; color: var(--muted); font-size: 14px; }
+    .cap.open .d { max-height: 180px; }
+    .cap .d p { padding-top: 10px; }
+    .cap .d code { display: block; margin-top: 10px; padding: 10px 12px; background: var(--bg); border-radius: 8px; font-size: 12.5px; color: var(--data); overflow-x: auto; }
+    .cli-vs { margin-top: 32px; padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start; }
+    .cli-vs .ic { font-family: var(--mono); color: var(--data); font-size: 20px; }
+
+    /* agent terminal */
+    .term { background: #070a14; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); }
+    .term-body { font-family: var(--mono); font-size: 13px; line-height: 1.7; padding: 16px 18px; height: min(60vh, 520px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+    @media (max-width: 979px) { .term-body { font-size: 11px; height: 46vh; } }
+    .term-body .l { opacity: 0; transform: translateY(6px); transition: all .25s; white-space: pre-wrap; word-break: break-word; }
+    .term-body .l.show { opacity: 1; transform: none; }
+    .term-body .l.hidden { display: none; }
+    .term .p { color: var(--agent); } .term .ok { color: var(--product); } .term .mut { color: var(--dim); } .term .cmd { color: #7dd3fc; } .term .wht { color: var(--text); }
+    .caret { display: inline-block; width: 8px; height: 15px; background: var(--text); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .steps5 { display: grid; gap: 8px; margin-top: 28px; }
+    .steps5 .s { display: flex; gap: 14px; align-items: center; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); color: var(--dim); transition: all .35s; font-size: 15px; }
+    .steps5 .s .i { font-family: var(--mono); font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1px solid currentColor; flex-shrink: 0; }
+    .steps5 .s.on { color: var(--text); border-color: var(--sc); background: color-mix(in srgb, var(--sc) 10%, transparent); }
+    .steps5 .s.on .i { background: var(--sc); color: var(--bg); border-color: var(--sc); }
+    @media (max-width: 979px) { .steps5 { display: none; } }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 56px; }
+    @media (min-width: 820px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+    .stat { padding: 24px; }
+    .stat .big { font-size: clamp(36px, 5vw, 52px); font-weight: 800; letter-spacing: -0.03em; color: var(--product); }
+    .stat .lbl { color: var(--muted); font-size: 14px; }
+
+    /* result */
+    .lineage { margin-top: 48px; padding: 24px; overflow-x: auto; }
+    .lineage svg { width: 100%; min-width: 620px; height: auto; display: block; }
+    .lineage text { font-family: var(--sans); font-size: 14px; fill: var(--text); font-weight: 600; }
+    .lineage .sub { font-family: var(--mono); font-size: 11px; fill: var(--muted); font-weight: 400; }
+    .tabs { display: flex; gap: 6px; margin-top: 32px; flex-wrap: wrap; }
+    .tab { background: none; border: 1px solid var(--line); color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border-radius: 999px; cursor: pointer; transition: all .2s; }
+    .tab[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .tabpanel { margin-top: 16px; display: none; }
+    .tabpanel.on { display: block; animation: fadeup .4s ease; }
+    @keyframes fadeup { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .tabpanel pre { margin: 0; padding: 20px; font-family: var(--mono); font-size: 13px; line-height: 1.7; overflow-x: auto; }
+    .tabpanel .explain { padding: 16px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    .market-card { padding: 24px; display: grid; gap: 16px; }
+    .mc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .mc-head h4 { margin: 0; font-size: 22px; }
+    .badge { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; }
+    .mc-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .mc-meta span { font-size: 13px; color: var(--muted); background: var(--bg-2); padding: 6px 10px; border-radius: 8px; }
+
+    /* change */
+    .change-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 48px; }
+    @media (min-width: 980px) { .change-grid { grid-template-columns: 1fr 1fr; } }
+    .change-grid .code { height: auto; padding: 14px 0; }
+    .change-grid .code .ln { opacity: 1; }
+    .change-grid .code .ln.new { max-height: 0; overflow: hidden; transition: max-height .5s ease, background .3s; display: block; }
+    .change-grid .code .ln.new.add { max-height: 24px; }
+    table.rows { width: 100%; border-collapse: collapse; font-size: 14px; }
+    table.rows th, table.rows td { text-align: left; padding: 10px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    table.rows th { font-family: var(--mono); font-size: 12px; color: var(--muted); font-weight: 600; }
+    table.rows .impact { display: none; }
+    table.rows.with-impact .impact { display: table-cell; animation: fadeup .5s ease; color: var(--product); font-weight: 600; }
+    .table-wrap { overflow-x: auto; }
+    .change-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; align-items: center; }
+    .mini-term { font-family: var(--mono); font-size: 12.5px; padding: 14px 16px; border-top: 1px solid var(--line); min-height: 64px; color: var(--muted); }
+
+    /* paths */
+    .switch { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 4px; margin-top: 40px; position: relative; }
+    .switch button { position: relative; z-index: 1; background: none; border: 0; color: var(--muted); font: inherit; font-weight: 600; font-size: 15px; padding: 10px 20px; border-radius: 999px; cursor: pointer; transition: color .3s; }
+    .switch button[aria-pressed="true"] { color: var(--bg); }
+    .switch .knob { position: absolute; top: 4px; bottom: 4px; left: 4px; border-radius: 999px; background: var(--text); transition: all .35s cubic-bezier(.2,.7,.2,1); }
+    .path-steps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; align-items: center; }
+    .path-steps .st { padding: 12px 18px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); font-weight: 600; animation: fadeup .4s ease both; }
+    .path-steps .st.first { border-color: var(--what); color: var(--what); }
+    .path-steps .ar { color: var(--dim); }
+    .problems { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 32px; }
+    @media (min-width: 820px) { .problems { grid-template-columns: repeat(4, 1fr); } }
+    .problem { padding: 20px; transition: all .4s; }
+    .problem .mk { font-family: var(--mono); font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .problem.fixed { border-color: rgba(74,222,128,.5); }
+    .problem.fixed .mk { color: var(--product); }
+    .problem.open .mk { color: var(--bad); }
+    .problem b { display: block; margin-bottom: 4px; }
+    .problem span { font-size: 14px; color: var(--muted); }
+
+    /* qa */
+    .qa { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+    @media (min-width: 900px) { .qa { grid-template-columns: 1fr 1fr; } }
+    .qa .card { padding: 28px; }
+    .qa .q { font-weight: 600; margin-bottom: 14px; font-size: 17px; }
+    .qa .q::before { content: "Q  "; font-family: var(--mono); color: var(--agent); }
+    .qa .a { color: var(--muted); }
+
+    /* cta */
+    .try { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+    @media (min-width: 820px) { .try { grid-template-columns: repeat(3, 1fr); } }
+    .try a { padding: 28px; text-decoration: none; transition: transform .25s, border-color .25s; display: block; }
+    .try a:hover { transform: translateY(-4px); border-color: var(--muted); }
+    .try h3 { font-size: 20px; margin: 10px 0 8px; }
+    .try p { color: var(--muted); font-size: 15px; }
+    .try .go { margin-top: 16px; font-family: var(--mono); font-size: 13px; }
+
+    footer { border-top: 1px solid var(--line); padding: 48px 0 64px; color: var(--muted); font-size: 14px; }
+    footer .cols { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 820px) { footer .cols { grid-template-columns: 2fr 1fr 1fr; } }
+    footer h4 { margin: 0 0 10px; color: var(--text); font-size: 14px; }
+    footer a { display: block; text-decoration: none; padding: 3px 0; }
+    footer a:hover { color: var(--text); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal, .bubble { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>dataproduct.com</h1>
-    <p>Coming soon.</p>
+  <div class="progress" id="progress"></div>
+
+  <nav class="top" aria-label="Main">
+    <div class="wrap">
+      <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span><span>dataproduct<span class="tld">.com</span></span></a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+      <div class="nav-links" id="navLinks">
+        <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
+        <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
+        <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
+        <a class="cta" href="https://www.entropy-data.com">Data Product Marketplace</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Contract first · with a coding agent</span>
+          <h1 style="margin-top:18px">Build a data product with <span class="grad">AI.</span></h1>
+          <p class="lead">No one writes the pipeline by hand anymore. A coding agent does. What makes the difference is what you feed it: a <b class="c-what">data contract</b> that says what to build, <b class="c-how">skills</b> that say how, and a <b class="c-data">data marketplace</b> with the data to build on.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#inputs">Scroll the journey ↓</a>
+            <a class="btn" href="#change">Jump to: change it</a>
+          </div>
+          <div class="scroll-hint"><span class="mouse" aria-hidden="true"></span>Scroll to build one, step by step</div>
+        </div>
+        <svg class="hero-svg" viewBox="0 0 560 440" role="img" aria-label="Three inputs (data contract, skills, data marketplace) flow into a coding agent, which produces a data product">
+          <defs>
+            <linearGradient id="gAgent" x1="0" x2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <path class="flow" d="M170 70 C 240 70, 230 220, 280 220" stroke="#f5b544" stroke-width="2.5" fill="none"/>
+          <path class="flow" d="M170 220 L 280 220" stroke="#3dd6d0" stroke-width="2.5" fill="none"/>
+          <path class="flow" d="M170 370 C 240 370, 230 220, 280 220" stroke="#a78bfa" stroke-width="2.5" fill="none"/>
+          <path class="flow" d="M380 220 L 430 220" stroke="#4ade80" stroke-width="2.5" fill="none"/>
+          <path class="flow" d="M490 270 C 490 420, 120 430, 95 405" stroke="#4ade80" stroke-width="1.5" fill="none" opacity=".45"/>
+          <g>
+            <rect x="10" y="38" width="160" height="64" rx="14" fill="#131a2e" stroke="#f5b544"/>
+            <text class="node-label" x="26" y="66">Data contract</text><text class="node-sub" x="26" y="86">the what</text>
+            <rect x="10" y="188" width="160" height="64" rx="14" fill="#131a2e" stroke="#3dd6d0"/>
+            <text class="node-label" x="26" y="216">Skills</text><text class="node-sub" x="26" y="236">the how</text>
+            <rect x="10" y="338" width="160" height="64" rx="14" fill="#131a2e" stroke="#a78bfa"/>
+            <text class="node-label" x="26" y="366">Marketplace</text><text class="node-sub" x="26" y="386">the data to build on</text>
+          </g>
+          <g class="pulse">
+            <circle cx="330" cy="220" r="52" fill="url(#gAgent)" opacity=".25" filter="url(#glow)"/>
+            <circle cx="330" cy="220" r="46" fill="#131a2e" stroke="url(#gAgent)" stroke-width="2.5"/>
+            <text class="node-label" x="330" y="216" text-anchor="middle">Coding</text>
+            <text class="node-label" x="330" y="236" text-anchor="middle">agent</text>
+          </g>
+          <g>
+            <rect x="430" y="170" width="120" height="100" rx="16" fill="#131a2e" stroke="#4ade80" stroke-width="2"/>
+            <text class="node-label" x="490" y="214" text-anchor="middle">Data</text>
+            <text class="node-label" x="490" y="234" text-anchor="middle">product</text>
+            <circle cx="430" cy="220" r="6" fill="#4ade80"/>
+            <circle cx="550" cy="220" r="6" fill="#4ade80"/>
+          </g>
+          <text class="node-sub" x="300" y="430" text-anchor="middle">published back, so the next one can build on it</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ================= INPUTS ================= -->
+    <section class="block" id="inputs" style="padding-top:60px">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">The idea</span>
+          <h2 class="h2">The agent is a commodity.<br>The inputs are what matter.</h2>
+          <p class="lead">With all three inputs in place, the instruction to the agent is a one-liner: <em>implement it</em>. The finished data product goes back into the marketplace, and the next one can stand on its shoulders.</p>
+        </div>
+        <div class="inputs">
+          <a href="#contract" class="card input-card reveal" style="--accent:var(--what)">
+            <div class="num">Input 1</div><h3>Data contract</h3><div class="kind c-what">the what</div>
+            <p>The interface specification in the Open Data Contract Standard, linked to a data product and to the business ontology.</p>
+          </a>
+          <a href="#skills" class="card input-card reveal" style="--accent:var(--how);transition-delay:.1s">
+            <div class="num">Input 2</div><h3>Skills</h3><div class="kind c-how">the how</div>
+            <p>Your company's patterns and conventions, in a Git repository of skills, templates, and hooks. You stay in control of how it is built.</p>
+          </a>
+          <a href="#marketplace" class="card input-card reveal" style="--accent:var(--data);transition-delay:.2s">
+            <div class="num">Input 3</div><h3>Data marketplace</h3><div class="kind c-data">the data to build on</div>
+            <p>Which data products exist, what their data means, and access to actually query it. Data products build on data products.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONVERSATION ================= -->
+    <section class="block" id="conversation">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow c-what"><span class="dot"></span>Before any YAML</span>
+          <h2 class="h2">It starts with a conversation.<br><span style="color:var(--muted)">Not with the data.</span></h2>
+          <p class="lead">Get the people who need the data into a room. Put the <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a> on the wall and fill it from the right: the business case drives the interface, and the interface drives the sources.</p>
+        </div>
+        <div class="chat" id="chat">
+          <div class="bubble right"><span class="who c-what">Category manager</span>I need a list of the products that have not sold in the last six months. The shelf warmers, gathering dust in the warehouse.</div>
+          <div class="bubble left"><span class="who" style="color:var(--how)">Product owner, sales</span>What counts as a sale? Do returns count? What about write-offs, or stolen stock?</div>
+          <div class="bubble right"><span class="who c-what">Category manager</span>Good question. And I really want to see it per <b>brand</b>: which brands barely sell, so we can talk to them, run a campaign, or delist them.</div>
+          <div class="bubble left"><span class="who" style="color:var(--how)">Product owner, sales</span>Then let's call it <b>slow-selling brands</b>, and write the contract before a single line of SQL.</div>
+        </div>
+        <div class="canvas-strip reveal">
+          <div class="canvas-cell"><b>Input ports</b>articles, shelf warmers</div>
+          <div class="canvas-cell"><b>Output port</b>slow_selling_brands</div>
+          <div class="canvas-cell"><b>Ownership</b>category management</div>
+          <div class="canvas-cell"><b>Consumers</b>brand managers, marketing</div>
+          <div class="canvas-cell hl"><b>Use case</b>find brands that barely sell</div>
+        </div>
+        <p class="quote reveal" style="margin-top:72px">"This is still a thing humans should do. This is our place. Not the building: defining what we want, and where the business value is."<cite>Simon Harrer, POA Summit 2026</cite></p>
+      </div>
+    </section>
+
+    <!-- ================= CONTRACT (scrolly) ================= -->
+    <section class="scrolly" id="contract" style="height:420vh" data-scrolly="contract">
+      <div class="sticky">
+        <div class="wrap split">
+          <div>
+            <span class="eyebrow c-what"><span class="dot"></span>Input 1 · the what</span>
+            <h2 class="h2">The data contract</h2>
+            <p class="lead">A YAML file in the <a href="https://bitol-io.github.io/open-data-contract-standard/">Open Data Contract Standard</a> that sits next to a dataset and states everything guaranteed about it. Keep scrolling, it writes itself.</p>
+            <div class="mobile-part" id="mobilePart">fundamentals</div>
+            <ul class="parts" id="parts">
+              <li data-part="fundamentals"><b>Fundamentals</b><span>ID, version, status</span></li>
+              <li data-part="schema"><b>Schema</b><span>tables, columns, semantics</span></li>
+              <li data-part="quality"><b>Quality</b><span>checks consumers rely on</span></li>
+              <li data-part="team"><b>Team</b><span>who owns it, how to reach them</span></li>
+              <li data-part="terms"><b>Terms of use</b><span>purpose and limitations</span></li>
+              <li data-part="sla"><b>SLAs</b><span>freshness, retention</span></li>
+              <li data-part="servers"><b>Servers</b><span>where the data lives</span></li>
+            </ul>
+          </div>
+          <div class="editor">
+            <div class="editor-bar"><i></i><i></i><i></i><span class="title">slow-selling-brands.odcs.yaml</span><span class="tag" id="partTag">fundamentals</span></div>
+            <pre class="code" id="contractCode"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="padding:80px 0">
+      <div class="wrap">
+        <p class="quote reveal">"Agents all love these things. They thrive on this."<cite>On data contracts as agent input</cite></p>
+        <p class="lead reveal" style="margin-top:32px">Write it in the <a href="https://github.com/datacontract/open-data-contract-standard-excel-template">ODCS Excel template</a> or the open-source <a href="https://github.com/datacontract/datacontract-editor">Data Contract Editor</a>. Either way, you end up with the YAML the agent needs.</p>
+      </div>
+    </section>
+
+    <!-- ================= SEMANTICS (scrolly) ================= -->
+    <section class="scrolly" id="semantics" style="height:260vh" data-scrolly="semantics">
+      <div class="sticky">
+        <div class="wrap split">
+          <div>
+            <span class="eyebrow c-data"><span class="dot"></span>Anchored in the business ontology</span>
+            <h2 class="h2">Define it once.<br>Reuse it everywhere.</h2>
+            <p class="lead" id="semText">Two tables, three columns that all mean an order ID: the key, the foreign key, and the link from a replacement order to the cancelled one.</p>
+          </div>
+          <div class="sem-stage">
+            <svg class="sem-svg" viewBox="0 0 560 420" aria-label="Three order ID columns in two tables link to one Order ID concept, which implies a join">
+              <g class="tbl">
+                <rect x="10" y="40" width="220" height="150" rx="12" fill="#131a2e" stroke="#263154"/>
+                <rect class="hd" x="10" y="40" width="220" height="36" rx="12"/><rect class="hd" x="10" y="64" width="220" height="12"/>
+                <text x="26" y="64" style="font-weight:600">orders</text>
+                <text id="c1" x="26" y="104">ORDER_ID</text>
+                <text x="26" y="134" fill="#9aa5c4" style="fill:#9aa5c4">ORDER_TIMESTAMP</text>
+                <text id="c3" x="26" y="164">PREVIOUS_ORDER_ID</text>
+              </g>
+              <g class="tbl">
+                <rect x="10" y="240" width="220" height="150" rx="12" fill="#131a2e" stroke="#263154"/>
+                <rect class="hd" x="10" y="240" width="220" height="36" rx="12"/><rect class="hd" x="10" y="264" width="220" height="12"/>
+                <text x="26" y="264" style="font-weight:600">line_items</text>
+                <text x="26" y="304" style="fill:#9aa5c4">LINE_ITEM_ID</text>
+                <text id="c2" x="26" y="334">ORDER_ID</text>
+                <text x="26" y="364" style="fill:#9aa5c4">SKU</text>
+              </g>
+              <path class="link" id="l1" d="M150 100 C 300 100, 330 210, 400 210"/>
+              <path class="link" id="l3" d="M200 160 C 300 160, 330 210, 400 210"/>
+              <path class="link" id="l2" d="M130 330 C 300 330, 330 210, 400 210"/>
+              <path class="join" id="lj" d="M236 100 C 270 100, 270 330, 236 330"/>
+              <g id="concept" opacity="0">
+                <circle cx="470" cy="210" r="70" fill="rgba(167,139,250,.12)" stroke="#a78bfa" stroke-width="2"/>
+                <text x="470" y="206" text-anchor="middle" style="font-family:Inter;font-weight:700;font-size:16px">Order ID</text>
+                <text x="470" y="226" text-anchor="middle" style="fill:#9aa5c4;font-size:11px">concept</text>
+              </g>
+              <text id="joinLabel" x="282" y="222" opacity="0" style="fill:#4ade80;font-size:12px">join implied</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="padding:80px 0">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Contract + semantics + data product</span>
+          <h2 class="h2" style="font-size:clamp(28px,4vw,44px)">Every part is an open standard.</h2>
+          <p class="lead">The building block uses the <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>, the interface the <a href="https://www.entropy-data.com/learn/open-data-contract-standard">Open Data Contract Standard</a>, and the meaning <a href="https://www.entropy-data.com/learn/what-is-apache-ossie">Apache Ossie</a>. None of it depends on a tool. It is just standards, YAML, and structure.</p>
+        </div>
+        <div class="editor reveal" style="margin-top:40px;max-width:640px">
+          <div class="editor-bar"><i></i><i></i><i></i><span class="title">dataproduct.yaml</span><span class="tag" style="background:rgba(74,222,128,.12);color:var(--product)">ODPS</span></div>
+<pre class="code" style="height:auto"><span class="ln show cur" style="opacity:1"><span class="k">apiVersion</span>: <span class="v">v1.0.0</span></span><span class="ln show" style="opacity:1"><span class="k">kind</span>: <span class="v">DataProduct</span></span><span class="ln show" style="opacity:1"><span class="k">id</span>: <span class="s">slow-selling-brands</span></span><span class="ln show" style="opacity:1"><span class="k">status</span>: <span class="v">draft</span></span><span class="ln show" style="opacity:1"><span class="k">outputPorts</span>:</span><span class="ln show" style="opacity:1">  - <span class="k">name</span>: <span class="s">slow_selling_brands</span></span><span class="ln show" style="opacity:1">    <span class="k">version</span>: <span class="v">1.0.0</span></span><span class="ln show" style="opacity:1">    <span class="k">contractId</span>: <span class="s">slow-selling-brands</span>   <span class="cmt"># the contract above</span></span></pre>
+        </div>
+        <p class="note reveal" style="margin-top:12px">"We just said what we want. Like the cruise control in your car: let's go for 100 kilometers per hour."</p>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section class="block" id="skills">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow c-how"><span class="dot"></span>Input 2 · the how</span>
+          <h2 class="h2">Skills: your conventions,<br>not the internet's.</h2>
+          <p class="lead">Without instructions, the agent builds from what it learned on the web, and every prompt may produce something different. "We want control. We want a say in how our data products are being built." So the conventions go into a skills repository that Claude Code, OpenAI Codex, GitHub Copilot, and other coding agents all understand.</p>
+        </div>
+        <div class="skills-grid">
+          <div class="card tree reveal" aria-label="Skills repository">
+            <span class="row dir">dataproduct-builder-dbt/</span>
+            <span class="row f ind1" data-tip="Rules every agent reads first">AGENTS.md</span>
+            <span class="row dir ind1">skills/</span>
+            <span class="row f ind2" data-tip="Lays out the dbt project">dataproduct-bootstrap/</span>
+            <span class="row f ind2" data-tip="Builds the pipeline from the contract">dataproduct-implement/</span>
+            <span class="row f ind2" data-tip="Tests data against the contract">datacontract-test/</span>
+            <span class="row dir ind1">hooks/</span>
+            <span class="row f ind2" data-tip="Double check at the end of every prompt">on-stop.sh</span>
+            <span class="row dir ind1">templates/</span>
+            <span class="row f ind2" data-tip="Snowflake naming conventions">snowflake-naming.md</span>
+            <p class="note" style="margin-top:16px;font-family:var(--sans)">Hover a file. Open example: <a href="https://github.com/entropy-data/dataproduct-builder-dbt">dbt Data Product Builder</a></p>
+          </div>
+          <div class="card loop reveal">
+            <div>
+              <h3 style="font-size:20px">Feedback loops: "You are not done yet."</h3>
+              <p class="note" style="margin-top:6px;font-size:14px">The skills wire in the <a href="https://github.com/datacontract/datacontract-cli">Data Contract CLI</a>. The agent lints, builds, tests against the contract, and iterates until everything is green.</p>
+            </div>
+            <div class="loop-ring" id="loopRing">
+              <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="74" fill="none" stroke="#263154" stroke-width="2" stroke-dasharray="4 6"/><circle id="loopArc" cx="100" cy="100" r="74" fill="none" stroke="#3dd6d0" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 465" transform="rotate(-90 100 100)"/></svg>
+              <div class="loop-step" data-i="0" style="left:50%;top:13%">lint contract</div>
+              <div class="loop-step" data-i="1" style="left:87%;top:50%">dbt run</div>
+              <div class="loop-step" data-i="2" style="left:50%;top:87%">datacontract test</div>
+              <div class="loop-step" data-i="3" style="left:13%;top:50%">iterate</div>
+              <div class="loop-center"><b id="loopIter">ready</b><span id="loopSub">press run</span></div>
+            </div>
+            <div class="loop-log" id="loopLog"><div class="mut">$ waiting for the agent…</div></div>
+            <button class="btn primary" id="loopBtn">▶ Run the loop</button>
+          </div>
+        </div>
+        <div class="reveal" style="margin-top:96px">
+          <h3 style="font-size:clamp(24px,3vw,34px)">Compliant by design, by transitivity.</h3>
+          <p class="lead" style="margin-top:12px">Leave your policies where they are. An AI routine keeps the skills conformant to the policies, and the data products conformant to the skills. "If it's not conformant, make it conformant."</p>
+          <div class="chain">
+            <span class="pill">Policies <span class="note">(Confluence)</span></span><span class="arrow">─ routine →</span>
+            <span class="pill" style="border-color:var(--how);color:var(--how)">Skills</span><span class="arrow">─ routine →</span>
+            <span class="pill" style="border-color:var(--product);color:var(--product)">Every data product</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MARKETPLACE ================= -->
+    <section class="block" id="marketplace">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow c-data"><span class="dot"></span>Input 3 · the data to build on</span>
+          <h2 class="h2">Stand on the shoulders<br>of other data products.</h2>
+          <p class="lead">To build a data product, the agent needs a <a href="https://www.entropy-data.com">data marketplace</a> with a handful of capabilities. Implement them however you like. Click one to see what the agent does with it.</p>
+        </div>
+        <div class="caps">
+          <div class="reveal">
+            <h3>Read: before building</h3>
+            <div class="card cap"><div class="t">Discover data products</div><div class="d"><p>Find what already exists, so the agent does not rebuild it.</p><code>$ entropy-data search query "brands articles sales"</code></div></div>
+            <div class="card cap"><div class="t">Get their data contracts</div><div class="d"><p>Schema, quality, terms of use: what the agent may rely on.</p><code>$ entropy-data dataproducts get shelf-warmers</code></div></div>
+            <div class="card cap"><div class="t">Resolve semantics</div><div class="d"><p>Which columns mean the same thing, and therefore how to join.</p><code>brand → ontology/brand · sku → ontology/sku</code></div></div>
+            <div class="card cap"><div class="t">Request access</div><div class="d"><p>With a purpose. Approved automatically or reviewed by the owner.</p><code>purpose: build slow-selling-brands</code></div></div>
+          </div>
+          <div class="reveal" style="transition-delay:.1s">
+            <h3>Write: when done</h3>
+            <div class="card cap"><div class="t">Publish data product and contract</div><div class="d"><p>So others can find it and build on it in turn.</p><code>status: active</code></div></div>
+            <div class="card cap"><div class="t">Publish test results</div><div class="d"><p>Proof that the data keeps the contract's guarantees.</p><code>$ entropy-data datacontracts test slow-selling-brands</code></div></div>
+            <div class="card cap"><div class="t">Publish lineage</div><div class="d"><p>The dbt run sends OpenLineage events, so the data flow becomes visible.</p><code>articles-latest, shelf-warmers → slow-selling-brands</code></div></div>
+          </div>
+        </div>
+        <div class="card cli-vs reveal">
+          <span class="ic">&gt;_</span>
+          <p style="color:var(--muted)"><b style="color:var(--text)">CLI, not MCP.</b> MCP works as well, but coding agents work especially well with command-line tools, and a CLI does not pollute the context. Under the hood it is a thin wrapper around the REST API.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AGENT (scrolly) ================= -->
+    <section class="scrolly" id="agent" style="height:420vh" data-scrolly="agent">
+      <div class="sticky">
+        <div class="wrap split">
+          <div>
+            <span class="eyebrow c-agent"><span class="dot"></span>Step 4 of 5 · one prompt</span>
+            <h2 class="h2">"Please implement it."</h2>
+            <p class="lead">One line, plus a few demo rules: don't ask questions, approve access requests if you have the rights, follow the Snowflake naming conventions, publish the test results.</p>
+            <div class="steps5" id="steps5">
+              <div class="s" style="--sc:var(--what)"><span class="i">1</span>Data contract: what to build</div>
+              <div class="s" style="--sc:var(--how)"><span class="i">2</span>Skills: how to build it</div>
+              <div class="s" style="--sc:var(--data)"><span class="i">3</span>Marketplace: the data to build on</div>
+              <div class="s" style="--sc:var(--agent)"><span class="i">4</span>Coding agent: one prompt</div>
+              <div class="s" style="--sc:var(--product)"><span class="i">5</span>The data product</div>
+            </div>
+          </div>
+          <div class="term">
+            <div class="editor-bar"><i></i><i></i><i></i><span class="title">claude · slow-selling-brands</span><span class="tag" id="agentClock" style="background:rgba(244,114,182,.12);color:var(--agent)">0:00</span></div>
+            <div class="term-body" id="termBody"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" style="padding-top:60px">
+      <div class="wrap">
+        <p class="quote reveal">"So it's done. It took five minutes. That was quite quick."<cite>Without asking a single question</cite></p>
+        <div class="stats" id="stats">
+          <div class="card stat reveal"><div class="big" data-count="41">0</div><div class="lbl">brands materialized in Snowflake</div></div>
+          <div class="card stat reveal"><div class="big" data-count="3" data-of="3">0</div><div class="lbl">dbt tests green</div></div>
+          <div class="card stat reveal"><div class="big" data-count="11" data-of="11">0</div><div class="lbl">data contract tests green</div></div>
+          <div class="card stat reveal"><div class="big" data-count="2">0</div><div class="lbl">existing data products reused</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RESULT ================= -->
+    <section class="block" id="result" style="padding-top:40px">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow c-product"><span class="dot"></span>Step 5 of 5 · the data product</span>
+          <h2 class="h2">What the agent built.</h2>
+          <p class="lead">It worked out on its own that it had to build on <b>articles latest</b> and <b>shelf warmers</b>, and requested access to both through the marketplace.</p>
+        </div>
+        <div class="card lineage reveal">
+          <svg viewBox="0 0 720 210" aria-label="Lineage: articles-latest and shelf-warmers flow into slow-selling-brands">
+            <path class="flow" d="M220 55 C 300 55, 300 105, 400 105" stroke="#a78bfa" stroke-width="2" fill="none"/>
+            <path class="flow" d="M220 155 C 300 155, 300 105, 400 105" stroke="#a78bfa" stroke-width="2" fill="none"/>
+            <rect x="20" y="20" width="200" height="70" rx="12" fill="#1a2340" stroke="#263154"/><text x="40" y="50">articles-latest</text><text class="sub" x="40" y="70">existing data product</text>
+            <rect x="20" y="120" width="200" height="70" rx="12" fill="#1a2340" stroke="#263154"/><text x="40" y="150">shelf-warmers</text><text class="sub" x="40" y="170">existing data product</text>
+            <rect x="400" y="60" width="240" height="90" rx="14" fill="rgba(74,222,128,.08)" stroke="#4ade80" stroke-width="2"/><text x="422" y="96">slow-selling-brands</text><text class="sub" x="422" y="118">new · built by the agent</text>
+            <circle cx="640" cy="105" r="6" fill="#4ade80"/><path d="M646 105 L 700 105" stroke="#4ade80" stroke-width="2" stroke-dasharray="4 5"/><text class="sub" x="652" y="95">next?</text>
+          </svg>
+        </div>
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" aria-selected="true" data-tab="t-market">Marketplace</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="t-dbt">dbt project</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="t-sql">SQL</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="t-snow">Snowflake</button>
+        </div>
+        <div class="tabpanel card on" id="t-market">
+          <div class="market-card">
+            <div class="mc-head"><div><span class="note mono">data product</span><h4>Slow Selling Brands</h4></div><span class="badge c-product">active</span></div>
+            <div class="mc-meta"><span>output port: slow_selling_brands v1</span><span>contract tests 11/11</span><span>input ports: 2</span><span>lineage: OpenLineage</span><span>visibility: private</span></div>
+          </div>
+          <div class="explain">The product is still private. One click on <b>Publish to Marketplace</b>, and others can build on it.</div>
+        </div>
+        <div class="tabpanel card" id="t-dbt">
+<pre><span class="sem">slow-selling-brands/</span>
+├── dataproduct.yaml
+├── datacontracts/
+│   └── slow-selling-brands.odcs.yaml
+├── models/
+│   ├── <span class="c-data">input_ports/</span>      <span class="cmt"># carry their contracts and source descriptions</span>
+│   │   ├── articles_latest.yml
+│   │   └── shelf_warmers.yml
+│   ├── <span class="c-how">intermediate/</span>
+│   └── <span class="c-product">output_port/</span>      <span class="cmt"># the new contract and the SQL</span>
+│       ├── slow_selling_brands.sql
+│       └── slow_selling_brands.yml
+└── dbt_project.yml</pre>
+          <div class="explain">Laid out by the <code>dataproduct-bootstrap</code> skill, implemented by <code>dataproduct-implement</code>. Simplified.</div>
+        </div>
+        <div class="tabpanel card" id="t-sql">
+<pre><span class="k">with</span> shelf_warmers <span class="k">as</span> (<span class="k">select</span> * <span class="k">from</span> {{ ref(<span class="s">'shelf_warmers'</span>) }}),
+     articles      <span class="k">as</span> (<span class="k">select</span> * <span class="k">from</span> {{ ref(<span class="s">'articles_latest'</span>) }})
+
+<span class="k">select</span>
+  a.brand_name::<span class="n">varchar</span>         <span class="k">as</span> brand,
+  count(*)::<span class="n">integer</span>            <span class="k">as</span> slow_selling_products,
+  max(sw.last_sold_date)::<span class="n">date</span> <span class="k">as</span> latest_sold_date
+<span class="k">from</span> shelf_warmers sw
+<span class="k">join</span> articles a <span class="k">on</span> sw.sku = a.sku   <span class="cmt">-- same concept in the semantics</span>
+<span class="k">group by</span> a.brand_name</pre>
+          <div class="explain">CTEs over shelf warmers and articles, joined on SKU, grouped by brand, cast to the contract's types. If the join columns had different names, it would still work, because both point to the same concept. Simplified.</div>
+        </div>
+        <div class="tabpanel card" id="t-snow">
+          <div class="market-card">
+            <div class="mc-head"><div><span class="note mono">table</span><h4 class="mono" style="font-size:18px">slow_selling_brands</h4></div><span class="badge c-how">Snowflake</span></div>
+            <p style="color:var(--muted)">Filled with brands, counts of slow-selling products, and last-sold dates. But it does not live in <code>SALES_PROD</code>: the agent followed the naming conventions from the skills, renamed database and schema, <b style="color:var(--text)">and updated the contract to match</b>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CHANGE ================= -->
+    <section class="block" id="change">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Now let's change it</span>
+          <h2 class="h2">Iterate by changing the <span class="c-what">what</span>.</h2>
+          <p class="lead">Creating a data product happens once. Changing it happens all the time, and it works the same way: change the contract first, then say "implement it" again. A slow-selling brand with one cheap product can be ignored. An important brand with a lot of stock cannot.</p>
+        </div>
+        <div class="change-grid">
+          <div class="editor reveal">
+            <div class="editor-bar"><i></i><i></i><i></i><span class="title">slow-selling-brands.odcs.yaml</span><span class="tag" id="chgTag">v1</span></div>
+<pre class="code" id="chgCode"><span class="ln"><span class="k">properties</span>:</span><span class="ln">  - <span class="k">name</span>: <span class="s">brand</span></span><span class="ln">  - <span class="k">name</span>: <span class="s">slow_selling_products</span></span><span class="ln">  - <span class="k">name</span>: <span class="s">latest_sold_date</span></span><span class="ln new">  - <span class="k">name</span>: <span class="s">impact_score</span></span><span class="ln new">    <span class="k">logicalType</span>: <span class="v">number</span></span><span class="ln new">    <span class="k">description</span>: <span class="s">Score based on total stock and list price.</span></span></pre>
+            <div class="mini-term" id="chgTerm">$ <span class="caret"></span></div>
+          </div>
+          <div class="card reveal" style="transition-delay:.1s;overflow:hidden">
+            <div class="editor-bar" style="background:var(--panel)"><span class="title" style="margin:0">slow_selling_brands</span><span class="tag" style="background:rgba(61,214,208,.12);color:var(--how)">illustrative rows</span></div>
+            <div class="table-wrap">
+              <table class="rows" id="rows">
+                <thead><tr><th>brand</th><th>slow_selling_products</th><th>latest_sold_date</th><th class="impact">impact_score</th></tr></thead>
+                <tbody>
+                  <tr><td>Brand A</td><td>14</td><td>2026-02-11</td><td class="impact">0.91</td></tr>
+                  <tr><td>Brand B</td><td>9</td><td>2026-03-02</td><td class="impact">0.64</td></tr>
+                  <tr><td>Brand C</td><td>6</td><td>2025-12-19</td><td class="impact">0.38</td></tr>
+                  <tr><td>Brand D</td><td>1</td><td>2026-01-27</td><td class="impact">0.05</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="change-actions">
+          <button class="btn primary" id="chgBtn">+ Add impact_score to the contract</button>
+          <button class="btn" id="chgRun" disabled>▶ Implement it</button>
+          <button class="btn" id="chgReset" style="display:none">↺ Reset</button>
+        </div>
+        <p class="lead reveal" style="margin-top:40px">The skills stay the same, the marketplace stays connected. The human work moves to the contract, and to checking whether the result is right. Change the skills instead, and everything flows through the agent again too.</p>
+      </div>
+    </section>
+
+    <!-- ================= PATHS ================= -->
+    <section class="block" id="paths">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Data-first or contract-first?</span>
+          <h2 class="h2">Two paths to a data product.</h2>
+          <p class="lead">Data engineers have always started with the data: extract, explore, build. It is creative, fast, and grounded in reality. But exploration alone is not a product. Flip the switch.</p>
+        </div>
+        <div class="switch" id="pathSwitch" role="group" aria-label="Choose a path">
+          <span class="knob" id="knob"></span>
+          <button aria-pressed="true" data-path="a">Path A · data-first</button>
+          <button aria-pressed="false" data-path="b">Path B · contract-first</button>
+        </div>
+        <div class="path-steps" id="pathSteps"></div>
+        <div class="problems" id="problems">
+          <div class="card problem" data-k="own"><div class="mk"></div><b>Ownership</b><span>Who owns this dataset long-term?</span></div>
+          <div class="card problem" data-k="doc"><div class="mk"></div><b>Documentation</b><span>Is <code>TX021</code> the order date or the payment time?</span></div>
+          <div class="card problem" data-k="prod"><div class="mk"></div><b>Production ready</b><span>Quality rules, checks, expectations.</span></div>
+          <div class="card problem" data-k="size"><div class="mk"></div><b>Right-sized</b><span>Only the fields the business needs, in its language.</span></div>
+        </div>
+        <p class="note" style="margin-top:20px">After Jochen Christ's talk <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a></p>
+      </div>
+    </section>
+
+    <!-- ================= TRUST ================= -->
+    <section class="block" id="trust">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">From the audience</span>
+          <h2 class="h2">But can you trust it?</h2>
+        </div>
+        <div class="qa">
+          <div class="card reveal"><p class="q">Agents are non-deterministic. How can you trust the data product?</p><p class="a">With feedback loops built on deterministic tools. Tests must be green, the linter must be happy, it must conform to the skills and the security guidelines. If not, it iterates. That harness makes hallucination "almost go away. It's not completely gone, but it's good enough, and better than humans."</p></div>
+          <div class="card reveal" style="transition-delay:.1s"><p class="q">If building is this cheap, won't the number of data products explode?</p><p class="a">The bottleneck is still humans. Building is cheap now. Deciding what to build and who owns it is where humans decide. And changes still need a process: a stable interface, a guaranteed lifetime, an upgrade path for breaking changes. "Let's not get rid of the humans."</p></div>
+        </div>
+        <p class="quote reveal" style="margin-top:96px">"As a famous movie character said: this is the way. This is how I think data products should be built, and will be built."<cite>Simon Harrer</cite></p>
+      </div>
+    </section>
+
+    <!-- ================= TRY ================= -->
+    <section class="block" id="try" style="padding-top:40px">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Try it yourself</span>
+          <h2 class="h2">Everything from the demo is available.</h2>
+        </div>
+        <div class="try">
+          <a class="card reveal" href="https://demo.entropy-data.com/start" style="border-top:3px solid var(--data)"><span class="eyebrow c-data">Marketplace</span><h3>Entropy Data demo</h3><p>A data product marketplace built on data contracts and semantics.</p><div class="go c-data">demo.entropy-data.com →</div></a>
+          <a class="card reveal" href="https://github.com/datacontract/datacontract-editor" style="border-top:3px solid var(--what);transition-delay:.1s"><span class="eyebrow c-what">Contract</span><h3>Data Contract Editor</h3><p>Write ODCS contracts visually, open source.</p><div class="go c-what">github.com/datacontract →</div></a>
+          <a class="card reveal" href="https://github.com/entropy-data/dataproduct-builder-dbt" style="border-top:3px solid var(--how);transition-delay:.2s"><span class="eyebrow c-how">Skills</span><h3>dbt Data Product Builder</h3><p>Give your coding agent the skills to build data products with dbt.</p><div class="go c-how">github.com/entropy-data →</div></a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap cols">
+      <div>
+        <a class="logo" href="#top" style="display:flex"><span class="logo-mark" aria-hidden="true"></span><span>dataproduct<span class="tld">.com</span></span></a>
+        <p style="margin-top:12px;max-width:420px">Based on the talks by Simon Harrer and Jochen Christ, and on the Entropy Explains episode on building data products with AI.</p>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
+        <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
+        <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
+        <a href="https://www.entropy-data.com">Data Product Marketplace</a>
+      </div>
+      <div>
+        <h4>Sources</h4>
+        <a href="https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026">POA Summit 2026 talk</a>
+        <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a>
+        <a href="https://www.entropy-data.com/learn/entropy-explains">Entropy Explains</a>
+        <a href="https://github.com/datacontract/dataproduct.com">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var clamp = function (v) { return Math.max(0, Math.min(1, v)); };
+
+    // ---------- nav ----------
+    var menuBtn = document.getElementById('menuBtn'), navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open);
+    });
+
+    // ---------- reveal on scroll ----------
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+    // chat bubbles appear one after another
+    var chat = document.getElementById('chat');
+    new IntersectionObserver(function (entries, obs) {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      chat.querySelectorAll('.bubble').forEach(function (b, i) { setTimeout(function () { b.classList.add('in'); }, reduce ? 0 : i * 900); });
+    }, { threshold: 0.3 }).observe(chat);
+
+    // ---------- syntax helper ----------
+    function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    function yamlLine(raw) {
+      var m = raw.match(/^(\s*(?:- )?)([A-Za-z_]+):(.*)$/);
+      if (!m) return esc(raw);
+      var val = m[3], cmt = '';
+      var ci = val.indexOf(' #');
+      if (ci >= 0) { cmt = val.slice(ci); val = val.slice(0, ci); }
+      var cls = /^\s*\d/.test(val) ? 'n' : (/^\s*[A-Za-z]/.test(val) && /[a-z_-]/.test(val) && val.trim().indexOf(' ') > -1 ? 's' : 'v');
+      if (/url:/.test(raw)) cls = 'sem';
+      return esc(m[1]) + '<span class="k">' + m[2] + '</span>:' + '<span class="' + cls + '">' + esc(val) + '</span>' + (cmt ? '<span class="cmt">' + esc(cmt) + '</span>' : '');
+    }
+
+    // ---------- contract scrolly ----------
+    var CONTRACT = [
+      ['fundamentals', 'apiVersion: v3.0.2'], ['fundamentals', 'kind: DataContract'], ['fundamentals', 'id: slow-selling-brands'],
+      ['fundamentals', 'name: Slow Selling Brands'], ['fundamentals', 'version: 1.0.0'], ['fundamentals', 'status: draft'],
+      ['schema', 'schema:'], ['schema', '  - name: slow_selling_brands'], ['schema', '    physicalType: table'],
+      ['schema', '    properties:'], ['schema', '      - name: brand'], ['schema', '        logicalType: string'],
+      ['schema', '        authoritativeDefinitions:  # from the business ontology'], ['schema', '          - type: semantics'],
+      ['schema', '            url: ontology/brand'], ['schema', '      - name: slow_selling_products'], ['schema', '        logicalType: integer'],
+      ['schema', '      - name: latest_sold_date'], ['schema', '        logicalType: date'],
+      ['quality', '    quality:'], ['quality', '      - type: sql'], ['quality', '        description: Every brand appears once'],
+      ['quality', '        query: SELECT COUNT(*) - COUNT(DISTINCT brand) FROM slow_selling_brands'], ['quality', '        mustBe: 0'],
+      ['team', 'team:'], ['team', '  name: category-management'], ['team', '  description: Reach us in #category-management on Slack'],
+      ['terms', 'description:'], ['terms', '  purpose: Find brands that barely sell'], ['terms', '  usage: Brand talks, campaigns, assortment decisions'],
+      ['terms', '  limitations: Not for evaluating individual employees'],
+      ['sla', 'slaProperties:'], ['sla', '  - property: freshness'], ['sla', '    value: 1'], ['sla', '    unit: d'],
+      ['servers', 'servers:'], ['servers', '  - server: production'], ['servers', '    type: snowflake'],
+      ['servers', '    database: SALES_PROD'], ['servers', '    schema: slow_selling_brands_v1']
+    ];
+    var codeEl = document.getElementById('contractCode');
+    codeEl.innerHTML = CONTRACT.map(function (l) { return '<span class="ln" data-part="' + l[0] + '">' + (yamlLine(l[1]) || ' ') + '</span>'; }).join('');
+    var cLines = codeEl.querySelectorAll('.ln');
+    var partsLis = document.querySelectorAll('#parts li');
+    var partOrder = ['fundamentals', 'schema', 'quality', 'team', 'terms', 'sla', 'servers'];
+    var partNames = { fundamentals: 'fundamentals', schema: 'schema', quality: 'data quality', team: 'team', terms: 'terms of use', sla: 'SLAs', servers: 'servers' };
+    var partTag = document.getElementById('partTag'), mobilePart = document.getElementById('mobilePart');
+    var lastContract = -1;
+    function contract(p) {
+      var n = Math.max(1, Math.round(clamp(p / 0.92) * cLines.length));
+      if (n === lastContract) return; lastContract = n;
+      var cur = CONTRACT[n - 1][0];
+      cLines.forEach(function (ln, i) {
+        ln.classList.toggle('show', i < n);
+        ln.classList.toggle('cur', i < n && CONTRACT[i][0] === cur);
+      });
+      var ci = partOrder.indexOf(cur);
+      partsLis.forEach(function (li, i) { li.classList.toggle('on', i === ci); li.classList.toggle('done', i < ci); });
+      partTag.textContent = partNames[cur]; mobilePart.textContent = '→ ' + partNames[cur];
+      // keep the current line in view
+      var target = cLines[n - 1].offsetTop - codeEl.clientHeight * 0.6;
+      codeEl.scrollTop = Math.max(0, target);
+    }
+
+    // ---------- semantics scrolly ----------
+    var semPaths = ['l1', 'l3', 'l2', 'lj'].map(function (id) {
+      var el = document.getElementById(id), len = el.getTotalLength();
+      el.style.strokeDasharray = len; el.style.strokeDashoffset = len;
+      return { el: el, len: len };
+    });
+    var concept = document.getElementById('concept'), joinLabel = document.getElementById('joinLabel'), semText = document.getElementById('semText');
+    var cols = ['c1', 'c3', 'c2'].map(function (id) { return document.getElementById(id); });
+    var semMsgs = [
+      'Two tables, three columns that all mean an order ID: the key, the foreign key, and the link from a replacement order to the cancelled one.',
+      'The business owns the ontology. All three columns point to the same Order ID concept. Define it once, reuse its metadata everywhere.',
+      'And the AI sees it: these fields are the same thing, so it can join the tables on them, even across two different data contracts. "We don\'t have to teach it. It\'s implicit in the metadata."'
+    ];
+    var semStage = -1;
+    function semantics(p) {
+      concept.setAttribute('opacity', clamp((p - 0.05) / 0.15));
+      for (var i = 0; i < 3; i++) {
+        var lp = clamp((p - 0.2 - i * 0.12) / 0.15);
+        semPaths[i].el.style.strokeDashoffset = semPaths[i].len * (1 - lp);
+        cols[i].classList.toggle('col-hi', lp > 0.5);
+      }
+      var jp = clamp((p - 0.7) / 0.15);
+      semPaths[3].el.style.strokeDashoffset = semPaths[3].len * (1 - jp);
+      joinLabel.setAttribute('opacity', jp);
+      var st = p < 0.2 ? 0 : (p < 0.65 ? 1 : 2);
+      if (st !== semStage) { semStage = st; semText.textContent = semMsgs[st]; }
+    }
+
+    // ---------- agent scrolly ----------
+    var LOG = [
+      ['<span class="p">❯</span> <span class="wht">Implement the data product slow-selling-brands with its data contract</span>', 0, '0:00'],
+      ['<span class="mut">  Don\'t ask questions. Approve access requests if you have the rights.</span>', 0, '0:00'],
+      ['<span class="mut">  Follow the Snowflake naming conventions. Publish the test results.</span>', 0, '0:00'],
+      ['<span class="c-what">●</span> Reading data contract slow-selling-brands.odcs.yaml', 1, '0:08'],
+      ['<span class="c-what">●</span> brand → ontology concept <span class="sem">brand</span>', 1, '0:12'],
+      ['<span class="c-how">●</span> Using skill <span class="c-how">dataproduct-bootstrap</span>', 2, '0:20'],
+      ['  <span class="mut">created dbt project, dataproduct.yaml, models/</span>', 2, '0:41'],
+      ['<span class="c-data">●</span> <span class="cmd">entropy-data search query "articles brands sales"</span>', 3, '0:55'],
+      ['  <span class="mut">found</span> articles-latest, shelf-warmers', 3, '1:02'],
+      ['<span class="c-data">●</span> <span class="cmd">entropy-data dataproducts get shelf-warmers</span>', 3, '1:10'],
+      ['  <span class="mut">join on</span> sku <span class="mut">(same concept in both contracts)</span>', 3, '1:21'],
+      ['<span class="c-data">●</span> Requesting access to articles-latest, shelf-warmers', 3, '1:34'],
+      ['  <span class="ok">✓ approved</span>', 3, '1:40'],
+      ['<span class="c-how">●</span> Using skill <span class="c-how">dataproduct-implement</span>', 4, '1:52'],
+      ['  <span class="mut">input_ports/ · intermediate/ · output_port/slow_selling_brands.sql</span>', 4, '2:38'],
+      ['  <span class="mut">database and schema renamed per naming conventions, contract updated</span>', 4, '2:51'],
+      ['<span class="c-agent">●</span> <span class="cmd">datacontract lint</span>  <span class="ok">✓</span>', 4, '3:05'],
+      ['<span class="c-agent">●</span> <span class="cmd">dbt run</span>  <span class="ok">✓ 41 rows</span>', 4, '3:48'],
+      ['<span class="c-agent">●</span> <span class="cmd">dbt test</span>  <span class="ok">✓ 3/3</span>', 4, '4:10'],
+      ['<span class="c-agent">●</span> <span class="cmd">datacontract test</span>  <span class="ok">✓ 11/11</span>', 4, '4:36'],
+      ['<span class="c-product">●</span> Published test results to Entropy Data', 5, '5:02'],
+      ['<span class="c-product">●</span> Lineage sent via OpenLineage', 5, '5:09'],
+      ['<span class="ok">✓ Done. 41 brands materialized. Data product slow-selling-brands is active.</span>', 5, '5:21']
+    ];
+    var termBody = document.getElementById('termBody'), clock = document.getElementById('agentClock');
+    termBody.innerHTML = LOG.map(function (l) { return '<div class="l">' + l[0] + '</div>'; }).join('') + '<div class="l show"><span class="caret"></span></div>';
+    var tLines = termBody.querySelectorAll('.l');
+    var steps5 = document.querySelectorAll('#steps5 .s');
+    var lastAgent = -1;
+    function agent(p) {
+      var n = Math.round(clamp((p - 0.04) / 0.86) * LOG.length);
+      if (n === lastAgent) return; lastAgent = n;
+      for (var i = 0; i < LOG.length; i++) {
+        tLines[i].classList.toggle('show', i < n);
+        tLines[i].classList.toggle('hidden', i >= n);
+      }
+      var stage = n === 0 ? 0 : LOG[n - 1][1];
+      clock.textContent = n === 0 ? '0:00' : LOG[n - 1][2];
+      // steps: 1..3 inputs light once agent uses them; 4 always on once prompted; 5 when done
+      steps5.forEach(function (s, i) {
+        var on = (i === 3 && n > 0) || (i < 3 && stage >= i + 1) || (i === 4 && stage === 5 && n === LOG.length);
+        s.classList.toggle('on', on);
+      });
+    }
+
+    var handlers = { contract: contract, semantics: semantics, agent: agent };
+    var scrollies = Array.prototype.map.call(document.querySelectorAll('[data-scrolly]'), function (el) { return { el: el, fn: handlers[el.dataset.scrolly] }; });
+    var progressBar = document.getElementById('progress');
+    var ticking = false;
+    function onScroll() {
+      ticking = false;
+      var vh = window.innerHeight;
+      scrollies.forEach(function (s) {
+        var r = s.el.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) return;
+        s.fn(reduce ? 1 : clamp(-r.top / (r.height - vh)));
+      });
+      var h = document.documentElement.scrollHeight - vh;
+      progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    window.addEventListener('resize', onScroll);
+    scrollies.forEach(function (s) { s.fn(reduce ? 1 : 0); });
+    onScroll();
+
+    // ---------- count-up stats ----------
+    var stats = document.getElementById('stats');
+    new IntersectionObserver(function (entries, obs) {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      stats.querySelectorAll('[data-count]').forEach(function (el) {
+        var to = +el.dataset.count, of = el.dataset.of, t0 = performance.now(), dur = reduce ? 0 : 1400;
+        (function step(t) {
+          var k = dur ? clamp((t - t0) / dur) : 1, v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+          el.textContent = of ? v + '/' + of : v;
+          if (k < 1) requestAnimationFrame(step);
+        })(t0);
+      });
+    }, { threshold: 0.4 }).observe(stats);
+
+    // ---------- feedback loop ----------
+    var loopBtn = document.getElementById('loopBtn'), loopLog = document.getElementById('loopLog'), loopArc = document.getElementById('loopArc');
+    var loopSteps = document.querySelectorAll('.loop-step'), loopIter = document.getElementById('loopIter'), loopSub = document.getElementById('loopSub');
+    var LOOP = [
+      [0, 'ok', '$ datacontract lint            ✓ follows best practices', 1],
+      [1, 'ok', '$ dbt run                      ✓ models built', 1],
+      [2, 'fail', '$ datacontract test            ✗ 10/11: latest_sold_date is timestamp, expected date', 1],
+      [3, 'ok', '↻ cast latest_sold_date to date in output_port.sql', 1],
+      [0, 'ok', '$ datacontract lint            ✓', 2],
+      [1, 'ok', '$ dbt run                      ✓ models built', 2],
+      [2, 'ok', '$ datacontract test            ✓ 11/11 passed', 2]
+    ];
+    loopBtn.addEventListener('click', function () {
+      loopBtn.disabled = true; loopLog.innerHTML = '';
+      loopSteps.forEach(function (s) { s.className = 'loop-step'; });
+      var i = 0;
+      (function next() {
+        if (i >= LOOP.length) {
+          loopIter.textContent = 'done'; loopSub.textContent = 'all green, it knows when it is done';
+          loopArc.setAttribute('stroke', '#4ade80'); loopBtn.disabled = false; loopBtn.textContent = '↺ Run again';
+          return;
+        }
+        var s = LOOP[i];
+        loopSteps.forEach(function (el) { el.classList.remove('active'); });
+        if (s[0] === 0) loopSteps.forEach(function (el) { el.classList.remove('ok', 'fail'); });
+        var el = loopSteps[s[0]];
+        el.classList.add('active');
+        loopIter.textContent = 'pass ' + s[3]; loopSub.textContent = 'checking…';
+        loopArc.setAttribute('stroke', '#3dd6d0');
+        loopArc.setAttribute('stroke-dasharray', ((s[0] + 1) / 4 * 465) + ' 465');
+        setTimeout(function () {
+          el.classList.remove('active'); el.classList.add(s[1]);
+          if (s[1] === 'fail') { loopArc.setAttribute('stroke', '#f87171'); loopSub.textContent = 'not done yet'; }
+          var d = document.createElement('div');
+          d.textContent = s[2]; d.style.color = s[1] === 'fail' ? 'var(--bad)' : (s[0] === 3 ? 'var(--how)' : 'var(--product)');
+          loopLog.appendChild(d);
+          while (loopLog.children.length > 4) loopLog.removeChild(loopLog.firstChild);
+          i++; setTimeout(next, reduce ? 0 : 350);
+        }, reduce ? 0 : 750);
+      })();
+    });
+
+    // ---------- marketplace caps ----------
+    document.querySelectorAll('.cap').forEach(function (c) {
+      c.setAttribute('tabindex', '0'); c.setAttribute('role', 'button');
+      var toggle = function () { c.classList.toggle('open'); };
+      c.addEventListener('click', toggle);
+      c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    });
+
+    // ---------- tabs ----------
+    var tabs = document.querySelectorAll('.tab');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (o) { o.setAttribute('aria-selected', o === t); });
+        document.querySelectorAll('.tabpanel').forEach(function (p) { p.classList.toggle('on', p.id === t.dataset.tab); });
+      });
+    });
+
+    // ---------- change demo ----------
+    var chgBtn = document.getElementById('chgBtn'), chgRun = document.getElementById('chgRun'), chgReset = document.getElementById('chgReset');
+    var chgTerm = document.getElementById('chgTerm'), chgTag = document.getElementById('chgTag'), rows = document.getElementById('rows');
+    var newLines = document.querySelectorAll('#chgCode .ln.new');
+    chgBtn.addEventListener('click', function () {
+      newLines.forEach(function (l, i) { setTimeout(function () { l.classList.add('add'); }, reduce ? 0 : i * 180); });
+      chgTag.textContent = 'v1 · modified'; chgBtn.disabled = true; chgRun.disabled = false;
+      chgTerm.innerHTML = '<span class="mut">contract saved. input changed, so the output has to change.</span><br>$ <span class="caret"></span>';
+    });
+    chgRun.addEventListener('click', function () {
+      chgRun.disabled = true;
+      var steps = [
+        '<span class="c-agent">❯</span> implement it',
+        '<span class="c-how">●</span> picked up the change: impact_score',
+        '<span class="c-agent">●</span> updated output_port/slow_selling_brands.sql',
+        '<span class="c-agent">●</span> datacontract test <span class="c-product">✓ all green</span>'
+      ];
+      var out = [];
+      steps.forEach(function (s, i) {
+        setTimeout(function () {
+          out.push(s); chgTerm.innerHTML = out.slice(-3).join('<br>');
+          if (i === steps.length - 1) { rows.classList.add('with-impact'); chgTag.textContent = 'v1 · implemented'; chgReset.style.display = ''; }
+        }, reduce ? 0 : i * 700);
+      });
+    });
+    chgReset.addEventListener('click', function () {
+      newLines.forEach(function (l) { l.classList.remove('add'); });
+      rows.classList.remove('with-impact'); chgTag.textContent = 'v1';
+      chgBtn.disabled = false; chgRun.disabled = true; chgReset.style.display = 'none';
+      chgTerm.innerHTML = '$ <span class="caret"></span>';
+    });
+
+    // ---------- paths ----------
+    var PATHS = {
+      a: { steps: ['Extract', 'Explore', 'Build', 'Contract', 'Test', 'Publish'], fixed: { own: 1, doc: 1, prod: 1, size: 0 },
+           note: 'Putting the data under contract fixes three of four. The wide technical tables stay.' },
+      b: { steps: ['Conversation', 'Contract', 'Build with agent', 'Test', 'Publish'], fixed: { own: 1, doc: 1, prod: 1, size: 1 },
+           note: 'Start where the consumer is. The right-sized product falls out of the contract.' }
+    };
+    var pathSteps = document.getElementById('pathSteps'), knob = document.getElementById('knob');
+    var pathBtns = document.querySelectorAll('#pathSwitch button');
+    function setPath(k) {
+      var P = PATHS[k];
+      pathBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.path === k); });
+      var active = document.querySelector('#pathSwitch button[data-path="' + k + '"]');
+      knob.style.left = active.offsetLeft + 'px'; knob.style.width = active.offsetWidth + 'px';
+      pathSteps.innerHTML = P.steps.map(function (s, i) {
+        var first = (k === 'b' && i < 2) || (k === 'a' && s === 'Contract');
+        return (i ? '<span class="ar">→</span>' : '') + '<span class="st' + (first ? ' first' : '') + '" style="animation-delay:' + (i * 0.07) + 's">' + s + '</span>';
+      }).join('') + '<span class="note" style="flex-basis:100%;margin-top:8px">' + P.note + '</span>';
+      document.querySelectorAll('.problem').forEach(function (el) {
+        var f = P.fixed[el.dataset.k];
+        el.classList.toggle('fixed', !!f); el.classList.toggle('open', !f);
+        el.querySelector('.mk').textContent = f ? '✓ solved' : '✗ still open';
+      });
+    }
+    pathBtns.forEach(function (b) { b.addEventListener('click', function () { setPath(b.dataset.path); }); });
+    setPath('a');
+    window.addEventListener('resize', function () { setPath(document.querySelector('#pathSwitch button[aria-pressed="true"]').dataset.path); });
+  })();
+  </script>
 </body>
 </html>
