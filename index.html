@@ -42,10 +42,6 @@
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    html.lenis, html.lenis body { height: auto; }
-    .lenis.lenis-smooth { scroll-behavior: auto !important; }
-    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-    .lenis.lenis-stopped { overflow: hidden; }
     body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: inherit; }
     h1, h2, h3 { line-height: 1.15; letter-spacing: -0.025em; margin: 0; color: var(--text); }
@@ -532,7 +528,7 @@
                 <g class="dc-g" data-step="7"><rect x="264" y="402" width="200" height="24" rx="12.0" class="pl-t"/><text x="364.0" y="417.5" class="plt-t" text-anchor="middle">⊘ Not for rating buyers</text></g>
                 <g class="dc-g" data-step="8"><rect x="56" y="434" width="408" height="28" rx="14" class="pl-srv"/><use href="#i-snow" x="150" y="441" width="14" height="14"/><text x="170" y="452" class="plt-srv">Snowflake · SALES_PROD · to be built</text></g>
               </svg>
-              <pre class="code dc-yaml" id="contractCode" data-lenis-prevent></pre>
+              <pre class="code dc-yaml" id="contractCode"></pre>
             </div>
           </div>
         </div>
@@ -705,7 +701,7 @@
         <div class="tabpanel card on" id="t-dbt">
           <div class="dbt-ex">
             <div class="tree dbt-tree"><span class="row dir">slow-selling-brands/</span><button class="row f ind1" data-dbt="odps">dataproduct.odps.yaml</button><button class="row f ind1" data-dbt="dbtp">dbt_project.yml</button><button class="row f ind1" data-dbt="ol">openlineage.yml</button><button class="row f ind1" data-dbt="ci">.github/workflows/data-product.yml</button><span class="row dir ind1">models/</span><span class="row dir ind2">input_ports/</span><button class="row f ind3" data-dbt="in_a_c">articles_latest.odcs.yaml</button><button class="row f ind3" data-dbt="in_a_s">articles_latest.source.yaml</button><button class="row f ind3" data-dbt="in_s_c">shelf_warmers.odcs.yaml</button><button class="row f ind3" data-dbt="in_s_s">shelf_warmers.source.yaml</button><span class="row dir ind2">output_ports/v1/</span><button class="row f ind3" data-dbt="out_c">slow-selling-brands.odcs.yaml</button><button class="row f ind3 sel" data-dbt="out_sql">slow_selling_brands.sql</button><button class="row f ind3" data-dbt="out_m">_models.yml</button></div>
-            <div class="dbt-view"><div class="dbt-cap" id="dbtCap"></div><pre id="dbtCode" data-lenis-prevent></pre></div>
+            <div class="dbt-view"><div class="dbt-cap" id="dbtCap"></div><pre id="dbtCode"></pre></div>
           </div>
         </div>
         <div class="tabpanel card" id="t-tests">
@@ -713,10 +709,10 @@
             <div class="tr-big">11/11</div>
             <div><b>Data contract slow-selling-brands is valid.</b><br><span class="note" style="font-size:13px">Server production · Snowflake · run by <code>datacontract test --publish</code> · results published to Entropy Data</span></div>
           </div>
-          <div class="table-wrap" data-lenis-prevent><table class="tr-table"><thead><tr><th>Result</th><th>Check</th><th>Field</th><th>Type</th></tr></thead><tbody><tr><td><span class="tr-ok">✓ passed</span></td><td>Table exists</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is string</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is integer</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is date</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>One row per brand</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">quality</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Freshness: within 1 day</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">SLA</span></td></tr></tbody></table></div>
+          <div class="table-wrap"><table class="tr-table"><thead><tr><th>Result</th><th>Check</th><th>Field</th><th>Type</th></tr></thead><tbody><tr><td><span class="tr-ok">✓ passed</span></td><td>Table exists</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is string</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is integer</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is date</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>One row per brand</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">quality</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Freshness: within 1 day</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">SLA</span></td></tr></tbody></table></div>
         </div>
         <div class="tabpanel card" id="t-lin">
-        <div class="lineage" data-lenis-prevent>
+        <div class="lineage">
           <svg viewBox="0 0 720 210" aria-label="Lineage: articles-latest and shelf-warmers flow into slow-selling-brands">
             <path class="flow" d="M220 55 C 300 55, 300 105, 400 105" stroke="#4f46e5" stroke-width="2" fill="none"/>
             <path class="flow" d="M220 155 C 300 155, 300 105, 400 105" stroke="#4f46e5" stroke-width="2" fill="none"/>
@@ -788,17 +784,11 @@
     </div>
   </footer>
 
-  <script src="js/lenis-1.1.13.min.js"></script>
   <script>
   (function () {
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var clamp = function (v) { return Math.max(0, Math.min(1, v)); };
 
-    // ---------- smooth scrolling ----------
-    if (!reduce && window.Lenis) {
-      var lenis = new Lenis({ lerp: 0.09, smoothWheel: true, anchors: true });
-      (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
-    }
 
     // ---------- nav ----------
     var menuBtn = document.getElementById('menuBtn'), navLinks = document.getElementById('navLinks');
@@ -981,18 +971,12 @@
     // directions without pausing. Scrolling never steps it again; only the Replay slider rewinds it.
     function collapse(s) {
       s.done = true;
-      var L = (typeof lenis !== 'undefined' && lenis) ? lenis : null;
       // read the position before the page gets shorter: the browser clamps its own scroll position right away
-      var from = L ? L.animatedScroll : window.scrollY, to = L ? L.targetScroll : from;
+      var from = window.scrollY;
       var before = s.el.getBoundingClientRect();
       s.el.style.height = '100vh';
       var cut = before.height - s.el.getBoundingClientRect().height;
-      if (cut > 0 && before.top < 0) {  // the step is above the top of the screen: keep the view where it is
-        if (L) {
-          L.scrollTo(from - cut, { immediate: true, force: true });
-          if (to > from) L.scrollTo(to - cut, { force: true });  // and let the smooth scroll carry on
-        } else window.scrollTo(0, from - cut);
-      }
+      if (cut > 0 && before.top < 0) window.scrollTo({ top: from - cut, behavior: 'instant' });  // the step is above the top of the screen: keep the view where it is
     }
     var progressBar = document.getElementById('progress');
     var ticking = false;
