@@ -418,11 +418,8 @@
                   <path d="M338 41 L 179 41" class="onto-line" marker-end="url(#arV)"/>
                   <text x="258" y="33" class="dc-small" text-anchor="middle">belongs to · n:1</text>
                   <path d="M120 60 L 120 100" class="onto-line" marker-end="url(#arV)"/>
-                  <path d="M400 60 L 400 100" class="onto-line" marker-end="url(#arV)"/>
                   <rect x="55" y="104" width="130" height="32" rx="16" class="prop"/><text x="120" y="125" class="prop-t" text-anchor="middle">Brand name</text>
-                  <rect x="325" y="104" width="150" height="32" rx="16" class="prop"/><text x="400" y="125" class="prop-t" text-anchor="middle">Last sold date</text>
                   <path d="M60 268 C 18 268, 18 120, 51 120" class="sem-link" marker-end="url(#arV)"/>
-                  <path d="M460 346 C 504 346, 504 120, 479 120" class="sem-link" marker-end="url(#arV)"/>
                 </g>
                 <!-- contract box -->
                 <g class="dc-g" data-step="0">
@@ -438,7 +435,7 @@
                   <text x="78" y="350" class="dc-col">latest_sold_date</text><text x="440" y="350" class="dc-type" text-anchor="end">date</text>
                   <line x1="60" y1="368" x2="460" y2="368" class="dc-div"/>
                 </g>
-                <g class="dc-g" data-step="2"><text x="246" y="272" class="dc-semtag">→ Brand name</text><text x="246" y="350" class="dc-semtag">→ Last sold date</text></g>
+                <g class="dc-g" data-step="2"><text x="246" y="272" class="dc-semtag">→ Brand name</text></g>
                 <g class="dc-g" data-step="3"><text x="94" y="321" class="dc-note">no sale in 6 months · returns are not sales</text></g>
                 <g class="dc-g" data-step="4"><rect x="78" y="380" width="175" height="26" rx="13" class="chip c1"/><text x="165" y="397" class="chip-t" text-anchor="middle">quality: one row per brand</text></g>
                 <g class="dc-g" data-step="5"><rect x="267" y="380" width="175" height="26" rx="13" class="chip c2"/><text x="354" y="397" class="chip-t" text-anchor="middle">SLA: refreshed daily</text></g>
@@ -705,7 +702,7 @@
       'schema:', '  - name: slow_selling_brands', '    physicalType: table', '    properties:',
       '      - name: brand', '        logicalType: string', '        authoritativeDefinitions:', '          - type: semantics', '            url: ontology/brand#brand-name',
       '      - name: slow_selling_products', '        logicalType: integer', '        description: No sale in the last 6 months, returns are not sales',
-      '      - name: latest_sold_date', '        logicalType: date', '        authoritativeDefinitions:', '          - type: semantics', '            url: ontology/product#last-sold-date',
+      '      - name: latest_sold_date', '        logicalType: date', '        description: When a product of the brand last sold',
       '    quality:', '      - type: sql', '        description: One row per brand', '        query: SELECT COUNT(*) - COUNT(DISTINCT brand) FROM slow_selling_brands', '        mustBe: 0',
       'slaProperties:', '  - property: freshness', '    value: 1', '    unit: d',
       'team:', '  name: sales',
@@ -726,7 +723,7 @@
     var STEPS = [
       { adds: 'purpose', msgs: [[M, 'Which of our brands barely sell? I want to talk to them, run a campaign, or take them out of the assortment.'], [J, 'Let\'s make that a data product with a contract: slow selling brands.']] },
       { adds: 'schema', msgs: [[J, 'What do you need to see per brand?'], [M, 'How many of its products sell slowly, and when one of them last sold.']] },
-      { adds: 'semantics', msgs: [[J, 'Brand as in our product catalog?'], [M, 'Yes, the brand everyone in the company means.'], [J, 'Then we link it to the ontology. Same for the sold date.']] },
+      { adds: 'semantics', msgs: [[J, 'Brand as in our product catalog?'], [M, 'Yes, the brand everyone in the company means.'], [J, 'Then we link it to the Brand concept in our ontology.']] },
       { adds: 'definition', msgs: [[J, 'When is a product slow-selling? Do returns count as sales?'], [M, 'No sale in six months. And returns are not sales.']] },
       { adds: 'data quality', msgs: [[M, 'One row per brand, please. No duplicates.']] },
       { adds: 'SLA', msgs: [[M, 'I look at it every Monday morning.'], [J, 'We refresh it daily.']] },
