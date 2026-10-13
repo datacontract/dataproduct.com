@@ -334,6 +334,9 @@
     .tr-table td.mono { font-family: var(--mono); font-size: 13px; }
     .tr-ok { color: #047857; background: #ecfdf5; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
     .tr-kind { color: #6b7280; background: #f3f4f6; border-radius: 6px; padding: 2px 8px; font-size: 12px; }
+    .sem5-wrap { padding: 16px; overflow-x: auto; }
+    .sem5 { display: block; width: 100%; min-width: 640px; max-width: 900px; margin: 0 auto; height: auto; }
+    .sem5 text { font-family: var(--sans); }
     .dbt-ex { display: grid; grid-template-columns: 1fr; }
     @media (min-width: 900px) { .dbt-ex { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); } }
     .dbt-tree { padding: 18px 16px; font-size: 13.5px; line-height: 1.8; border-right: 1px solid #f3f4f6; }
@@ -696,6 +699,7 @@
         <div class="tabs" role="tablist">
           <button class="tab" role="tab" aria-selected="true" data-tab="t-dbt">dbt project</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="t-tests">Test results</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="t-sem">Semantics</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="t-lin">Lineage</button>
         </div>
         <div class="tabpanel card on" id="t-dbt">
@@ -710,6 +714,36 @@
             <div><b>Data contract slow-selling-brands is valid.</b><br><span class="note" style="font-size:13px">Server production · Snowflake · run by <code>datacontract test --publish</code> · results published to Entropy Data</span></div>
           </div>
           <div class="table-wrap"><table class="tr-table"><thead><tr><th>Result</th><th>Check</th><th>Field</th><th>Type</th></tr></thead><tbody><tr><td><span class="tr-ok">✓ passed</span></td><td>Table exists</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is string</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is integer</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is date</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>One row per brand</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">quality</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Freshness: within 1 day</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">SLA</span></td></tr></tbody></table></div>
+        </div>
+        <div class="tabpanel card" id="t-sem">
+          <div class="sem5-wrap">
+            <svg class="sem5" viewBox="0 0 720 360" role="img" aria-label="Business concepts Product with SKU and Brand with Brand name, linked to columns of the data contracts articles-latest, shelf-warmers, and slow-selling-brands">
+              <defs>
+                <pattern id="dotsC" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e5e7eb"/></pattern>
+                <filter id="shC" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#111827" flood-opacity=".08"/></filter>
+                <marker id="mVC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+              </defs>
+              <rect width="720" height="360" fill="url(#dotsC)"/>
+              <rect x="270" y="10" width="180" height="340" rx="14" fill="#faf5ff" stroke="#ede9fe"/>
+              <text x="286" y="32" class="cap">Business ontology</text>
+              <g filter="url(#shC)"><rect x="295" y="46" width="130" height="38" rx="10" class="node"/></g><rect x="303" y="53" width="24" height="24" rx="7" fill="#ede9fe"/><use href="#i-ent" x="307.0" y="57.0" width="16" height="16" style="color:#7c3aed"/><text x="335" y="70" class="nt">Product</text>
+              <path d="M360 84 L 360 104" class="e-v" marker-end="url(#mVC)"/>
+              <rect x="310" y="106" width="100" height="30" rx="15" class="prop"/><use href="#i-prop" x="322" y="113" width="16" height="16" style="color:#7c3aed"/><text x="344" y="126" class="pt">SKU</text>
+              <path d="M425 65 C 448 65, 448 233, 425 233" class="e-v" marker-end="url(#mVC)"/><rect x="404" y="140" width="64" height="18" rx="9.0" class="pl-v"/><text x="436.0" y="152.5" class="plt-v" text-anchor="middle">belongs to</text>
+              <g filter="url(#shC)"><rect x="295" y="214" width="130" height="38" rx="10" class="node"/></g><rect x="303" y="221" width="24" height="24" rx="7" fill="#ede9fe"/><use href="#i-ent" x="307.0" y="225.0" width="16" height="16" style="color:#7c3aed"/><text x="335" y="238" class="nt">Brand</text>
+              <path d="M360 252 L 360 272" class="e-v" marker-end="url(#mVC)"/>
+              <rect x="300" y="274" width="120" height="30" rx="15" class="prop"/><use href="#i-prop" x="312" y="281" width="16" height="16" style="color:#7c3aed"/><text x="334" y="294" class="pt">Brand name</text>
+              <g filter="url(#shC)"><rect x="20" y="14" width="210" height="148" rx="12" class="sv-card"/></g><path d="M20 26 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#fffbeb"/><rect x="30" y="24" width="24" height="24" rx="7" fill="#fef3c7"/><use href="#i-dc" x="34.0" y="28.0" width="16" height="16" style="color:#d97706"/><text x="62" y="36" class="nt2" style="font-family:var(--mono)">articles-latest</text><text x="62" y="50" class="cs2">data contract</text><text x="34" y="80" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">sku</text><text x="34" y="102" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">brand_name</text><text x="34" y="124" class="col" style="font-size:12px">category</text><text x="34" y="146" class="col" style="font-size:12px">list_price</text>
+              <g filter="url(#shC)"><rect x="20" y="200" width="210" height="126" rx="12" class="sv-card"/></g><path d="M20 212 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#fffbeb"/><rect x="30" y="210" width="24" height="24" rx="7" fill="#fef3c7"/><use href="#i-dc" x="34.0" y="214.0" width="16" height="16" style="color:#d97706"/><text x="62" y="222" class="nt2" style="font-family:var(--mono)">shelf-warmers</text><text x="62" y="236" class="cs2">data contract</text><text x="34" y="266" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">sku</text><text x="34" y="288" class="col" style="font-size:12px">last_sold_date</text><text x="34" y="310" class="col" style="font-size:12px">stock</text>
+              <g filter="url(#shC)"><rect x="490" y="170" width="210" height="126" rx="12" class="sv-card" stroke="#10b981"/></g><path d="M490 182 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#f0fdf4"/><rect x="500" y="180" width="24" height="24" rx="7" fill="#d1fae5"/><use href="#i-dc" x="504.0" y="184.0" width="16" height="16" style="color:#047857"/><text x="532" y="192" class="nt2" style="font-family:var(--mono)">slow-selling-brands</text><text x="532" y="206" class="cs2">new data contract</text><text x="504" y="236" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">brand</text><text x="504" y="258" class="col" style="font-size:12px">slow_selling_products</text><text x="504" y="280" class="col" style="font-size:12px">latest_sold_date</text>
+              <path d="M62 76 C 250 76, 250 121, 306 121" class="e-sem" marker-end="url(#mVC)"/>
+              <path d="M112 98 C 260 98, 230 289, 296 289" class="e-sem" marker-end="url(#mVC)"/>
+              <path d="M62 262 C 240 262, 250 125, 306 125" class="e-sem" marker-end="url(#mVC)"/>
+              <path d="M490 232 C 456 232, 456 289, 424 289" class="e-sem" marker-end="url(#mVC)"/>
+              <rect x="176" y="166" width="80" height="18" rx="9.0" class="pl-v"/><text x="216.0" y="178.5" class="plt-v" text-anchor="middle">join on sku</text>
+            </svg>
+          </div>
+          <div class="explain"><code>sku</code> in articles-latest and shelf-warmers links to the same SKU concept, so the agent joins on it. <code>brand</code> in the new contract links to the same Brand name as <code>brand_name</code> upstream.</div>
         </div>
         <div class="tabpanel card" id="t-lin">
         <div class="lineage">
