@@ -156,11 +156,16 @@
     .contract-lead { font-size: 16px; margin-bottom: 18px; }
     .convo-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 980px) { .convo-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 28px; } }
-    .chat-panel { height: min(64vh, 600px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: 18px; background: #f9fafb; }
+    .chat-panel { height: min(64vh, 600px); overflow: hidden; position: relative; padding: 0 18px; background: #f9fafb; }
+    .chat-track { display: flex; flex-direction: column; gap: 10px; padding: 18px 0; will-change: transform; }
+    .chat-panel::before, .chat-panel::after { content: ""; position: absolute; left: 0; right: 0; height: 36px; z-index: 1; pointer-events: none; }
+    .chat-panel::before { top: 0; background: linear-gradient(#f9fafb, rgba(249,250,251,0)); }
+    .chat-panel::after { bottom: 0; background: linear-gradient(rgba(249,250,251,0), #f9fafb); }
     .chat-panel .bubble { opacity: 1; transform: none; font-size: 15px; line-height: 1.55; max-width: 88%; }
-    .chat-panel .bubble.fresh { animation: fadein .25s ease both; }
     @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
-    .chat-panel .bubble.old { opacity: .6; }
+    .chat-panel .bubble { transition: opacity .3s ease, box-shadow .3s ease; }
+    .chat-panel .bubble.future { opacity: .35; }
+    .chat-panel .bubble.cur { box-shadow: 0 0 0 2px #c7d2fe; }
     .chat-panel .bubble.left { background: #fff; border: 1px solid #e5e7eb; }
     .chat-panel .bubble.right { background: #eef2ff; border: 1px solid #c7d2fe; }
     .bubble .adds { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: #059669; background: #ecfdf5; border-radius: 999px; padding: 2px 10px; }
@@ -396,7 +401,7 @@
     </section>
 
     <!-- ================= CONTRACT (scrolly) ================= -->
-    <section class="scrolly" id="contract" style="height:540vh" data-scrolly="contract">
+    <section class="scrolly" id="contract" style="height:380vh" data-scrolly="contract">
       <div class="sticky">
         <div class="wrap">
           <div class="contract-head">
@@ -742,25 +747,36 @@
     ];
     var chatPanel = document.getElementById('chatPanel'), partTag = document.getElementById('partTag');
     var dcGroups = document.querySelectorAll('#dcSvg .dc-g'), dcSvgEl = document.getElementById('dcSvg');
+    // render the whole conversation once; scrolling moves it
+    var html = '';
+    STEPS.forEach(function (st, i) {
+      st.msgs.forEach(function (m, j) {
+        var right = m[0] === M, last = j === st.msgs.length - 1;
+        html += '<div class="bubble ' + (right ? 'right' : 'left') + '" data-step="' + i + '">' +
+          '<span class="who" style="color:' + (right ? '#4f46e5' : '#0891b2') + '">' + m[0] + '</span>' + m[1] +
+          (last ? '<br><span class="adds">+ ' + st.adds + '</span>' : '') + '</div>';
+      });
+    });
+    chatPanel.innerHTML = '<div class="chat-track" id="chatTrack">' + html + '</div>';
+    var chatTrack = document.getElementById('chatTrack');
+    var bubbles = chatTrack.querySelectorAll('.bubble');
+    var stepTop = STEPS.map(function (_, i) { return chatTrack.querySelector('.bubble[data-step="' + i + '"]'); });
     var lastStep = -1;
     function contract(p) {
-      var k = Math.min(STEPS.length - 1, Math.floor(clamp(p / 0.9) * STEPS.length));
+      var panelH = chatPanel.clientHeight, trackH = chatTrack.scrollHeight;
+      var maxT = Math.max(0, trackH - panelH + 36);
+      var t = maxT * clamp(p / 0.9);
+      chatTrack.style.transform = 'translate3d(0,' + (-t) + 'px,0)';
+      var line = t + panelH * 0.6, k = 0;
+      for (var i = 0; i < STEPS.length; i++) if (stepTop[i].offsetTop <= line) k = i;
+      if (p >= 0.9) k = STEPS.length - 1;
       if (k === lastStep) return;
-      var html = '';
-      for (var i = 0; i <= k; i++) {
-        STEPS[i].msgs.forEach(function (m, j) {
-          var right = m[0] === M, last = j === STEPS[i].msgs.length - 1;
-          html += '<div class="bubble ' + (right ? 'right' : 'left') + (i < k ? ' old' : '') + (lastStep >= 0 && i > lastStep ? ' fresh' : '') + '">' +
-            '<span class="who" style="color:' + (right ? '#4f46e5' : '#0891b2') + '">' + m[0] + '</span>' + m[1] +
-            (last ? '<br><span class="adds">+ ' + STEPS[i].adds + '</span>' : '') + '</div>';
-        });
-      }
-      chatPanel.innerHTML = html;
-      dcGroups.forEach(function (g) {
-        var st = +g.dataset.step;
-        g.classList.toggle('on', st <= k);
-        g.classList.toggle('new', st === k);
+      bubbles.forEach(function (b) {
+        var st = +b.dataset.step;
+        b.classList.toggle('future', st > k);
+        b.classList.toggle('cur', st === k);
       });
+      dcGroups.forEach(function (g) { g.classList.toggle('on', +g.dataset.step <= k); });
       partTag.textContent = '+ ' + STEPS[k].adds;
       if (lastStep < 0) requestAnimationFrame(function () { dcSvgEl.classList.add('ready'); });
       lastStep = k;
