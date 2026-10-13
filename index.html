@@ -29,6 +29,7 @@
   <link rel="preload" href="fonts/inter-v12-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="media/logo_fuchsia_v2.svg" type="image/svg+xml">
   <style>
+    @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/caveat-v23-latin-regular.woff2') format('woff2'); }
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-v12-latin-regular.woff2') format('woff2'); }
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-v12-latin-500.woff2') format('woff2'); }
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-v12-latin-600.woff2') format('woff2'); }
@@ -380,6 +381,16 @@
     .faq details[open] summary::after { content: "−"; }
     .faq details p { padding: 0 0 18px; color: #4b5563; max-width: 46rem; }
 
+    .has-hint { position: relative; }
+    .hint { font-family: "Caveat", cursive; font-size: 20px; line-height: 1.15; color: #9ca3af; display: flex; align-items: flex-end; gap: 4px; margin-bottom: 8px; }
+    .hint svg { flex-shrink: 0; transform: rotate(60deg) scaleX(-1); margin-left: 4px; }
+    .tabpanel.has-hint .hint { padding: 14px 18px 0; margin: 0; }
+    @media (min-width: 1480px) {
+      .hint { position: absolute; left: -146px; top: 36px; width: 132px; flex-direction: column; align-items: flex-start; margin: 0; padding: 0 !important; }
+      .hint svg { transform: none; margin: 6px 0 0 24px; }
+    }
+    .skills-grid > .hint { grid-column: 1 / -1; }
+
     /* cta */
 
     footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
@@ -573,9 +584,10 @@
         <div class="reveal">
           <span class="eyebrow c-how"><svg width="22" height="22"><use href="#i-skills"/></svg>Input 2 · the how</span>
           <h2 class="h2">Skills: your conventions.</h2>
-          <p class="lead">A Git repository of skills, templates, and hooks that any coding agent reads. Click a file.</p>
+          <p class="lead">A Git repository of skills, templates, and hooks that any coding agent reads.</p>
         </div>
-        <div class="skills-grid">
+        <div class="skills-grid has-hint">
+          <div class="hint" aria-hidden="true"><span>Click a file,<br>explore the skills!</span><svg viewBox="0 0 60 48" width="54" height="44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 C 3 20, 16 36, 50 38"/><path d="M42 31 L 51 38 L 42 44"/></svg></div>
           <div class="card tree reveal" role="tablist" aria-label="Skills repository">
             <span class="row dir">dataproduct-builder-demo/</span>
             <button class="row f ind1" data-file="agents">AGENTS.md</button>
@@ -723,7 +735,7 @@
         <div class="reveal">
           <span class="eyebrow c-product"><svg width="22" height="22"><use href="#i-dp"/></svg>Step 5 · the data product</span>
           <h2 class="h2">The fully operationalized data product</h2>
-          <p class="lead">The agent produced a complete dbt project, built on <b>articles-latest</b> and <b>shelf-warmers</b>: 41 brands in Snowflake, 3/3 dbt tests and 11/11 contract tests green. Click a file.</p>
+          <p class="lead">The agent produced a complete dbt project, built on <b>articles-latest</b> and <b>shelf-warmers</b>: 41 brands in Snowflake, 3/3 dbt tests and 11/11 contract tests green.</p>
         </div>
         <div class="tabs" role="tablist">
           <button class="tab" role="tab" aria-selected="true" data-tab="t-dbt">dbt project</button>
@@ -731,7 +743,8 @@
           <button class="tab" role="tab" aria-selected="false" data-tab="t-sem">Semantics</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="t-lin">Lineage</button>
         </div>
-        <div class="tabpanel card on" id="t-dbt">
+        <div class="tabpanel card on has-hint" id="t-dbt">
+          <div class="hint" aria-hidden="true"><span>Click a file,<br>explore the project!</span><svg viewBox="0 0 60 48" width="54" height="44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 C 3 20, 16 36, 50 38"/><path d="M42 31 L 51 38 L 42 44"/></svg></div>
           <div class="dbt-ex">
             <div class="tree dbt-tree"><span class="row dir">slow-selling-brands/</span><button class="row f ind1" data-dbt="odps">dataproduct.odps.yaml</button><button class="row f ind1" data-dbt="dbtp">dbt_project.yml</button><button class="row f ind1" data-dbt="ol">openlineage.yml</button><button class="row f ind1" data-dbt="ci">.github/workflows/data-product.yml</button><span class="row dir ind1">models/</span><span class="row dir ind2">input_ports/</span><button class="row f ind3" data-dbt="in_a_c">articles_latest.odcs.yaml</button><button class="row f ind3" data-dbt="in_a_s">articles_latest.source.yaml</button><button class="row f ind3" data-dbt="in_s_c">shelf_warmers.odcs.yaml</button><button class="row f ind3" data-dbt="in_s_s">shelf_warmers.source.yaml</button><span class="row dir ind2">output_ports/v1/</span><button class="row f ind3" data-dbt="out_c">slow-selling-brands.odcs.yaml</button><button class="row f ind3 sel" data-dbt="out_sql">slow_selling_brands.sql</button><button class="row f ind3" data-dbt="out_m">_models.yml</button></div>
             <div class="dbt-view"><div class="dbt-cap" id="dbtCap"></div><pre id="dbtCode"></pre></div>
@@ -746,30 +759,27 @@
         </div>
         <div class="tabpanel card" id="t-sem">
           <div class="sem5-wrap">
-            <svg class="sem5" viewBox="0 0 720 360" role="img" aria-label="Business concepts Product with SKU and Brand with Brand name, linked to columns of the data contracts articles-latest, shelf-warmers, and slow-selling-brands">
+            <svg class="sem5" viewBox="0 0 720 350" role="img" aria-label="Business ontology with Product (SKU) and Brand (Brand name) at the top; below, the data contracts shelf-warmers, articles-latest, and slow-selling-brands, whose columns link to these concepts">
               <defs>
                 <pattern id="dotsC" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e5e7eb"/></pattern>
                 <filter id="shC" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#111827" flood-opacity=".08"/></filter>
                 <marker id="mVC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
               </defs>
-              <rect width="720" height="360" fill="url(#dotsC)"/>
-              <rect x="270" y="10" width="180" height="340" rx="14" fill="#faf5ff" stroke="#ede9fe"/>
-              <text x="286" y="32" class="cap">Business ontology</text>
-              <g filter="url(#shC)"><rect x="295" y="46" width="130" height="38" rx="10" class="node"/></g><rect x="303" y="53" width="24" height="24" rx="7" fill="#ede9fe"/><use href="#i-ent" x="307.0" y="57.0" width="16" height="16" style="color:#7c3aed"/><text x="335" y="70" class="nt">Product</text>
-              <path d="M360 84 L 360 104" class="e-v" marker-end="url(#mVC)"/>
-              <rect x="310" y="106" width="100" height="30" rx="15" class="prop"/><use href="#i-prop" x="322" y="113" width="16" height="16" style="color:#7c3aed"/><text x="344" y="126" class="pt">SKU</text>
-              <path d="M425 65 C 448 65, 448 233, 425 233" class="e-v" marker-end="url(#mVC)"/><rect x="404" y="140" width="64" height="18" rx="9.0" class="pl-v"/><text x="436.0" y="152.5" class="plt-v" text-anchor="middle">belongs to</text>
-              <g filter="url(#shC)"><rect x="295" y="214" width="130" height="38" rx="10" class="node"/></g><rect x="303" y="221" width="24" height="24" rx="7" fill="#ede9fe"/><use href="#i-ent" x="307.0" y="225.0" width="16" height="16" style="color:#7c3aed"/><text x="335" y="238" class="nt">Brand</text>
-              <path d="M360 252 L 360 272" class="e-v" marker-end="url(#mVC)"/>
-              <rect x="300" y="274" width="120" height="30" rx="15" class="prop"/><use href="#i-prop" x="312" y="281" width="16" height="16" style="color:#7c3aed"/><text x="334" y="294" class="pt">Brand name</text>
-              <g filter="url(#shC)"><rect x="20" y="14" width="210" height="148" rx="12" class="sv-card"/></g><path d="M20 26 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#fffbeb"/><rect x="30" y="24" width="24" height="24" rx="7" fill="#fef3c7"/><use href="#i-dc" x="34.0" y="28.0" width="16" height="16" style="color:#d97706"/><text x="62" y="36" class="nt2" style="font-family:var(--mono)">articles-latest</text><text x="62" y="50" class="cs2">data contract</text><text x="34" y="80" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">sku</text><text x="34" y="102" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">brand_name</text><text x="34" y="124" class="col" style="font-size:12px">category</text><text x="34" y="146" class="col" style="font-size:12px">list_price</text>
-              <g filter="url(#shC)"><rect x="20" y="200" width="210" height="126" rx="12" class="sv-card"/></g><path d="M20 212 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#fffbeb"/><rect x="30" y="210" width="24" height="24" rx="7" fill="#fef3c7"/><use href="#i-dc" x="34.0" y="214.0" width="16" height="16" style="color:#d97706"/><text x="62" y="222" class="nt2" style="font-family:var(--mono)">shelf-warmers</text><text x="62" y="236" class="cs2">data contract</text><text x="34" y="266" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">sku</text><text x="34" y="288" class="col" style="font-size:12px">last_sold_date</text><text x="34" y="310" class="col" style="font-size:12px">stock</text>
-              <g filter="url(#shC)"><rect x="490" y="170" width="210" height="126" rx="12" class="sv-card" stroke="#10b981"/></g><path d="M490 182 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#f0fdf4"/><rect x="500" y="180" width="24" height="24" rx="7" fill="#d1fae5"/><use href="#i-dc" x="504.0" y="184.0" width="16" height="16" style="color:#047857"/><text x="532" y="192" class="nt2" style="font-family:var(--mono)">slow-selling-brands</text><text x="532" y="206" class="cs2">new data contract</text><text x="504" y="236" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">brand</text><text x="504" y="258" class="col" style="font-size:12px">slow_selling_products</text><text x="504" y="280" class="col" style="font-size:12px">latest_sold_date</text>
-              <path d="M62 76 C 250 76, 250 121, 306 121" class="e-sem" marker-end="url(#mVC)"/>
-              <path d="M112 98 C 260 98, 230 289, 296 289" class="e-sem" marker-end="url(#mVC)"/>
-              <path d="M62 262 C 240 262, 250 125, 306 125" class="e-sem" marker-end="url(#mVC)"/>
-              <path d="M490 232 C 456 232, 456 289, 424 289" class="e-sem" marker-end="url(#mVC)"/>
-              <rect x="176" y="166" width="80" height="18" rx="9.0" class="pl-v"/><text x="216.0" y="178.5" class="plt-v" text-anchor="middle">join on sku</text>
+              <rect width="720" height="350" fill="url(#dotsC)"/>
+              <rect x="20" y="8" width="680" height="142" rx="14" fill="#faf5ff" stroke="#ede9fe"/>
+              <text x="36" y="30" class="cap">Business ontology</text>
+              <g filter="url(#shC)"><rect x="177" y="40" width="130" height="38" rx="10" class="node"/></g><rect x="185" y="47" width="24" height="24" rx="7" fill="#ede9fe"/><use href="#i-ent" x="189.0" y="51.0" width="16" height="16" style="color:#7c3aed"/><text x="217" y="64" class="nt">Product</text><g filter="url(#shC)"><rect x="412" y="40" width="130" height="38" rx="10" class="node"/></g><rect x="420" y="47" width="24" height="24" rx="7" fill="#ede9fe"/><use href="#i-ent" x="424.0" y="51.0" width="16" height="16" style="color:#7c3aed"/><text x="452" y="64" class="nt">Brand</text>
+              <path d="M309 59 L 408 59" class="e-v" marker-end="url(#mVC)"/><rect x="324" y="50" width="70" height="18" rx="9.0" class="pl-v"/><text x="359.0" y="62.5" class="plt-v" text-anchor="middle">belongs to</text>
+              <path d="M242 78 L 242 100" class="e-v" marker-end="url(#mVC)"/><path d="M477 78 L 477 100" class="e-v" marker-end="url(#mVC)"/>
+              <rect x="192" y="102" width="100" height="30" rx="15" class="prop"/><use href="#i-prop" x="204" y="109" width="16" height="16" style="color:#7c3aed"/><text x="226" y="122" class="pt">SKU</text><rect x="417" y="102" width="120" height="30" rx="15" class="prop"/><use href="#i-prop" x="429" y="109" width="16" height="16" style="color:#7c3aed"/><text x="451" y="122" class="pt">Brand name</text>
+              <rect x="92" y="108" width="80" height="18" rx="9.0" class="pl-v"/><text x="132.0" y="120.5" class="plt-v" text-anchor="middle">join on sku</text>
+              <g filter="url(#shC)"><rect x="20" y="190" width="210" height="126" rx="12" class="sv-card"/></g><path d="M20 202 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#fffbeb"/><rect x="30" y="200" width="24" height="24" rx="7" fill="#fef3c7"/><use href="#i-dc" x="34.0" y="204.0" width="16" height="16" style="color:#d97706"/><text x="62" y="212" class="nt2" style="font-family:var(--mono)">shelf-warmers</text><text x="62" y="226" class="cs2">data contract</text><text x="34" y="256" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">sku</text><text x="34" y="278" class="col" style="font-size:12px">last_sold_date</text><text x="34" y="300" class="col" style="font-size:12px">stock</text>
+              <g filter="url(#shC)"><rect x="255" y="190" width="210" height="148" rx="12" class="sv-card"/></g><path d="M255 202 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#fffbeb"/><rect x="265" y="200" width="24" height="24" rx="7" fill="#fef3c7"/><use href="#i-dc" x="269.0" y="204.0" width="16" height="16" style="color:#d97706"/><text x="297" y="212" class="nt2" style="font-family:var(--mono)">articles-latest</text><text x="297" y="226" class="cs2">data contract</text><text x="269" y="256" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">sku</text><text x="269" y="278" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">brand_name</text><text x="269" y="300" class="col" style="font-size:12px">category</text><text x="269" y="322" class="col" style="font-size:12px">list_price</text>
+              <g filter="url(#shC)"><rect x="490" y="190" width="210" height="126" rx="12" class="sv-card" stroke="#10b981"/></g><path d="M490 202 a12 12 0 0 1 12 -12 h186 a12 12 0 0 1 12 12 v32 h-210 z" fill="#f0fdf4"/><rect x="500" y="200" width="24" height="24" rx="7" fill="#d1fae5"/><use href="#i-dc" x="504.0" y="204.0" width="16" height="16" style="color:#047857"/><text x="532" y="212" class="nt2" style="font-family:var(--mono)">slow-selling-brands</text><text x="532" y="226" class="cs2">new data contract</text><text x="504" y="256" class="col" style="font-size:12px;fill:#5b21b6;font-weight:600">brand</text><text x="504" y="278" class="col" style="font-size:12px">slow_selling_products</text><text x="504" y="300" class="col" style="font-size:12px">latest_sold_date</text>
+              <path d="M230 252 C 238 252, 236 182, 236 136" class="e-sem" marker-end="url(#mVC)"/>
+              <path d="M255 252 C 247 252, 248 182, 248 136" class="e-sem" marker-end="url(#mVC)"/>
+              <path d="M465 274 C 474 274, 471 182, 471 136" class="e-sem" marker-end="url(#mVC)"/>
+              <path d="M490 252 C 482 252, 483 182, 483 136" class="e-sem" marker-end="url(#mVC)"/>
             </svg>
           </div>
           <div class="explain"><code>sku</code> in articles-latest and shelf-warmers links to the same SKU concept, so the agent joins on it. <code>brand</code> in the new contract links to the same Brand name as <code>brand_name</code> upstream.</div>
