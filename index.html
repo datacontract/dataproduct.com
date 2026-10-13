@@ -330,6 +330,14 @@
     @keyframes fadeup { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     .tabpanel pre { margin: 0; background: #111827; border-radius: 16px 16px 0 0; padding: 20px; font-family: var(--mono); font-size: 13px; line-height: 1.7; overflow-x: auto; }
     .tabpanel pre .ln { display: block; }
+    .tr-head { display: flex; gap: 20px; align-items: center; padding: 20px 24px; border-bottom: 1px solid #f3f4f6; }
+    .tr-big { font-size: 36px; font-weight: 800; color: #059669; letter-spacing: -0.03em; }
+    .tr-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .tr-table th { text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; padding: 10px 24px; background: #f9fafb; }
+    .tr-table td { padding: 9px 24px; border-top: 1px solid #f3f4f6; white-space: nowrap; }
+    .tr-table td.mono { font-family: var(--mono); font-size: 13px; }
+    .tr-ok { color: #047857; background: #ecfdf5; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+    .tr-kind { color: #6b7280; background: #f3f4f6; border-radius: 6px; padding: 2px 8px; font-size: 12px; }
     .dbt-ex { display: grid; grid-template-columns: 1fr; }
     @media (min-width: 900px) { .dbt-ex { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); } }
     .dbt-tree { padding: 18px 16px; font-size: 13.5px; line-height: 1.8; border-right: 1px solid #f3f4f6; }
@@ -690,6 +698,7 @@
         </div>
         <div class="tabs" role="tablist">
           <button class="tab" role="tab" aria-selected="true" data-tab="t-dbt">dbt project</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="t-tests">Test results</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="t-lin">Lineage</button>
         </div>
         <div class="tabpanel card on" id="t-dbt">
@@ -697,6 +706,13 @@
             <div class="tree dbt-tree"><span class="row dir">slow-selling-brands/</span><button class="row f ind1" data-dbt="odps">dataproduct.odps.yaml</button><button class="row f ind1" data-dbt="dbtp">dbt_project.yml</button><button class="row f ind1" data-dbt="ol">openlineage.yml</button><button class="row f ind1" data-dbt="ci">.github/workflows/data-product.yml</button><span class="row dir ind1">models/</span><span class="row dir ind2">input_ports/</span><button class="row f ind3" data-dbt="in_a_c">articles_latest.odcs.yaml</button><button class="row f ind3" data-dbt="in_a_s">articles_latest.source.yaml</button><button class="row f ind3" data-dbt="in_s_c">shelf_warmers.odcs.yaml</button><button class="row f ind3" data-dbt="in_s_s">shelf_warmers.source.yaml</button><span class="row dir ind2">output_ports/v1/</span><button class="row f ind3" data-dbt="out_c">slow-selling-brands.odcs.yaml</button><button class="row f ind3 sel" data-dbt="out_sql">slow_selling_brands.sql</button><button class="row f ind3" data-dbt="out_m">_models.yml</button></div>
             <div class="dbt-view"><div class="dbt-cap" id="dbtCap"></div><pre id="dbtCode" data-lenis-prevent></pre></div>
           </div>
+        </div>
+        <div class="tabpanel card" id="t-tests">
+          <div class="tr-head">
+            <div class="tr-big">11/11</div>
+            <div><b>Data contract slow-selling-brands is valid.</b><br><span class="note" style="font-size:13px">Server production · Snowflake · run by <code>datacontract test --publish</code> · results published to Entropy Data</span></div>
+          </div>
+          <div class="table-wrap" data-lenis-prevent><table class="tr-table"><thead><tr><th>Result</th><th>Check</th><th>Field</th><th>Type</th></tr></thead><tbody><tr><td><span class="tr-ok">✓ passed</span></td><td>Table exists</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is string</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is integer</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is date</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>One row per brand</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">quality</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Freshness: within 1 day</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">SLA</span></td></tr></tbody></table></div>
         </div>
         <div class="tabpanel card" id="t-lin">
         <div class="lineage" data-lenis-prevent>
@@ -806,8 +822,8 @@
       'apiVersion: v3.0.2', 'kind: DataContract', 'id: slow-selling-brands', 'name: Slow Selling Brands', 'version: 1.0.0', 'status: draft',
       'description:', '  purpose: Find brands that barely sell', '  usage: Brand talks, campaigns, assortment decisions', '  limitations: Not for rating individual buyers',
       'schema:', '  - name: slow_selling_brands', '    physicalType: table', '    properties:',
-      '      - name: brand', '        logicalType: string', '        authoritativeDefinitions:', '          - type: semantics', '            url: ontology/brand#brand-name',
-      '      - name: slow_selling_products', '        logicalType: integer', '        description: No sale in the last 6 months, returns are not sales',
+      '      - name: brand', '        logicalType: string', '        required: true', '        authoritativeDefinitions:', '          - type: semantics', '            url: ontology/brand#brand-name',
+      '      - name: slow_selling_products', '        logicalType: integer', '        required: true', '        description: No sale in the last 6 months, returns are not sales',
       '      - name: latest_sold_date', '        logicalType: date', '        description: When a product of the brand last sold',
       '    quality:', '      - type: sql', '        description: One row per brand', '        query: SELECT COUNT(*) - COUNT(DISTINCT brand) FROM slow_selling_brands', '        mustBe: 0',
       'slaProperties:', '  - property: freshness', '    value: 1', '    unit: d',
