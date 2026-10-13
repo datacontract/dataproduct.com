@@ -270,20 +270,35 @@
 
     /* agent terminal */
     .term { background: #0b1120; border: 1px solid #111827; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(17,24,39,.3); }
-    .term-body { font-family: var(--mono); font-size: 13px; line-height: 1.7; padding: 16px 18px; height: min(60vh, 520px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
-    @media (max-width: 979px) { .term-body { font-size: 11px; height: 46vh; } }
+    .term-body { font-family: var(--mono); font-size: 13px; line-height: 1.7; padding: 16px 18px; height: min(60vh, 540px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+    @media (max-width: 979px) { .term-body { font-size: 11px; height: 26vh; } }
+    .agent-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 980px) { .agent-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; } }
+    .bv-panel { padding: 10px; height: min(60vh, 584px); display: flex; }
+    @media (max-width: 979px) { .bv-panel { height: 40vh; } }
+    .bv-svg { width: 100%; height: 100%; }
+    .bv-svg text { font-family: var(--sans); }
+    .bv { opacity: 0; transition: opacity .3s ease; }
+    .bv.on { opacity: 1; }
+    .bv-title { font-size: 14px; font-weight: 700; fill: #111827; }
+    .bv-card { fill: #fff; stroke: #e5e7eb; }
+    .bv-hl { fill: none; stroke: #4f46e5; stroke-width: 2; }
+    .bv-name { font-size: 13px; font-weight: 600; fill: #111827; }
+    .bv-sub { font-size: 10.5px; fill: #6b7280; }
+    .bv-lbl { font-size: 10.5px; font-weight: 600; fill: #4f46e5; }
+    .bv-tbl { font-family: var(--mono) !important; font-size: 9.5px; font-weight: 700; fill: #0c4a6e; }
+    .bv-edge { fill: none; stroke: #4f46e5; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .bv-edge-a { fill: none; stroke: #c026d3; stroke-width: 1.5; }
+    .bv-edge-g { fill: none; stroke: #059669; stroke-width: 2; stroke-dasharray: 6 4; }
+    .bv-lin { fill: none; stroke: #4f46e5; stroke-width: 1.2; stroke-dasharray: 2 3; }
+    .st-pend { fill: #fef3c7; stroke: #fcd34d; } .st-ok { fill: #ecfdf5; stroke: #6ee7b7; }
+    .st-t { font-size: 10px; font-weight: 600; fill: #92400e; } .st-t.ok { fill: #047857; }
     .term-body .l { opacity: 0; transform: translateY(6px); transition: all .25s; white-space: pre-wrap; word-break: break-word; }
     .term-body .l.show { opacity: 1; transform: none; }
     .term-body .l.hidden { display: none; }
     .term .p { color: var(--agent); } .term .ok { color: var(--product); } .term .mut { color: var(--dim); } .term .cmd { color: #7dd3fc; } .term .wht { color: var(--text); }
     .caret { display: inline-block; width: 8px; height: 15px; background: var(--text); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
-    .steps5 { display: grid; gap: 8px; margin-top: 28px; }
-    .steps5 .s { display: flex; gap: 14px; align-items: center; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); color: var(--dim); transition: all .35s; font-size: 15px; }
-    .steps5 .s .i { font-family: var(--mono); font-size: 12px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1px solid currentColor; flex-shrink: 0; }
-    .steps5 .s.on { color: var(--text); border-color: var(--sc); background: color-mix(in srgb, var(--sc) 10%, transparent); }
-    .steps5 .s.on .i { background: var(--sc); color: var(--bg); border-color: var(--sc); }
-    @media (max-width: 979px) { .steps5 { display: none; } }
 
     /* result */
     .lineage { margin-top: 48px; padding: 24px; overflow-x: auto; }
@@ -571,24 +586,61 @@
     </section>
 
     <!-- ================= AGENT (scrolly) ================= -->
-    <section class="scrolly" id="agent" style="height:360vh" data-scrolly="agent">
+    <section class="scrolly" id="agent" style="height:420vh" data-scrolly="agent">
       <div class="sticky">
-        <div class="wrap split">
-          <div>
+        <div class="wrap">
+          <div class="contract-head">
             <span class="eyebrow c-agent"><svg width="22" height="22"><use href="#i-agent"/></svg>Step 4 · the coding agent</span>
             <h2 class="h2">Implement it.</h2>
-            <p class="lead">One prompt. The agent does the rest.</p>
-            <div class="steps5" id="steps5">
-              <div class="s" style="--sc:var(--what)"><span class="i">1</span>Data contract: what to build</div>
-              <div class="s" style="--sc:var(--how)"><span class="i">2</span>Skills: how to build it</div>
-              <div class="s" style="--sc:var(--data)"><span class="i">3</span>Marketplace: the data to build on</div>
-              <div class="s" style="--sc:var(--agent)"><span class="i">4</span>Coding agent: one prompt</div>
-              <div class="s" style="--sc:var(--product)"><span class="i">5</span>The data product</div>
-            </div>
+            <p class="lead contract-lead">One prompt. The agent uses the contract, the skills, and the marketplace, then runs the pipeline and publishes the result.</p>
           </div>
-          <div class="term">
-            <div class="editor-bar"><i></i><i></i><i></i><span class="title">claude · slow-selling-brands</span><span class="tag" id="agentClock" style="background:rgba(192,38,211,.12);color:var(--agent)">0:00</span></div>
-            <div class="term-body" id="termBody"></div>
+          <div class="agent-grid">
+            <div class="term">
+              <div class="editor-bar"><i></i><i></i><i></i><span class="title">claude · slow-selling-brands</span><span class="tag" id="agentClock" style="background:rgba(192,38,211,.12);color:var(--agent)">0:00</span></div>
+              <div class="term-body" id="termBody"></div>
+            </div>
+            <div class="card bv-panel">
+              <svg class="bv-svg" id="bvSvg" viewBox="0 0 560 470" role="img" aria-label="The coding agent reads the contract and skills, requests access to two data products in the marketplace, builds and runs the dbt pipeline into Snowflake, and publishes the new data product back to the marketplace">
+                <defs><marker id="arI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4f46e5"/></marker>
+                <marker id="arE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#059669"/></marker>
+                <marker id="arF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c026d3"/></marker></defs>
+                <!-- marketplace -->
+                <rect x="8" y="8" width="232" height="454" rx="14" fill="#f9fafb" stroke="#e5e7eb"/>
+                <use href="#i-market" x="22" y="20" width="18" height="18" style="color:#4f46e5"/><text x="46" y="34" class="bv-title">Data marketplace</text>
+                <g><rect x="22" y="52" width="204" height="54" rx="10" class="bv-card"/><use href="#i-dp" x="32" y="62" width="16" height="16" style="color:#4f46e5"/><text x="54" y="75" class="bv-name">articles-latest</text><text x="54" y="93" class="bv-sub">Product catalog</text></g>
+                <g><rect x="22" y="116" width="204" height="54" rx="10" class="bv-card"/><use href="#i-dp" x="32" y="126" width="16" height="16" style="color:#4f46e5"/><text x="54" y="139" class="bv-name">shelf-warmers</text><text x="54" y="157" class="bv-sub">Fulfillment</text></g>
+                <g opacity=".45"><rect x="22" y="180" width="204" height="54" rx="10" class="bv-card"/><use href="#i-dp" x="32" y="190" width="16" height="16" style="color:#4f46e5"/><text x="54" y="203" class="bv-name">orders</text><text x="54" y="221" class="bv-sub">Checkout</text></g>
+                <g opacity=".45"><rect x="22" y="244" width="204" height="54" rx="10" class="bv-card"/><use href="#i-dp" x="32" y="254" width="16" height="16" style="color:#4f46e5"/><text x="54" y="267" class="bv-name">returns</text><text x="54" y="285" class="bv-sub">Fulfillment</text></g>
+                <rect x="20" y="50" width="208" height="58" rx="11" class="bv-hl bv" data-v="search"/>
+                <rect x="20" y="114" width="208" height="58" rx="11" class="bv-hl bv" data-v="search"/>
+                <g class="bv" data-v="req1" data-until="ok1"><rect x="160" y="84" width="58" height="18" rx="9" class="st-pend"/><text x="189" y="97" class="st-t" text-anchor="middle">pending</text></g>
+                <g class="bv" data-v="ok1"><rect x="160" y="84" width="58" height="18" rx="9" class="st-ok"/><text x="189" y="97" class="st-t ok" text-anchor="middle">access ✓</text></g>
+                <g class="bv" data-v="req2" data-until="ok2"><rect x="160" y="148" width="58" height="18" rx="9" class="st-pend"/><text x="189" y="161" class="st-t" text-anchor="middle">pending</text></g>
+                <g class="bv" data-v="ok2"><rect x="160" y="148" width="58" height="18" rx="9" class="st-ok"/><text x="189" y="161" class="st-t ok" text-anchor="middle">access ✓</text></g>
+                <g class="bv" data-v="publish"><rect x="22" y="338" width="204" height="72" rx="10" fill="#f0fdf4" stroke="#059669" stroke-width="2"/><use href="#i-dp" x="32" y="348" width="18" height="18" style="color:#059669"/><text x="56" y="362" class="bv-name">slow-selling-brands</text><text x="56" y="380" class="bv-sub">new · built by the agent</text></g>
+                <g class="bv" data-v="results"><rect x="56" y="388" width="64" height="16" rx="8" class="st-ok"/><text x="88" y="400" class="st-t ok" text-anchor="middle">tests 11/11</text></g>
+                <g class="bv" data-v="done"><rect x="126" y="388" width="44" height="16" rx="8" fill="#059669"/><text x="148" y="400" class="st-t" text-anchor="middle" style="fill:#fff">active</text></g>
+                <g class="bv" data-v="lineage"><path d="M22 80 C 0 80, 0 368, 20 368" class="bv-lin" marker-end="url(#arI)"/><path d="M22 144 C 6 144, 6 362, 20 362" class="bv-lin" marker-end="url(#arI)"/><text x="30" y="432" class="bv-sub" style="fill:#4f46e5">lineage via OpenLineage</text></g>
+                <!-- inputs -->
+                <g class="bv" data-v="contract"><rect x="262" y="16" width="130" height="40" rx="10" fill="#fff" stroke="#d97706"/><use href="#i-dc" x="272" y="26" width="20" height="20" style="color:#d97706"/><text x="298" y="41" class="bv-name">Data contract</text><path d="M327 58 C 330 90, 345 105, 352 116" class="bv-edge-a" marker-end="url(#arF)"/></g>
+                <g class="bv" data-v="skills"><rect x="414" y="16" width="130" height="40" rx="10" fill="#fff" stroke="#0891b2"/><use href="#i-skills" x="424" y="26" width="20" height="20" style="color:#0891b2"/><text x="450" y="41" class="bv-name">Skills</text><path d="M479 58 C 479 100, 430 125, 410 140" class="bv-edge-a" marker-end="url(#arF)"/></g>
+                <!-- agent -->
+                <g class="bv" data-v="prompt"><circle cx="372" cy="150" r="38" fill="#fff" stroke="#c026d3" stroke-width="2.5"/><use href="#i-agent" x="358" y="124" width="28" height="28" style="color:#c026d3"/><text x="372" y="166" class="bv-name" text-anchor="middle">Coding</text><text x="372" y="181" class="bv-name" text-anchor="middle">agent</text></g>
+                <g class="bv" data-v="search"><path d="M334 142 C 290 120, 270 86, 230 82" class="bv-edge" marker-end="url(#arI)"/><path d="M334 158 C 290 158, 270 146, 230 146" class="bv-edge" marker-end="url(#arI)"/><text x="240" y="114" class="bv-lbl">search</text></g>
+                <g class="bv" data-v="req1"><text x="240" y="178" class="bv-lbl" style="fill:#b45309">request access</text></g>
+                <!-- dbt project -->
+                <g class="bv" data-v="dbt"><rect x="262" y="250" width="138" height="78" rx="10" fill="#fff" stroke="#9ca3af"/><text x="276" y="272" class="bv-name">dbt project</text><text x="276" y="290" class="bv-sub">dataproduct.odps.yaml</text><path d="M366 188 L 340 246" class="bv-edge-a" marker-end="url(#arF)"/><text x="362" y="226" class="bv-lbl" style="fill:#c026d3">writes</text></g>
+                <g class="bv" data-v="models"><text x="276" y="306" class="bv-sub">input_ports/</text><text x="276" y="320" class="bv-sub">output_ports/v1/</text></g>
+                <g class="bv" data-v="lint"><rect x="262" y="336" width="138" height="18" rx="9" class="st-ok"/><text x="331" y="349" class="st-t ok" text-anchor="middle">lint ODCS ✓ · ODPS ✓</text></g>
+                <!-- snowflake -->
+                <g class="bv" data-v="dbt"><rect x="420" y="250" width="134" height="150" rx="10" fill="#fff" stroke="#29b5e8" stroke-dasharray="4 3"/><text x="432" y="272" class="bv-name" style="fill:#0284c7">Snowflake</text></g>
+                <g class="bv" data-v="run"><path d="M400 290 L 418 290" class="bv-edge-g" marker-end="url(#arE)"/><text x="414" y="244" class="bv-lbl" style="fill:#059669">dbt-ol run</text>
+                  <rect x="428" y="282" width="118" height="44" rx="8" fill="#f0f9ff" stroke="#7dd3fc"/><text x="435" y="300" class="bv-tbl">SLOW_SELLING_BRANDS</text><text x="435" y="317" class="bv-sub">table · 41 rows</text></g>
+                <g class="bv" data-v="tests1"><rect x="428" y="334" width="118" height="18" rx="9" class="st-ok"/><text x="487" y="347" class="st-t ok" text-anchor="middle">dbt test 3/3 ✓</text></g>
+                <g class="bv" data-v="tests2"><rect x="428" y="358" width="118" height="18" rx="9" class="st-ok"/><text x="487" y="371" class="st-t ok" text-anchor="middle">contract test 11/11 ✓</text></g>
+                <g class="bv" data-v="publish"><path d="M420 384 C 340 446, 300 372, 230 370" class="bv-edge-g" marker-end="url(#arE)"/><text x="276" y="440" class="bv-lbl" style="fill:#059669">dataproduct publish</text></g>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -821,36 +873,33 @@
 
     // ---------- agent scrolly ----------
     var LOG = [
-      ['<span class="p">❯</span> <span class="wht">Implement the data product slow-selling-brands with its data contract</span>', 0, '0:00'],
-      ['<span class="mut">  Don\'t ask questions. Approve access requests if you have the rights.</span>', 0, '0:00'],
-      ['<span class="mut">  Follow the Snowflake naming conventions. Publish the test results.</span>', 0, '0:00'],
-      ['<span class="c-what">●</span> Reading data contract slow-selling-brands.odcs.yaml', 1, '0:08'],
-      ['<span class="c-what">●</span> brand → ontology concept <span class="sem">brand</span>', 1, '0:12'],
-      ['<span class="c-how">●</span> Using skill <span class="c-how">dataproduct-bootstrap</span>', 2, '0:20'],
-      ['  <span class="mut">created dbt project, dataproduct.odps.yaml, models/</span>', 2, '0:41'],
-      ['<span class="c-data">●</span> <span class="cmd">entropy-data search query "articles brands sales"</span>', 3, '0:55'],
-      ['  <span class="mut">found</span> articles-latest, shelf-warmers', 3, '1:02'],
-      ['<span class="c-data">●</span> <span class="cmd">entropy-data dataproducts get shelf-warmers</span>', 3, '1:10'],
-      ['  <span class="mut">join on</span> sku <span class="mut">(same concept in both contracts)</span>', 3, '1:21'],
-      ['<span class="c-data">●</span> Requesting access to articles-latest, shelf-warmers', 3, '1:34'],
-      ['  <span class="ok">✓ approved</span>', 3, '1:40'],
-      ['<span class="c-how">●</span> Using skill <span class="c-how">dataproduct-implement</span>', 4, '1:52'],
-      ['  <span class="mut">input_ports/ · intermediate/ · output_port/slow_selling_brands.sql</span>', 4, '2:38'],
-      ['  <span class="mut">database and schema renamed per naming conventions, contract updated</span>', 4, '2:51'],
-      ['<span class="c-agent">●</span> <span class="cmd">datacontract lint</span>  <span class="ok">✓</span>', 4, '3:05'],
-      ['<span class="c-agent">●</span> <span class="cmd">dataproduct lint</span>  <span class="ok">✓ ODPS valid</span>', 4, '3:12'],
-      ['<span class="c-agent">●</span> <span class="cmd">dbt run</span>  <span class="ok">✓ 41 rows</span>', 4, '3:48'],
-      ['<span class="c-agent">●</span> <span class="cmd">dbt test</span>  <span class="ok">✓ 3/3</span>', 4, '4:10'],
-      ['<span class="c-agent">●</span> <span class="cmd">datacontract test</span>  <span class="ok">✓ 11/11</span>', 4, '4:36'],
-      ['<span class="c-product">●</span> <span class="cmd">dataproduct publish dataproduct.odps.yaml</span>  <span class="ok">✓</span>', 5, '4:55'],
-      ['<span class="c-product">●</span> Published test results to Entropy Data', 5, '5:02'],
-      ['<span class="c-product">●</span> Lineage sent via OpenLineage', 5, '5:09'],
-      ['<span class="ok">✓ Done. 41 brands materialized. Data product slow-selling-brands is active.</span>', 5, '5:21']
+      ['<span class="p">❯</span> <span class="wht">Implement the data product slow-selling-brands with its data contract</span>', 'prompt', '0:00'],
+      ['<span class="mut">  Don\'t ask questions. Approve access requests if you have the rights.</span>', 'prompt', '0:00'],
+      ['<span class="c-what">●</span> Reading data contract slow-selling-brands.odcs.yaml', 'contract', '0:08'],
+      ['<span class="c-how">●</span> Using skill <span class="c-how">dataproduct-bootstrap</span>', 'skills', '0:20'],
+      ['  <span class="mut">created dbt project, dataproduct.odps.yaml</span>', 'dbt', '0:41'],
+      ['<span class="c-data">●</span> <span class="cmd">entropy-data search query "articles sales"</span>', 'search', '0:55'],
+      ['  <span class="mut">found</span> articles-latest, shelf-warmers <span class="mut">(join on sku)</span>', 'search', '1:04'],
+      ['<span class="c-data">●</span> Requesting access to <span class="wht">articles-latest</span>', 'req1', '1:20'],
+      ['  <span class="ok">✓ approved</span>', 'ok1', '1:26'],
+      ['<span class="c-data">●</span> Requesting access to <span class="wht">shelf-warmers</span>', 'req2', '1:34'],
+      ['  <span class="ok">✓ approved</span>', 'ok2', '1:40'],
+      ['<span class="c-how">●</span> Using skill <span class="c-how">dataproduct-implement</span>', 'models', '1:52'],
+      ['  <span class="mut">input_ports/ · intermediate/ · output_port/slow_selling_brands.sql</span>', 'models', '2:38'],
+      ['<span class="c-agent">●</span> <span class="cmd">datacontract lint</span>  <span class="ok">✓</span>  <span class="cmd">dataproduct lint</span>  <span class="ok">✓</span>', 'lint', '3:05'],
+      ['<span class="c-agent">●</span> <span class="cmd">dbt-ol run</span>  <span class="ok">✓ SLOW_SELLING_BRANDS, 41 rows</span>', 'run', '3:48'],
+      ['<span class="c-agent">●</span> <span class="cmd">dbt test</span>  <span class="ok">✓ 3/3</span>', 'tests1', '4:10'],
+      ['<span class="c-agent">●</span> <span class="cmd">datacontract test</span>  <span class="ok">✓ 11/11</span>', 'tests2', '4:36'],
+      ['<span class="c-product">●</span> <span class="cmd">dataproduct publish dataproduct.odps.yaml</span>  <span class="ok">✓</span>', 'publish', '4:55'],
+      ['<span class="c-product">●</span> Published test results to Entropy Data', 'results', '5:02'],
+      ['<span class="c-product">●</span> Lineage sent via OpenLineage', 'lineage', '5:09'],
+      ['<span class="ok">✓ Done. Data product slow-selling-brands is active.</span>', 'done', '5:21']
     ];
+    var ORDER = ['prompt', 'contract', 'skills', 'dbt', 'search', 'req1', 'ok1', 'req2', 'ok2', 'models', 'lint', 'run', 'tests1', 'tests2', 'publish', 'results', 'lineage', 'done'];
     var termBody = document.getElementById('termBody'), clock = document.getElementById('agentClock');
     termBody.innerHTML = LOG.map(function (l) { return '<div class="l">' + l[0] + '</div>'; }).join('') + '<div class="l show"><span class="caret"></span></div>';
     var tLines = termBody.querySelectorAll('.l');
-    var steps5 = document.querySelectorAll('#steps5 .s');
+    var bvEls = document.querySelectorAll('#bvSvg .bv');
     var lastAgent = -1;
     function agent(p) {
       var n = Math.round(clamp((p - 0.04) / 0.86) * LOG.length);
@@ -859,12 +908,11 @@
         tLines[i].classList.toggle('show', i < n);
         tLines[i].classList.toggle('hidden', i >= n);
       }
-      var stage = n === 0 ? 0 : LOG[n - 1][1];
       clock.textContent = n === 0 ? '0:00' : LOG[n - 1][2];
-      // steps: 1..3 inputs light once agent uses them; 4 always on once prompted; 5 when done
-      steps5.forEach(function (s, i) {
-        var on = (i === 3 && n > 0) || (i < 3 && stage >= i + 1) || (i === 4 && stage === 5 && n === LOG.length);
-        s.classList.toggle('on', on);
+      var cur = n === 0 ? -1 : ORDER.indexOf(LOG[n - 1][1]);
+      bvEls.forEach(function (el) {
+        var from = ORDER.indexOf(el.dataset.v), until = el.dataset.until ? ORDER.indexOf(el.dataset.until) : 99;
+        el.classList.toggle('on', from <= cur && cur < until);
       });
     }
 
