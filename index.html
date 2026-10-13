@@ -193,7 +193,7 @@
     .dc-semtag { font-size: 11.5px; fill: #7c3aed; font-weight: 600; }
     .dc-note { font-size: 11.5px; fill: #b45309; font-weight: 500; }
     .dc-small { font-size: 11px; fill: #6b7280; }
-    .chip { stroke-width: 1; } .chip.c1 { fill: #ecfdf5; stroke: #6ee7b7; } .chip.c2 { fill: #eff6ff; stroke: #93c5fd; } .chip.c3 { fill: #fef3c7; stroke: #fcd34d; } .chip.c4 { fill: #fef2f2; stroke: #fca5a5; }
+    .chip { stroke-width: 1; } .chip.c1 { fill: #ecfdf5; stroke: #6ee7b7; } .chip.c2 { fill: #eff6ff; stroke: #93c5fd; } .chip.c3 { fill: #fef3c7; stroke: #fcd34d; } .chip.c4 { fill: #fef2f2; stroke: #fca5a5; } .chip.c5 { fill: #f9fafb; stroke: #d1d5db; stroke-dasharray: 4 3; }
     .chip-t { font-size: 11.5px; font-weight: 600; fill: #374151; }
     .desc-line { stroke: #059669; stroke-width: 1.5; }
     .phys { fill: #fff; stroke: #9ca3af; stroke-width: 1.5; }
@@ -413,7 +413,7 @@
             <div class="chat-panel card" id="chatPanel" aria-live="polite"></div>
             <div class="dc-panel card">
               <div class="dc-bar"><div class="seg" role="tablist"><button class="on" data-view="diagram">Diagram</button><button data-view="yaml">YAML</button></div><span class="tag" id="partTag">purpose</span></div>
-              <svg class="dc-svg" id="dcSvg" viewBox="0 0 520 548" role="img" aria-label="The data contract slow_selling_brands with three columns, linked to the Brand and Product concepts of the business ontology, describing a physical table in Snowflake">
+              <svg class="dc-svg" id="dcSvg" viewBox="0 0 520 500" role="img" aria-label="The data contract slow_selling_brands with three columns, linked to the Brand and Product concepts of the business ontology">
                 <defs>
                   <marker id="arV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7c3aed"/></marker>
                   <marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#059669"/></marker>
@@ -431,7 +431,7 @@
                 </g>
                 <!-- contract box -->
                 <g class="dc-g" data-step="0">
-                  <rect x="60" y="176" width="400" height="276" rx="14" class="dc-box"/>
+                  <rect x="60" y="176" width="400" height="310" rx="14" class="dc-box"/>
                   <use href="#i-dp" x="78" y="191" width="18" height="18" style="color:#059669"/>
                   <text x="102" y="205" class="dc-title">Data Contract: slow_selling_brands</text>
                   <text x="78" y="230" class="dc-purpose">purpose: find brands that barely sell</text>
@@ -449,14 +449,7 @@
                 <g class="dc-g" data-step="5"><rect x="267" y="380" width="175" height="26" rx="13" class="chip c2"/><text x="354" y="397" class="chip-t" text-anchor="middle">SLA: refreshed daily</text></g>
                 <g class="dc-g" data-step="6"><rect x="78" y="414" width="175" height="26" rx="13" class="chip c3"/><text x="165" y="431" class="chip-t" text-anchor="middle">owner: sales team</text></g>
                 <g class="dc-g" data-step="7"><rect x="267" y="414" width="175" height="26" rx="13" class="chip c4"/><text x="354" y="431" class="chip-t" text-anchor="middle">not for rating buyers</text></g>
-                <!-- physical table -->
-                <g class="dc-g" data-step="8">
-                  <path d="M260 488 L 260 456" class="desc-line" marker-end="url(#arG)"/>
-                  <text x="270" y="477" class="dc-small" style="fill:#059669">describes</text>
-                  <rect x="130" y="490" width="260" height="52" rx="10" class="phys"/>
-                  <text x="148" y="512" class="phys-t">SLOW_SELLING_BRANDS</text><text x="372" y="512" class="dc-small" text-anchor="end">physical table</text>
-                  <text x="148" y="530" class="dc-small">Snowflake · SALES_PROD</text>
-                </g>
+                <g class="dc-g" data-step="8"><rect x="78" y="448" width="364" height="26" rx="13" class="chip c5"/><text x="260" y="465" class="chip-t" text-anchor="middle">server: Snowflake · SALES_PROD (to be built)</text></g>
               </svg>
               <pre class="code dc-yaml" id="contractCode" data-lenis-prevent></pre>
             </div>
