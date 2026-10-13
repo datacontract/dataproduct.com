@@ -1,0 +1,13 @@
+{
+  "name": "dataproduct.com: Build Data Products with AI",
+  "short_name": "dataproduct.com",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "icons": [
+    { "src": "/media/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/media/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/media/logo_fuchsia_v2.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
