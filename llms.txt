@@ -2,6 +2,8 @@
 
 > How to build a data product with AI, contract first. A coding agent (Claude Code, OpenAI Codex, GitHub Copilot) builds the data product from three inputs: a data contract that says what to build, a skills repository that says how, and a data marketplace with the data to build on.
 
+Full content, including the complete data contract, skills, agent run, and test results: [llms-full.txt](https://www.dataproduct.com/llms-full.txt)
+
 ## The approach
 
 1. **Data contract (the what).** Business and consumers agree on what the data product must deliver. It is written as a YAML file in the Open Data Contract Standard (ODCS): purpose, schema, semantics, data quality, SLAs, owner, terms of use, and servers. Columns link to concepts in the business ontology.

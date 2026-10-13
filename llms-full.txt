@@ -1,0 +1,364 @@
+# dataproduct.com: full content
+
+> How to build a data product with AI, contract first. A coding agent (Claude Code, OpenAI Codex, GitHub Copilot) builds the data product from three inputs: a data contract that says what to build, a skills repository that says how, and a data marketplace with the data to build on.
+
+Source: https://www.dataproduct.com/ · Authors: Simon Harrer and Jochen Christ (Entropy Data) · Last updated: 2026-10-13 · Short version: https://www.dataproduct.com/llms.txt
+
+## The approach
+
+1. **Data contract (the what).** Business and consumers agree on what the data product must deliver. It is written as a YAML file in the Open Data Contract Standard (ODCS): purpose, schema, semantics, data quality, SLAs, owner, terms of use, and servers. Columns link to concepts in the business ontology.
+2. **Skills (the how).** A Git repository of skills, templates, and hooks encodes the company's conventions for building data products. Example: the dbt Data Product Builder with the skills dataproduct-bootstrap, dataproduct-implement, and datacontract-test.
+3. **Data marketplace (the data to build on).** The agent discovers existing data products, reads their data contracts, resolves semantics, and requests access. When done, it publishes the new data product, its test results, and its lineage.
+4. **Coding agent.** One prompt: "Implement the data product with its data contract." The agent generates a dbt project, runs the pipeline with OpenLineage (dbt-ol run), runs dbt tests and data contract tests, and publishes the data product.
+5. **Result.** A fully operationalized data product: a dbt project with input and output ports, a table in Snowflake, green contract tests, lineage, and a listing in the marketplace.
+
+## Example: slow-selling-brands
+
+A category manager (Maxi) wants to know which brands barely sell. Together with the product owner of the sales data (John), Maxi turns the question into a data contract. A coding agent then implements it, building on two existing data products from the data marketplace.
+
+### Step 1: From conversation to data contract
+
+Each answer in the conversation adds one part of the data contract.
+
+- **Maxi · category manager:** Which of our brands barely sell? I want to talk to them, run a campaign, or take them out of the assortment.
+- **John · product owner, sales:** Let's make that a data product with a contract: slow selling brands. _(+ purpose)_
+- **John · product owner, sales:** What do you need to see per brand?
+- **Maxi · category manager:** How many of its products sell slowly, and when one of them last sold. _(+ schema)_
+- **John · product owner, sales:** Brand as in our product catalog?
+- **Maxi · category manager:** Yes, the brand everyone in the company means.
+- **John · product owner, sales:** Then we link it to the Brand concept in our ontology. _(+ semantics)_
+- **John · product owner, sales:** When is a product slow-selling? Do returns count as sales?
+- **Maxi · category manager:** No sale in six months. And returns are not sales. _(+ definition)_
+- **Maxi · category manager:** One row per brand, please. No duplicates. _(+ data quality)_
+- **Maxi · category manager:** I look at it every Monday morning.
+- **John · product owner, sales:** We refresh it daily. _(+ SLA)_
+- **Maxi · category manager:** Who do I ask when something looks off?
+- **John · product owner, sales:** Us, the sales team. _(+ owner)_
+- **John · product owner, sales:** Anything it must not be used for?
+- **Maxi · category manager:** It is about brands, not people. Not for rating individual buyers. _(+ terms of use)_
+- **John · product owner, sales:** We serve it from Snowflake. The contract is done, now the agent can build it. _(+ server)_
+
+### The resulting data contract (ODCS v3.1.0)
+
+```yaml
+apiVersion: v3.1.0
+kind: DataContract
+id: slow-selling-brands
+name: Slow Selling Brands
+version: 1.0.0
+status: draft
+description:
+  purpose: Find brands that barely sell
+  usage: Brand talks, campaigns, assortment decisions
+  limitations: Not for rating individual buyers
+schema:
+  - name: slow_selling_brands
+    physicalType: table
+    properties:
+      - name: brand
+        logicalType: string
+        required: true
+        authoritativeDefinitions:
+          - type: semantics
+            url: ontology/brand#brand-name
+      - name: slow_selling_products
+        logicalType: integer
+        required: true
+        description: No sale in the last 6 months, returns are not sales
+      - name: latest_sold_date
+        logicalType: date
+        description: When a product of the brand last sold
+    quality:
+      - type: sql
+        description: One row per brand
+        query: SELECT COUNT(*) - COUNT(DISTINCT brand) FROM slow_selling_brands
+        mustBe: 0
+slaProperties:
+  - property: freshness
+    value: 1
+    unit: d
+team:
+  name: sales
+servers:
+  - server: production
+    type: snowflake
+    account: acme-eu1
+    database: SALES_PROD
+    schema: slow_selling_brands_v1
+```
+
+### Step 2: Skills, the conventions for building data products
+
+A Git repository of skills, templates, and hooks that any coding agent reads (Claude Code, OpenAI Codex, GitHub Copilot). Demo: https://github.com/entropy-data/dataproduct-builder-demo · Full version for more platforms: https://github.com/entropy-data/dataproduct-builder-dbt
+
+#### Routing manifest (`AGENTS.md`)
+
+Read first by every coding agent. Maps a request to the skill to follow, and sets the house rules.
+
+1. New data product from scratch → `dataproduct-bootstrap`
+2. Implement a published data product → `dataproduct-implement`
+3. Test contracts against Snowflake → `datacontract-test`
+
+Rule: Don't skip the pre-checks. Don't overwrite files silently. Don't commit secrets. Don't push.
+
+#### Bootstrap a data product (`skills/dataproduct-bootstrap/SKILL.md`)
+
+Scaffolds a new Snowflake dbt data product in one go, following the conventions.
+
+Tools: `dbt`, `entropy-data`
+
+1. **Pre-checks**: The directory is empty. If a `dbt_project.yml` exists, stop.
+2. **Gather parameters**: One batched question: id, name, purpose, owning team, Snowflake database, schema, table.
+3. **Scaffold the project**: Copy the templates: dbt project, ODPS and ODCS files, OpenLineage config, CI workflow.
+4. **Final report**: A table of every created file, and the next step: `dataproduct-implement`.
+
+Rule: Greenfield only. Adding models to an existing project is `dataproduct-implement`.
+
+#### Templates (`skills/dataproduct-bootstrap/templates/`)
+
+The files every data product starts with. Change them once, every new data product follows.
+
+```
+dbt_project.yml
+profiles.yml.example
+data-product.odps.yaml
+openlineage.yml
+models/
+  input_ports/_models.yml
+  staging/_models.yml
+  intermediate/_models.yml
+  output_ports/v1/_models.yml
+  output_ports/v1/contract.odcs.yaml
+.github/workflows/data-product.yml
+README.md
+```
+
+#### Implement a data product (`skills/dataproduct-implement/SKILL.md`)
+
+Turns a data product from Entropy Data into a working dbt pipeline, and proves it works.
+
+Tools: `entropy-data`, `dbt`, `dbt-ol`, `datacontract`
+
+1. **Pre-checks**: dbt project exists, all four CLIs are installed, `entropy-data connection test` succeeds.
+2. **Resolve the data product**: `entropy-data dataproducts get`: name, owner, output ports.
+3. **Fetch the data contract**: `entropy-data datacontracts get`, saved under `models/output_ports/v1/`.
+4. **Translate the schema to dbt**: One model per contract table, columns cast to Snowflake types, tests from the contract.
+5. **Wire the input ports**: Each approved access becomes a dbt source, with the upstream contract as a trust snapshot.
+6. **`dbt parse`**: Fix obvious mistakes before anything runs.
+7. **`dbt-ol run`**: Materializes the tables in Snowflake and ships lineage to Entropy Data.
+8. **`dbt test`**: not_null, unique, and accepted_values from the contract.
+9. **`datacontract test`**: Checks the live Snowflake data against every rule in the contract.
+10. **Stamp as builder-managed**: Marks the data product in Entropy Data as built with this plugin.
+11. **Final report**: Status of every artifact: created, updated, passed, failed.
+
+Rule: The contract is the source of truth for the schema, not for the logic.
+
+#### Test the data contracts (`skills/datacontract-test/SKILL.md`)
+
+Runs `datacontract test` against the live Snowflake data.
+
+Tools: `datacontract`
+
+1. **Pre-checks**: `datacontract` is installed, contracts exist, Snowflake credentials are set.
+2. **Select the contracts**: Output-port and input-port contracts, grouped by role.
+3. **Select the server**: One server per contract, `production` by default.
+4. **Run the test**: `datacontract test <contract> --server <server>`
+5. **Report**: One row per contract, failing rules by field.
+
+Rule: Output ports: am I still producing what I promised? Input ports: is upstream still producing what I trusted?
+
+#### Lint on every edit (`hooks/datacontract_lint.sh`)
+
+After each edit to an `*.odcs.yaml` file, the hook runs `datacontract lint`. A failing lint goes straight back to the agent.
+
+Tools: `datacontract`
+
+```
+"PostToolUse": [{
+  "matcher": "Edit|Write|MultiEdit",
+  "command": "hooks/datacontract_lint.sh"
+}]
+```
+
+#### One repo, any agent (`.claude-plugin/  .codex-plugin/  .github/`)
+
+Plugin manifests for Claude Code, OpenAI Codex, and GitHub Copilot. Install once, every data product uses the same skills.
+
+```
+/plugin marketplace add https://github.com/entropy-data/dataproduct-builder-demo
+/plugin install dataproduct-builder-demo@dataproduct-builder-demo
+```
+
+### Step 3: Data marketplace, the data to build on
+
+The agent searches the data marketplace (Entropy Data), reads the data contracts of the candidates, and requests access. It picks two data products:
+
+- **articles-latest** (product catalog, Snowflake): current articles with brand, category, and list price. Columns `sku` (linked to the SKU concept) and `brand_name` (linked to the Brand name concept).
+- **shelf-warmers** (fulfillment, Snowflake): articles without a sale in the last six months. Column `sku` (linked to the SKU concept).
+
+Both `sku` columns link to the same SKU concept in the business ontology, so the agent knows it can join on it.
+
+### Step 4: The coding agent run
+
+One prompt: "Implement the data product slow-selling-brands with its data contract". Timestamps are minutes:seconds.
+
+```text
+[0:00] ❯ Implement the data product slow-selling-brands with its data contract
+[0:00]   Don't ask questions. Approve access requests if you have the rights.
+[0:08] ● Reading data contract slow-selling-brands.odcs.yaml
+[0:20] ● Using skill dataproduct-bootstrap
+[0:41]   created dbt project, dataproduct.odps.yaml
+[0:55] ● entropy-data search query "articles sales"
+[1:04]   found articles-latest, shelf-warmers (join on sku)
+[1:20] ● Requesting access to articles-latest
+[1:26]   ✓ approved
+[1:34] ● Requesting access to shelf-warmers
+[1:40]   ✓ approved
+[1:52] ● Using skill dataproduct-implement
+[2:38]   input_ports/ · intermediate/ · output_port/slow_selling_brands.sql
+[3:05] ● datacontract lint  ✓  dataproduct lint  ✓
+[3:48] ● dbt-ol run  ✓ SLOW_SELLING_BRANDS, 41 rows
+[4:10] ● dbt test  ✓ 3/3
+[4:36] ● datacontract test  ✓ 11/11
+[4:55] ● dataproduct publish dataproduct.odps.yaml  ✓
+[5:02] ● datacontract test --publish  ✓ test results published to Entropy Data
+[5:09] ● Lineage sent via OpenLineage
+[5:21] ✓ Done. Data product slow-selling-brands is active.
+```
+
+### Step 5: The result
+
+A dbt project with input and output ports, the table SLOW_SELLING_BRANDS in Snowflake (41 rows), 3/3 dbt tests and 11/11 data contract tests passing, lineage from OpenLineage, and the data product listed as active in the marketplace.
+
+#### `dataproduct.odps.yaml`
+
+Data product (ODPS). Offers the contract as its output port.
+
+```yaml
+apiVersion: v1.1.0
+kind: DataProduct
+id: slow-selling-brands
+name: Slow Selling Brands
+status: active
+team:
+  name: sales
+inputPorts:
+  - name: articles_latest
+    contractId: articles-latest
+  - name: shelf_warmers
+    contractId: shelf-warmers
+outputPorts:
+  - name: slow_selling_brands
+    version: 1.0.0
+    contractId: slow-selling-brands
+```
+
+#### `models/output_ports/v1/slow_selling_brands.sql`
+
+The model the agent wrote. Joined on SKU, cast to the contract types. Simplified.
+
+```sql
+with shelf_warmers as (select * from {{ ref('shelf_warmers') }}),
+     articles      as (select * from {{ ref('articles_latest') }})
+
+select
+  a.brand_name::varchar         as brand,
+  count(*)::integer            as slow_selling_products,
+  max(sw.last_sold_date)::date as latest_sold_date
+from shelf_warmers sw
+join articles a on sw.sku = a.sku   -- same concept in the semantics
+group by a.brand_name
+```
+
+#### `models/output_ports/v1/_models.yml`
+
+Columns and tests derived from the contract.
+
+```yaml
+version: 2
+models:
+  - name: slow_selling_brands
+    meta:
+      data_contract:
+        id: slow-selling-brands
+    columns:
+      - name: brand
+        tests: [not_null, unique]
+      - name: slow_selling_products
+        tests: [not_null]
+      - name: latest_sold_date
+```
+
+#### Data contract test results
+
+Run by `datacontract test --publish` against the server production (Snowflake); results are published to Entropy Data.
+
+| Result | Check | Field | Type |
+|---|---|---|---|
+| ✓ passed | Table exists | slow_selling_brands | schema |
+| ✓ passed | Field is present | brand | schema |
+| ✓ passed | Field is present | slow_selling_products | schema |
+| ✓ passed | Field is present | latest_sold_date | schema |
+| ✓ passed | Type is string | brand | schema |
+| ✓ passed | Type is integer | slow_selling_products | schema |
+| ✓ passed | Type is date | latest_sold_date | schema |
+| ✓ passed | Required: no null values | brand | schema |
+| ✓ passed | Required: no null values | slow_selling_products | schema |
+| ✓ passed | One row per brand | slow_selling_brands | quality |
+| ✓ passed | Freshness: within 1 day | latest_sold_date | SLA |
+
+#### Lineage
+
+articles-latest and shelf-warmers flow into slow-selling-brands, recorded from the OpenLineage events of `dbt-ol run`.
+
+## Do it yourself
+
+1. **The data to build on: set up Entropy Data as your data marketplace.** The free Community Edition runs anywhere Docker runs (`docker compose up --detach`): https://github.com/entropy-data/entropy-data-ce. Register your existing data products, so the agent can find them, read their contracts, and request access.
+2. **The how: customize the skills with Claude Code.** Fork the skills repo (https://github.com/entropy-data/dataproduct-builder-dbt). Point Claude Code at one of your exemplary data products and let it adapt the skills to your platform, conventions, and policies.
+3. **The what: begin with your first data contract.** Write down what the data product must deliver, together with business, producers, and consumers, in the Data Contract Editor (https://editor.datacontract.com). Then tell your agent to implement it.
+
+## FAQ
+
+### What is a data product?
+
+A data product is a unit of data, code, and metadata, owned by one team, that offers its data to others through output ports. Each output port is described by a data contract. Data products are defined in the Open Data Product Standard (ODPS).
+
+### What is a data contract?
+
+A data contract is a YAML document in the Open Data Contract Standard (ODCS) that states everything guaranteed about a dataset: schema, semantics, data quality rules, SLAs, owner, terms of use, and where the data lives. The open-source Data Contract CLI tests real data against it.
+
+### How do you build a data product with AI?
+
+Give a coding agent such as Claude Code three inputs: a data contract that says what to build, a skills repository that says how to build it, and a data marketplace with the data to build on. Then prompt it to implement the data product. The agent requests access to input data products, generates a dbt project, runs the pipeline, tests the data against the contract, and publishes the data product with test results and lineage.
+
+### What does contract-first mean?
+
+Contract-first means agreeing on the data contract with the business and the consumers before any data is extracted or any pipeline is written. The contract becomes the specification the coding agent implements and the test the result must pass.
+
+### Which standards and tools are used?
+
+The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS) from the Linux Foundation, Apache Ossie for semantics, dbt and Snowflake for the pipeline, the Data Contract CLI and Data Product CLI for testing and publishing, and Entropy Data as the data marketplace.
+
+## Standards
+
+- [Open Data Contract Standard (ODCS)](https://bitol-io.github.io/open-data-contract-standard/)
+- [Open Data Product Standard (ODPS)](https://www.entropy-data.com/learn/open-data-product-standard)
+- [Apache Ossie (semantics)](https://www.entropy-data.com/learn/what-is-apache-ossie)
+
+## Tools
+
+- [Data Contract CLI](https://github.com/datacontract/datacontract-cli): lint and test data contracts
+- [Data Product CLI](https://github.com/datacontract/dataproduct-cli): lint and publish ODPS data products
+- [Data Contract Editor](https://github.com/datacontract/datacontract-editor): write data contracts visually
+- [dbt Data Product Builder](https://github.com/entropy-data/dataproduct-builder-dbt): skills for coding agents
+- [Entropy Data](https://www.entropy-data.com): data product marketplace
+
+## Learn more
+
+- [What is a Data Product?](https://www.entropy-data.com/learn/what-is-a-data-product)
+- [Data Product Heuristics](https://www.datamesh-architecture.com/data-product-heuristics)
+- [Data Product Canvas](https://www.datamesh-architecture.com/data-product-canvas)
+- [Data Product Types](https://www.datamesh-architecture.com/#data-product-types)
+- [Entropy Explains, episode 4: Building Data Products with AI](https://www.youtube.com/watch?v=dq72KvRs7OA)
+- [Talk: Building a Data Product Contract-first (with AI), POA Summit 2026](https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026)
+- [Talk: Data-first or Contract-first?](https://www.entropy-data.com/learn/talk-data-first-or-contract-first)
