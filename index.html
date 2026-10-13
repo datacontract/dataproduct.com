@@ -157,8 +157,10 @@
     .convo-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 980px) { .convo-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 28px; } }
     .chat-panel { height: min(64vh, 600px); overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: 18px; background: #f9fafb; }
-    .chat-panel .bubble { opacity: 1; transform: none; font-size: 15px; line-height: 1.55; max-width: 88%; animation: fadeup .45s ease both; }
-    .chat-panel .bubble.old { opacity: .55; }
+    .chat-panel .bubble { opacity: 1; transform: none; font-size: 15px; line-height: 1.55; max-width: 88%; }
+    .chat-panel .bubble.fresh { animation: fadein .25s ease both; }
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+    .chat-panel .bubble.old { opacity: .6; }
     .chat-panel .bubble.left { background: #fff; border: 1px solid #e5e7eb; }
     .chat-panel .bubble.right { background: #eef2ff; border: 1px solid #c7d2fe; }
     .bubble .adds { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: #059669; background: #ecfdf5; border-radius: 999px; padding: 2px 10px; }
@@ -166,8 +168,9 @@
     .dc-bar { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #6b7280; padding-bottom: 6px; }
     .dc-bar .tag { font-size: 12px; color: #059669; background: #ecfdf5; border-radius: 999px; padding: 2px 10px; }
     .dc-svg { flex: 1; width: 100%; min-height: 0; }
-    .dc-g { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
-    .dc-g.on { opacity: 1; transform: none; }
+    .dc-g { opacity: 0; }
+    .dc-svg.ready .dc-g { transition: opacity .25s ease; }
+    .dc-g.on { opacity: 1; }
     .dc-svg text { font-family: var(--sans); }
     .dc-cap { font-size: 11px; font-weight: 600; fill: #9ca3af; letter-spacing: .06em; text-transform: uppercase; }
     .concept { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2; }
@@ -190,7 +193,6 @@
     .desc-line { stroke: #059669; stroke-width: 1.5; }
     .phys { fill: #fff; stroke: #9ca3af; stroke-width: 1.5; }
     .phys-t { font-family: var(--mono) !important; font-size: 13px; font-weight: 600; fill: #111827; }
-    .dc-g.new .concept, .dc-g.new .dc-box, .dc-g.new .chip, .dc-g.new .phys { filter: drop-shadow(0 0 6px rgba(79,70,229,.35)); }
     @media (max-width: 979px) {
       .chat-panel { height: 30vh; padding: 12px; }
       .chat-panel .bubble { font-size: 13px; }
@@ -732,7 +734,7 @@
       { adds: 'server', msgs: [[J, 'We serve it from Snowflake. The contract is done, now the agent can build it.']] }
     ];
     var chatPanel = document.getElementById('chatPanel'), partTag = document.getElementById('partTag');
-    var dcGroups = document.querySelectorAll('#dcSvg .dc-g');
+    var dcGroups = document.querySelectorAll('#dcSvg .dc-g'), dcSvgEl = document.getElementById('dcSvg');
     var lastStep = -1;
     function contract(p) {
       var k = Math.min(STEPS.length - 1, Math.floor(clamp(p / 0.9) * STEPS.length));
@@ -741,7 +743,7 @@
       for (var i = 0; i <= k; i++) {
         STEPS[i].msgs.forEach(function (m, j) {
           var right = m[0] === M, last = j === STEPS[i].msgs.length - 1;
-          html += '<div class="bubble ' + (right ? 'right' : 'left') + (i < k ? ' old' : '') + '"' + (i < lastStep || (i === lastStep && k > lastStep) ? ' style="animation:none"' : '') + '>' +
+          html += '<div class="bubble ' + (right ? 'right' : 'left') + (i < k ? ' old' : '') + (lastStep >= 0 && i > lastStep ? ' fresh' : '') + '">' +
             '<span class="who" style="color:' + (right ? '#4f46e5' : '#0891b2') + '">' + m[0] + '</span>' + m[1] +
             (last ? '<br><span class="adds">+ ' + STEPS[i].adds + '</span>' : '') + '</div>';
         });
@@ -753,6 +755,7 @@
         g.classList.toggle('new', st === k);
       });
       partTag.textContent = '+ ' + STEPS[k].adds;
+      if (lastStep < 0) requestAnimationFrame(function () { dcSvgEl.classList.add('ready'); });
       lastStep = k;
     }
 
