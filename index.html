@@ -572,12 +572,17 @@
         </div>
         <div class="tabs" role="tablist">
           <button class="tab" role="tab" aria-selected="true" data-tab="t-odps">dataproduct.odps.yaml</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="t-odcs">slow-selling-brands.odcs.yaml</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="t-dbt">dbt project</button>
           <button class="tab" role="tab" aria-selected="false" data-tab="t-sql">SQL</button>
         </div>
         <div class="tabpanel card on" id="t-odps">
 <pre><span class="ln show cur" style="opacity:1"><span class="k">apiVersion</span>: <span class="v">v1.1.0</span></span><span class="ln show" style="opacity:1"><span class="k">kind</span>: <span class="v">DataProduct</span></span><span class="ln show" style="opacity:1"><span class="k">id</span>: <span class="s">slow-selling-brands</span></span><span class="ln show" style="opacity:1"><span class="k">status</span>: <span class="v">draft</span></span><span class="ln show" style="opacity:1"><span class="k">outputPorts</span>:</span><span class="ln show" style="opacity:1">  - <span class="k">name</span>: <span class="s">slow_selling_brands</span></span><span class="ln show" style="opacity:1">    <span class="k">version</span>: <span class="v">1.0.0</span></span><span class="ln show" style="opacity:1">    <span class="k">contractId</span>: <span class="s">slow-selling-brands</span>   <span class="cmt"># the data contract</span></span></pre>
           <div class="explain">The data product offers the contract as its output port, in the <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>. Linted and published with the <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>.</div>
+        </div>
+        <div class="tabpanel card" id="t-odcs">
+<pre id="contractCode2" data-lenis-prevent style="max-height:520px;overflow:auto"></pre>
+          <div class="explain">The data contract from step 1, in the <a href="https://www.entropy-data.com/learn/open-data-contract-standard">Open Data Contract Standard</a>.</div>
         </div>
         <div class="tabpanel card" id="t-dbt">
 <pre><span class="sem">slow-selling-brands/</span>
@@ -712,6 +717,7 @@
       'servers:', '  - server: production', '    type: snowflake', '    database: SALES_PROD', '    schema: slow_selling_brands_v1'
     ];
     document.getElementById('contractCode').innerHTML = CONTRACT.map(function (l) { return '<span class="ln show" style="opacity:1">' + (yamlLine(l) || ' ') + '</span>'; }).join('');
+    document.getElementById('contractCode2').innerHTML = document.getElementById('contractCode').innerHTML;
 
     var dcPanel = document.querySelector('.dc-panel');
     document.querySelectorAll('.seg button').forEach(function (b) {
