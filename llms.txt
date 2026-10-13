@@ -33,6 +33,7 @@ A category manager wants to know which brands barely sell. The data contract slo
 - [What is a Data Product?](https://www.entropy-data.com/learn/what-is-a-data-product)
 - [Data Product Heuristics](https://www.datamesh-architecture.com/data-product-heuristics)
 - [Data Product Canvas](https://www.datamesh-architecture.com/data-product-canvas)
+- [Data Product Types](https://www.datamesh-architecture.com/#data-product-types)
 - [Entropy Explains, episode 4: Building Data Products with AI](https://www.youtube.com/watch?v=dq72KvRs7OA)
 - [Talk: Building a Data Product Contract-first (with AI), POA Summit 2026](https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026)
 - [Talk: Data-first or Contract-first?](https://www.entropy-data.com/learn/talk-data-first-or-contract-first)
