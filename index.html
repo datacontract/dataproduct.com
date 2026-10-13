@@ -173,7 +173,7 @@
     .contract-head .h2 { margin-bottom: 8px; }
     .scrub { position: absolute; right: 0; top: 4px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #6b7280; background: #fff; border: 1px solid #e5e7eb; border-radius: 999px; padding: 6px 14px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
     .scrub input { width: 160px; accent-color: #4f46e5; cursor: pointer; }
-    @media (max-width: 979px) { .scrub { padding: 4px 10px; font-size: 12px; } .scrub input { width: 90px; } }
+    @media (max-width: 979px) { .scrub { position: static; display: inline-flex; margin: 0 0 6px; padding: 4px 12px; font-size: 12px; } .scrub input { width: 140px; } .contract-head .eyebrow { display: flex; } }
     .contract-lead { font-size: 16px; margin-bottom: 18px; }
     .convo-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 980px) { .convo-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 28px; } }
@@ -221,9 +221,9 @@
     .pl-t { fill: #fff1f2; stroke: none; } .plt-t { fill: #be123c; font-size: 11.5px; }
     .pl-srv { fill: #f9fafb; stroke: #d1d5db; stroke-dasharray: 4 3; } .plt-srv { font-size: 11.5px; font-weight: 600; fill: #374151; }
     @media (max-width: 979px) {
-      .chat-panel { height: 30vh; padding: 12px; }
+      .chat-panel { height: 27vh; padding: 0 12px; }
       .chat-panel .bubble { font-size: 13px; }
-      .dc-panel { height: 42vh; padding: 8px; }
+      .dc-panel { height: 42vh; padding: 6px; }
       .contract-head .h2 { font-size: 24px; margin: 4px 0 10px; }
       .contract-head .eyebrow { font-size: 13px; }
       .contract-lead { display: none; }
@@ -306,11 +306,11 @@
     .term { background: #0b1120; border: 1px solid #111827; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(17,24,39,.3); }
     .term-body { font-family: var(--mono); font-size: 13px; line-height: 1.7; padding: 16px 18px; height: min(60vh, 540px); overflow: hidden; }
     .term-track { transition: transform .35s cubic-bezier(.2,.7,.2,1); will-change: transform; }
-    @media (max-width: 979px) { .term-body { font-size: 11px; height: 26vh; } }
+    @media (max-width: 979px) { .term-body { font-size: 11px; height: 25vh; padding: 12px 14px; } }
     .agent-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 980px) { .agent-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; } }
     .bv-panel { padding: 10px; height: min(60vh, 584px); display: flex; }
-    @media (max-width: 979px) { .bv-panel { height: 40vh; } }
+    @media (max-width: 979px) { .bv-panel { height: 40vh; padding: 4px; } .agent-grid { gap: 12px; } .convo-grid { gap: 12px; } }
     .bv-svg { width: 100%; height: 100%; }
     .bv { opacity: 0; transition: opacity .3s ease; }
     .bv.on { opacity: 1; }
@@ -367,6 +367,9 @@
     .dbt-cap { padding: 12px 20px; font-size: 13px; color: #d1d5db; border-bottom: 1px solid #1f2937; }
     .dbt-cap b { color: #fff; font-family: var(--mono); font-weight: 600; margin-right: 8px; }
     .tabpanel .dbt-view pre { border-radius: 0; height: 440px; overflow: auto; }
+    @media (max-width: 899px) { .tabpanel .dbt-view pre { height: auto; max-height: 380px; } .dbt-view { border-radius: 0 0 16px 16px; } }
+    .swipe { display: none; font-family: "Caveat", cursive; font-size: 18px; color: #9ca3af; padding: 8px 18px 0; }
+    @media (max-width: 760px) { .swipe { display: block; } }
     .tabpanel .explain { padding: 16px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 
     .badge { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; }
@@ -383,7 +386,7 @@
 
     .has-hint { position: relative; }
     .hint { font-family: "Caveat", cursive; font-size: 20px; line-height: 1.15; color: #9ca3af; display: flex; align-items: flex-end; gap: 4px; margin-bottom: 8px; }
-    .hint svg { flex-shrink: 0; transform: rotate(60deg) scaleX(-1); margin-left: 4px; }
+    .hint svg { flex-shrink: 0; transform: rotate(75deg); margin-left: 8px; }
     .tabpanel.has-hint .hint { padding: 14px 18px 0; margin: 0; }
     @media (min-width: 1480px) {
       .hint { position: absolute; left: -146px; top: 36px; width: 132px; flex-direction: column; align-items: flex-start; margin: 0; padding: 0 !important; }
@@ -524,7 +527,7 @@
             <div class="chat-panel card" id="chatPanel" aria-live="polite"></div>
             <div class="dc-panel card">
               <div class="dc-bar"><div class="seg" role="tablist"><button class="on" data-view="diagram">Diagram</button><button data-view="yaml">YAML</button></div><span class="tag" id="partTag">purpose</span></div>
-              <svg class="dc-svg" id="dcSvg" viewBox="0 0 520 500" role="img" aria-label="The data contract slow_selling_brands with three columns; the brand column is linked to the Brand concept of the business ontology">
+              <svg class="dc-svg" id="dcSvg" viewBox="10 4 500 478" role="img" aria-label="The data contract slow_selling_brands with three columns; the brand column is linked to the Brand concept of the business ontology">
                 <defs>
                   <pattern id="dotsA" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e5e7eb"/></pattern>
                   <filter id="shA" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#111827" flood-opacity=".08"/></filter>
@@ -758,6 +761,7 @@
           <div class="table-wrap"><table class="tr-table"><thead><tr><th>Result</th><th>Check</th><th>Field</th><th>Type</th></tr></thead><tbody><tr><td><span class="tr-ok">✓ passed</span></td><td>Table exists</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Field is present</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is string</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is integer</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Type is date</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">brand</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Required: no null values</td><td class="mono">slow_selling_products</td><td><span class="tr-kind">schema</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>One row per brand</td><td class="mono">slow_selling_brands</td><td><span class="tr-kind">quality</span></td></tr><tr><td><span class="tr-ok">✓ passed</span></td><td>Freshness: within 1 day</td><td class="mono">latest_sold_date</td><td><span class="tr-kind">SLA</span></td></tr></tbody></table></div>
         </div>
         <div class="tabpanel card" id="t-sem">
+          <div class="swipe" aria-hidden="true">swipe to see all →</div>
           <div class="sem5-wrap">
             <svg class="sem5" viewBox="0 0 720 350" role="img" aria-label="Business ontology with Product (SKU) and Brand (Brand name) at the top; below, the data contracts shelf-warmers, articles-latest, and slow-selling-brands, whose columns link to these concepts">
               <defs>
@@ -785,7 +789,8 @@
           <div class="explain"><code>sku</code> in articles-latest and shelf-warmers links to the same SKU concept, so the agent joins on it. <code>brand</code> in the new contract links to the same Brand name as <code>brand_name</code> upstream.</div>
         </div>
         <div class="tabpanel card" id="t-lin">
-        <div class="lineage">
+        <div class="swipe" aria-hidden="true">swipe to see all →</div>
+<div class="lineage">
           <svg viewBox="0 0 720 210" aria-label="Lineage: articles-latest and shelf-warmers flow into slow-selling-brands">
             <path class="flow" d="M220 55 C 300 55, 300 105, 400 105" stroke="#4f46e5" stroke-width="2" fill="none"/>
             <path class="flow" d="M220 155 C 300 155, 300 105, 400 105" stroke="#4f46e5" stroke-width="2" fill="none"/>
