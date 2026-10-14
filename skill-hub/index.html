@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skill Hub for Building Data Products | dataproduct.com</title>
+  <meta name="description" content="Open skill libraries that teach coding agents like Claude Code, OpenAI Codex, and GitHub Copilot CLI how to build data products. Filter by technology: dbt, Snowflake, Databricks, AWS Glue.">
+  <link rel="canonical" href="https://www.dataproduct.com/skill-hub/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="dataproduct.com">
+  <meta property="og:url" content="https://www.dataproduct.com/skill-hub/">
+  <meta property="og:title" content="Skill Hub for building data products">
+  <meta property="og:description" content="Open skill libraries that teach your coding agent how to build data products. Filter by technology and connect your agent with two commands.">
+  <meta property="og:image" content="https://www.dataproduct.com/media/og.png?v=2">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.dataproduct.com/media/og.png?v=2">
+  <link rel="preload" href="/fonts/inter-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/media/logo_fuchsia_v2.svg" type="image/svg+xml">
+  <link rel="icon" href="/media/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/media/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-v12-latin-regular.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-v12-latin-500.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/inter-v12-latin-600.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/inter-v12-latin-700.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/inter-v12-latin-800.woff2') format('woff2'); }
+    :root {
+      --bg: #ffffff;
+      --bg-2: #f9fafb;
+      --panel: #ffffff;
+      --panel-2: #f3f4f6;
+      --line: #e5e7eb;
+      --text: #111827;
+      --muted: #4b5563;
+      --dim: #6b7280;
+      --brand: #4f46e5;
+      --what: #d97706;
+      --how: #0891b2;
+      --data: #4f46e5;
+      --agent: #c026d3;
+      --product: #059669;
+      --bad: #dc2626;
+      --what-t: #b45309;
+      --how-t: #0e7490;
+      --data-t: #4f46e5;
+      --agent-t: #a21caf;
+      --product-t: #047857;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-anchor: none; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid #4f46e5; outline-offset: 2px; }
+    .skip { position: absolute; left: 16px; top: -100px; z-index: 100; background: #111827; color: #fff; padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+    .skip:focus { top: 12px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    [id] { scroll-margin-top: 88px; }
+    h1, h2, h3 { line-height: 1.15; letter-spacing: -0.025em; margin: 0; color: var(--text); }
+    p { margin: 0; }
+    code, .mono { font-family: var(--mono); }
+    .wrap { max-width: 80rem; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 1024px) { .wrap { padding: 0 32px; } }
+    main a:not(.btn):not(.card):not(.input-card) { color: var(--brand); text-decoration: none; }
+    main a:not(.btn):not(.card):not(.input-card):hover { color: #3730a3; }
+
+    /* ---------- Nav ---------- */
+    nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #fff; border-bottom: 1px solid #f3f4f6; }
+    nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 24px; }
+    .logo { font-size: 20px; font-weight: 600; color: #111827; text-decoration: none; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .logo img { height: 32px; width: auto; }
+    .logo .tld { color: #6b7280; font-weight: 500; }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links { gap: 0; }
+    .nav-links a { text-decoration: none; color: #111827; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: color .2s, background .2s; white-space: nowrap; }
+    .nav-links a:hover { background: #f3f4f6; }
+    .nav-links a.cta { display: inline-flex; align-items: center; gap: 8px; color: #fff; background: #4f46e5; border-radius: 9999px; padding: 8px 14px; margin-left: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .nav-links a.cta:hover { background: #6366f1; }
+    .dd { position: relative; }
+    .dd-btn { background: none; border: 0; font: inherit; font-size: 14px; font-weight: 600; color: #111827; padding: 8px 12px; border-radius: 8px; cursor: pointer; display: flex; gap: 6px; align-items: center; }
+    .dd-btn svg { color: #9ca3af; transition: transform .2s; }
+    .dd-btn:hover { background: #f3f4f6; }
+    .dd-menu { display: none; position: absolute; top: 100%; left: 0; margin-top: 6px; min-width: 250px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 10px 30px -10px rgba(17,24,39,.2); padding: 6px; z-index: 60; }
+    .dd-menu a { display: block; padding: 10px 12px !important; border-radius: 8px; font-weight: 500 !important; }
+    .dd.open .dd-menu { display: block; }
+    .dd.open .dd-btn svg { transform: rotate(180deg); }
+    .menu-btn { display: none; background: none; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 14px; cursor: pointer; }
+    @media (max-width: 760px) {
+      .menu-btn { display: block; }
+      .nav-links { display: none; position: absolute; top: 80px; left: 0; right: 0; flex-direction: column; align-items: stretch; padding: 12px 16px 16px; background: rgba(255, 255, 255, 0.97); border-bottom: 1px solid var(--line); }
+      .nav-links.open { display: flex; }
+      .dd-btn { display: none; }
+      .dd-menu { display: block; position: static; border: 0; box-shadow: none; padding: 0; margin: 0; min-width: 0; }
+      .nav-links a { padding: 12px; }
+      .nav-links a.cta { justify-content: center; margin: 8px 0 0; }
+    }
+
+
+    /* ---------- Shared ---------- */
+    section { position: relative; }
+    .eyebrow { font-size: 16px; font-weight: 600; line-height: 1.75; color: var(--brand); display: inline-flex; align-items: center; gap: 8px; }
+    .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+    .h2 { font-size: clamp(30px, 4vw, 48px); font-weight: 700; margin: 8px 0 20px; }
+    .lead { font-size: 18px; line-height: 1.8; color: var(--muted); max-width: 42rem; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .note { font-size: 13px; color: var(--dim); }
+    .h1 { font-size: clamp(36px, 5vw, 60px); font-weight: 700; letter-spacing: -0.035em; margin: 8px 0 20px; }
+    #hub { padding: 152px 0 96px; }
+    /* skill hub */
+    .hub-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 40px; }
+    .hub-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .hub-group .lbl { font-size: 13px; color: var(--dim); margin-right: 4px; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; font-weight: 600; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+    .chip:hover { background: #f9fafb; }
+    .chip[aria-pressed="true"] { color: #3730a3; background: #eef2ff; border-color: #4f46e5; }
+    .chip img, .tech img { width: 16px; height: 16px; flex: none; }
+    .tech img { width: 14px; height: 14px; }
+    .hub-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+    @media (min-width: 900px) { .hub-list { grid-template-columns: 1fr 1fr; } }
+    .hub-item { padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .hub-item[hidden] { display: none; }
+    .hub-item h3 { font-size: 18px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .hub-item .repo { font-family: var(--mono); font-size: 13px; word-break: break-all; }
+    .hub-item p { color: var(--muted); font-size: 15px; }
+    .techs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tech { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; color: var(--muted); background: #f9fafb; border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; }
+    .soon { font-size: 12px; font-weight: 600; color: var(--dim); background: #f3f4f6; border-radius: 999px; padding: 2px 10px; }
+    .cmd { position: relative; margin-top: auto; }
+    .cmd pre { margin: 0; white-space: pre; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; background: #111827; color: #f3f4f6; border-radius: 8px; padding: 38px 14px 12px; }
+    .cmd .copy { position: absolute; top: 8px; right: 8px; font: inherit; font-size: 12px; font-weight: 600; color: #d1d5db; background: #374151; border: 0; border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+    .cmd .copy:hover { color: #fff; }
+    .hub-empty { color: var(--dim); margin-top: 24px; }
+
+    footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
+    footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
+    footer .foot-brand .logo { justify-content: center; font-size: 18px; }
+    footer .foot-brand p { margin: 12px auto 0; max-width: 34rem; font-size: 14px; color: #6b7280; }
+    footer .foot-links { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; }
+    footer .foot-links a { font-size: 14px; line-height: 1.5; color: #4b5563; text-decoration: none; display: inline-block; padding: 4px 0; }
+    footer .foot-links a:hover { color: #111827; }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="0c6974f6-15ae-439d-a98c-7fda9c9e7942"></script>
+</head>
+<body>
+  <a class="skip" href="#top">Skip to content</a>
+  <nav class="top" aria-label="Main">
+    <div class="wrap">
+      <a class="logo" href="/"><img src="/media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>dataproduct<span class="tld">.com</span></span></a>
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+      <div class="nav-links" id="navLinks">
+        <div class="dd">
+          <button type="button" class="dd-btn" aria-expanded="false" aria-controls="ddLearn">Learn <svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/></svg></button>
+          <div class="dd-menu" id="ddLearn">
+            <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
+            <a href="https://www.entropy-data.com/learn/what-is-a-data-contract">What is a Data Contract?</a>
+            <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
+            <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a>
+            <a href="https://www.datamesh-architecture.com/#data-product-types">Data Product Types</a>
+          </div>
+        </div>
+        <div class="dd">
+          <button type="button" class="dd-btn" aria-expanded="false" aria-controls="ddStd">Standards &amp; Tools <svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/></svg></button>
+          <div class="dd-menu" id="ddStd">
+            <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
+            <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>
+            <a href="https://cli.datacontract.com">Data Contract CLI</a>
+            <a href="https://www.entropy-data.com">Data Product Marketplace</a>
+            <a href="https://github.com/entropy-data/entropy-data-skills">Marketplace Skills</a>
+          </div>
+        </div>
+        <a class="cta" href="/skill-hub/" aria-current="page"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Skill Hub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+        <section class="block" id="hub">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow c-how">Skill hub</span>
+          <h1 class="h1">The skill hub for building data products.</h1>
+          <p class="lead">Open skill libraries that teach your coding agent how to build data products: skills, templates, and hooks. Pick the one for your platform, connect your agent with two commands, then adapt it to your conventions.</p>
+        </div>
+        <div class="hub-bar">
+          <div class="hub-group" role="group" aria-label="Filter by technology">
+            <span class="lbl">Technology</span>
+            <button type="button" class="chip" data-filter="" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="dbt" aria-pressed="false"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</button>
+            <button type="button" class="chip" data-filter="Snowflake" aria-pressed="false"><img src="/media/icons/snowflake.svg" alt="" width="16" height="16">Snowflake</button>
+            <button type="button" class="chip" data-filter="Databricks" aria-pressed="false"><img src="/media/icons/databricks.svg" alt="" width="16" height="16">Databricks</button>
+            <button type="button" class="chip" data-filter="AWS Glue" aria-pressed="false"><img src="/media/icons/glue.svg" alt="" width="16" height="16">AWS Glue</button>
+          </div>
+          <div class="hub-group" role="group" aria-label="Coding agent">
+            <span class="lbl">Agent</span>
+            <button type="button" class="chip" data-agent="claude" aria-pressed="true"><img src="/media/icons/agent-claude-code.svg" alt="" width="16" height="16">Claude Code</button>
+            <button type="button" class="chip" data-agent="codex" aria-pressed="false"><img src="/media/icons/agent-openai-codex.svg" alt="" width="16" height="16">OpenAI Codex</button>
+            <button type="button" class="chip" data-agent="copilot" aria-pressed="false"><img src="/media/icons/agent-github-copilot-cli.svg" alt="" width="16" height="16">GitHub Copilot CLI</button>
+          </div>
+        </div>
+        <div class="hub-list" aria-live="polite">
+          <article class="card hub-item" data-tech="dbt|Snowflake" data-repo="dataproduct-skills/dataproduct-builder-dbt-snowflake">
+            <h3>dbt on Snowflake</h3>
+            <a class="repo" href="https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake">github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake</a>
+            <p>Bootstraps, implements, and tests dbt data products on Snowflake against their data contracts, and publishes ODPS, ODCS, and OpenLineage to Entropy Data.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</span><span class="tech"><img src="/media/icons/snowflake.svg" alt="" width="16" height="16">Snowflake</span></div>
+            <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake
+claude plugin install dataproduct-builder-dbt-snowflake@dataproduct-builder-dbt-snowflake -s project</pre><button type="button" class="copy">Copy</button></div>
+          </article>
+          <article class="card hub-item" data-tech="dbt|Snowflake" data-repo="entropy-data/dataproduct-builder-demo">
+            <h3>Demo</h3>
+            <a class="repo" href="https://github.com/entropy-data/dataproduct-builder-demo">github.com/entropy-data/dataproduct-builder-demo</a>
+            <p>The small builder from the walkthrough on the <a href="/">home page</a>. A good starting point to fork and adapt to your conventions.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</span><span class="tech"><img src="/media/icons/snowflake.svg" alt="" width="16" height="16">Snowflake</span></div>
+            <div class="cmd"><pre>claude plugin marketplace add https://github.com/entropy-data/dataproduct-builder-demo
+claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s project</pre><button type="button" class="copy">Copy</button></div>
+          </article>
+          <article class="card hub-item" data-tech="Databricks">
+            <h3>Databricks <span class="soon">Coming soon</span></h3>
+            <p>Declarative Automation Bundles, Delta Live Tables, and Unity Catalog, with data contracts.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/databricks.svg" alt="" width="16" height="16">Databricks</span></div>
+          </article>
+          <article class="card hub-item" data-tech="AWS Glue">
+            <h3>AWS Glue <span class="soon">Coming soon</span></h3>
+            <p>Glue ETL with PySpark jobs and the Glue Data Catalog, with data contracts.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/glue.svg" alt="" width="16" height="16">AWS Glue</span></div>
+          </article>
+        </div>
+        <p class="note" style="margin-top:24px">Missing your platform? Contribute a skill library at <a href="https://github.com/dataproduct-skills">github.com/dataproduct-skills</a>.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-brand"><a class="logo" href="https://www.entropy-data.com"><img src="/media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Entropy Data</span></a>
+        <p>Based on the talks by Simon Harrer and Jochen Christ, and on the Entropy Explains episode on building data products with AI.</p></div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
+        <a href="https://www.entropy-data.com/learn/what-is-a-data-contract">What is a Data Contract?</a>
+        <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
+        <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
+        <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a>
+        <a href="https://www.datamesh-architecture.com/#data-product-types">Data Product Types</a>
+        <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>
+        <a href="https://cli.datacontract.com">Data Contract CLI</a>
+        <a href="https://www.entropy-data.com">Data Product Marketplace</a>
+        <a href="https://github.com/entropy-data/entropy-data-skills">Marketplace Skills</a>
+        <a href="/skill-hub/">Skill Hub</a>
+        <a href="https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026">POA Summit 2026 talk</a>
+        <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a>
+        <a href="https://www.youtube.com/watch?v=dq72KvRs7OA">Entropy Explains, episode 4</a>
+        <a href="https://www.entropy-data.com/legal-notice">Legal Notice</a>
+        <a href="https://www.entropy-data.com/privacy-policy">Privacy Policy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    // ---------- nav ----------
+    var menuBtn = document.getElementById('menuBtn'), navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open);
+    });
+
+    document.querySelectorAll('.dd').forEach(function (dd) {
+      var btn = dd.querySelector('.dd-btn');
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = !dd.classList.contains('open');
+        document.querySelectorAll('.dd.open').forEach(function (o) { o.classList.remove('open'); o.querySelector('.dd-btn').setAttribute('aria-expanded', 'false'); });
+        dd.classList.toggle('open', open); btn.setAttribute('aria-expanded', open);
+      });
+    });
+    function closeMenus() {
+      document.querySelectorAll('.dd.open').forEach(function (o) { o.classList.remove('open'); o.querySelector('.dd-btn').setAttribute('aria-expanded', 'false'); });
+    }
+    document.addEventListener('click', closeMenus);
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var dd = document.activeElement && document.activeElement.closest && document.activeElement.closest('.dd.open');
+      closeMenus();
+      if (dd) dd.querySelector('.dd-btn').focus();
+      if (navLinks.classList.contains('open')) { navLinks.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.focus(); }
+    });
+    navLinks.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { navLinks.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }); });
+
+  })();
+  </script>
+  <script>
+  (function () {
+    var hub = document.getElementById('hub');
+    if (!hub) return;
+    var items = hub.querySelectorAll('.hub-item');
+    var cmds = {
+      claude: function (r, p) { return 'claude plugin marketplace add https://github.com/' + r + '\nclaude plugin install ' + p + '@' + p + ' -s project'; },
+      codex: function (r, p) { return 'codex plugin marketplace add https://github.com/' + r + '\ncodex plugin add ' + p + '@' + p; },
+      copilot: function (r, p) { return 'copilot plugin marketplace add https://github.com/' + r + '\ncopilot plugin install ' + p + '@' + p; }
+    };
+    function press(btn) {
+      btn.parentNode.querySelectorAll('.chip').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+    }
+    hub.querySelectorAll('[data-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        press(btn);
+        var f = btn.dataset.filter;
+        items.forEach(function (it) { it.hidden = !!f && it.dataset.tech.split("|").indexOf(f) < 0; });
+      });
+    });
+    hub.querySelectorAll('[data-agent]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        press(btn);
+        items.forEach(function (it) {
+          var r = it.dataset.repo, pre = it.querySelector('pre');
+          if (r && pre) pre.textContent = cmds[btn.dataset.agent](r, r.split('/')[1]);
+        });
+      });
+    });
+    hub.querySelectorAll('.copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var text = btn.parentNode.querySelector('pre').textContent;
+        navigator.clipboard.writeText(text).then(function () {
+          btn.textContent = 'Copied';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+        });
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -441,28 +441,6 @@
     .diy p { color: var(--muted); font-size: 15px; }
     .diy pre { white-space: pre-wrap; font-family: var(--mono); font-size: 12.5px; background: #f9fafb; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 16px 0 0; overflow-x: auto; }
     .diy .go { margin-top: auto; padding-top: 16px; font-family: var(--mono); font-size: 13px; }
-    /* skill hub */
-    .hub-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: 40px; }
-    .hub-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-    .hub-group .lbl { font-size: 13px; color: var(--dim); margin-right: 4px; }
-    .chip { font: inherit; font-size: 13px; font-weight: 600; color: var(--muted); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
-    .chip:hover { background: #f9fafb; }
-    .chip[aria-pressed="true"] { color: #fff; background: #111827; border-color: #111827; }
-    .hub-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
-    @media (min-width: 900px) { .hub-list { grid-template-columns: 1fr 1fr; } }
-    .hub-item { padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-    .hub-item[hidden] { display: none; }
-    .hub-item h3 { font-size: 18px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .hub-item .repo { font-family: var(--mono); font-size: 13px; word-break: break-all; }
-    .hub-item p { color: var(--muted); font-size: 15px; }
-    .techs { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tech { font-size: 12px; font-weight: 500; color: var(--muted); background: #f9fafb; border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; }
-    .soon { font-size: 12px; font-weight: 600; color: var(--dim); background: #f3f4f6; border-radius: 999px; padding: 2px 10px; }
-    .cmd { position: relative; margin-top: auto; }
-    .cmd pre { margin: 0; white-space: pre; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; background: #111827; color: #f3f4f6; border-radius: 8px; padding: 12px 64px 12px 14px; }
-    .cmd .copy { position: absolute; top: 8px; right: 8px; font: inherit; font-size: 12px; font-weight: 600; color: #d1d5db; background: #374151; border: 0; border-radius: 6px; padding: 3px 8px; cursor: pointer; }
-    .cmd .copy:hover { color: #fff; }
-    .hub-empty { color: var(--dim); margin-top: 24px; }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="0c6974f6-15ae-439d-a98c-7fda9c9e7942"></script>
 </head>
@@ -495,7 +473,7 @@
             <a href="https://github.com/entropy-data/entropy-data-skills">Marketplace Skills</a>
           </div>
         </div>
-        <a class="cta" href="#hub"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Skill Hub</a>
+        <a class="cta" href="/skill-hub/"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Skill Hub</a>
       </div>
     </div>
   </nav>
@@ -683,7 +661,7 @@ servers:
             <span class="row dir ind1">hooks/</span>
             <button type="button" class="row f ind2" aria-controls="viewer" aria-pressed="false" data-file="hook">datacontract_lint.sh</button>
             <button type="button" class="row f ind1" aria-controls="viewer" aria-pressed="false" data-file="plugins">.claude-plugin/ .codex-plugin/ .github/</button>
-            <p class="note" style="margin-top:16px;font-family:var(--sans)">Skill libraries on GitHub: <a href="https://github.com/entropy-data/dataproduct-builder-demo">dataproduct-builder-demo</a> to get started, and <a href="#hub">more in the skill hub</a>.</p>
+            <p class="note" style="margin-top:16px;font-family:var(--sans)">Skill libraries on GitHub: <a href="https://github.com/entropy-data/dataproduct-builder-demo">dataproduct-builder-demo</a> to get started, and <a href="/skill-hub/">more in the skill hub</a>.</p>
           </div>
           <div class="card viewer reveal" id="viewer" aria-live="polite"><div class="path">skills/dataproduct-implement/SKILL.md</div><h3>Implement a data product</h3><p class="desc">Turns a data product from Entropy Data into a working dbt pipeline, and proves it works.</p><div class="lbl">Tools</div><div class="tools"><code>entropy-data</code><code>dbt</code><code>dbt-ol</code><code>datacontract</code></div><div class="lbl">Steps</div><ol><li><b>Pre-checks</b><span>dbt project exists, all four CLIs are installed, <code>entropy-data connection test</code> succeeds.</span></li><li><b>Resolve the data product</b><span><code>entropy-data dataproducts get</code>: name, owner, output ports.</span></li><li><b>Fetch the data contract</b><span><code>entropy-data datacontracts get</code>, saved under <code>models/output_ports/v1/</code>.</span></li><li><b>Translate the schema to dbt</b><span>One model per contract table, columns cast to Snowflake types, tests from the contract.</span></li><li><b>Wire the input ports</b><span>Each approved access becomes a dbt source, with the upstream contract as a trust snapshot.</span></li><li><b><code>dbt parse</code></b><span>Fix obvious mistakes before anything runs.</span></li><li><b><code>dbt-ol run</code></b><span>Materializes the tables in Snowflake and ships lineage to Entropy Data.</span></li><li><b><code>dbt test</code></b><span>not_null, unique, and accepted_values from the contract.</span></li><li><b><code>datacontract test</code></b><span>Checks the live Snowflake data against every rule in the contract.</span></li><li><b>Stamp as builder-managed</b><span>Marks the data product in Entropy Data as built with this plugin.</span></li><li><b>Final report</b><span>Status of every artifact: created, updated, passed, failed.</span></li></ol><div class="rule">The contract is the source of truth for the schema, not for the logic.</div></div>
         </div>
@@ -895,62 +873,6 @@ servers:
       </div>
     </section>
 
-    <!-- ================= SKILL HUB ================= -->
-    <section class="block" id="hub" style="padding-top:40px">
-      <div class="wrap">
-        <div class="reveal">
-          <span class="eyebrow c-how"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-skills"/></svg>Skill hub</span>
-          <h2 class="h2">Find the skill library for your platform.</h2>
-          <p class="lead">Filter by technology, then connect your coding agent with two commands.</p>
-        </div>
-        <div class="hub-bar">
-          <div class="hub-group" role="group" aria-label="Filter by technology">
-            <span class="lbl">Technology</span>
-            <button type="button" class="chip" data-filter="" aria-pressed="true">All</button>
-            <button type="button" class="chip" data-filter="dbt" aria-pressed="false">dbt</button>
-            <button type="button" class="chip" data-filter="Snowflake" aria-pressed="false">Snowflake</button>
-            <button type="button" class="chip" data-filter="Databricks" aria-pressed="false">Databricks</button>
-            <button type="button" class="chip" data-filter="AWS Glue" aria-pressed="false">AWS Glue</button>
-          </div>
-          <div class="hub-group" role="group" aria-label="Coding agent">
-            <span class="lbl">Agent</span>
-            <button type="button" class="chip" data-agent="claude" aria-pressed="true">Claude Code</button>
-            <button type="button" class="chip" data-agent="codex" aria-pressed="false">OpenAI Codex</button>
-            <button type="button" class="chip" data-agent="copilot" aria-pressed="false">GitHub Copilot CLI</button>
-          </div>
-        </div>
-        <div class="hub-list" aria-live="polite">
-          <article class="card hub-item" data-tech="dbt|Snowflake" data-repo="dataproduct-skills/dataproduct-builder-dbt-snowflake">
-            <h3>dbt on Snowflake</h3>
-            <a class="repo" href="https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake">github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake</a>
-            <p>Bootstraps, implements, and tests dbt data products on Snowflake against their data contracts, and publishes ODPS, ODCS, and OpenLineage to Entropy Data.</p>
-            <div class="techs"><span class="tech">dbt</span><span class="tech">Snowflake</span></div>
-            <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake
-claude plugin install dataproduct-builder-dbt-snowflake@dataproduct-builder-dbt-snowflake -s project</pre><button type="button" class="copy">Copy</button></div>
-          </article>
-          <article class="card hub-item" data-tech="dbt|Snowflake" data-repo="entropy-data/dataproduct-builder-demo">
-            <h3>Demo</h3>
-            <a class="repo" href="https://github.com/entropy-data/dataproduct-builder-demo">github.com/entropy-data/dataproduct-builder-demo</a>
-            <p>The small builder shown on this page. A good starting point to fork and adapt to your conventions.</p>
-            <div class="techs"><span class="tech">dbt</span><span class="tech">Snowflake</span></div>
-            <div class="cmd"><pre>claude plugin marketplace add https://github.com/entropy-data/dataproduct-builder-demo
-claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s project</pre><button type="button" class="copy">Copy</button></div>
-          </article>
-          <article class="card hub-item" data-tech="Databricks">
-            <h3>Databricks <span class="soon">Coming soon</span></h3>
-            <p>Declarative Automation Bundles, Delta Live Tables, and Unity Catalog, with data contracts.</p>
-            <div class="techs"><span class="tech">Databricks</span></div>
-          </article>
-          <article class="card hub-item" data-tech="AWS Glue">
-            <h3>AWS Glue <span class="soon">Coming soon</span></h3>
-            <p>Glue ETL with PySpark jobs and the Glue Data Catalog, with data contracts.</p>
-            <div class="techs"><span class="tech">AWS Glue</span></div>
-          </article>
-        </div>
-        <p class="note" style="margin-top:24px">Missing your platform? Contribute a skill library at <a href="https://github.com/dataproduct-skills">github.com/dataproduct-skills</a>.</p>
-      </div>
-    </section>
-
     <!-- ================= DO IT YOURSELF ================= -->
     <section class="block" id="diy" style="padding-top:40px">
       <div class="wrap">
@@ -972,7 +894,7 @@ claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s proje
             <h3>Customize the skills with Claude Code</h3>
             <p>Fork a skill library from the hub as a base. Point Claude Code at one of your exemplary data products and let it adapt the skills to your platform, conventions, and policies.</p>
             <pre>&gt; Adapt these skills to how we build data products. Use &lt;our best data product repo&gt; as the reference.</pre>
-            <a class="go c-how" href="#hub">Pick a skill library from the hub →</a>
+            <a class="go c-how" href="/skill-hub/">Pick a skill library from the hub →</a>
           </div>
           <div class="card reveal" style="border-top:3px solid var(--what);transition-delay:.2s">
             <span class="eyebrow c-what">3 · The what</span>
@@ -1016,6 +938,7 @@ claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s proje
         <a href="https://cli.datacontract.com">Data Contract CLI</a>
         <a href="https://www.entropy-data.com">Data Product Marketplace</a>
         <a href="https://github.com/entropy-data/entropy-data-skills">Marketplace Skills</a>
+        <a href="/skill-hub/">Skill Hub</a>
         <a href="https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026">POA Summit 2026 talk</a>
         <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a>
         <a href="https://www.youtube.com/watch?v=dq72KvRs7OA">Entropy Explains, episode 4</a>
@@ -1302,46 +1225,6 @@ claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s proje
       });
     });
 
-  })();
-  </script>
-  <script>
-  (function () {
-    var hub = document.getElementById('hub');
-    if (!hub) return;
-    var items = hub.querySelectorAll('.hub-item');
-    var cmds = {
-      claude: function (r, p) { return 'claude plugin marketplace add https://github.com/' + r + '\nclaude plugin install ' + p + '@' + p + ' -s project'; },
-      codex: function (r, p) { return 'codex plugin marketplace add https://github.com/' + r + '\ncodex plugin add ' + p + '@' + p; },
-      copilot: function (r, p) { return 'copilot plugin marketplace add https://github.com/' + r + '\ncopilot plugin install ' + p + '@' + p; }
-    };
-    function press(btn) {
-      btn.parentNode.querySelectorAll('.chip').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-    }
-    hub.querySelectorAll('[data-filter]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        press(btn);
-        var f = btn.dataset.filter;
-        items.forEach(function (it) { it.hidden = !!f && it.dataset.tech.split("|").indexOf(f) < 0; });
-      });
-    });
-    hub.querySelectorAll('[data-agent]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        press(btn);
-        items.forEach(function (it) {
-          var r = it.dataset.repo, pre = it.querySelector('pre');
-          if (r && pre) pre.textContent = cmds[btn.dataset.agent](r, r.split('/')[1]);
-        });
-      });
-    });
-    hub.querySelectorAll('.copy').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var text = btn.parentNode.querySelector('pre').textContent;
-        navigator.clipboard.writeText(text).then(function () {
-          btn.textContent = 'Copied';
-          setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
-        });
-      });
-    });
   })();
   </script>
 </body>

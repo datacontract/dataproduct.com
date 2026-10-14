@@ -27,7 +27,7 @@ A category manager wants to know which brands barely sell. The data contract slo
 - [Data Contract CLI](https://github.com/datacontract/datacontract-cli): lint and test data contracts
 - [Data Product CLI](https://github.com/datacontract/dataproduct-cli): lint and publish ODPS data products
 - [Data Contract Editor](https://github.com/datacontract/datacontract-editor): write data contracts visually
-- [Skill hub](https://www.dataproduct.com/#hub): skill libraries for coding agents, filtered by technology
+- [Skill hub](https://www.dataproduct.com/skill-hub/): skill libraries for coding agents, filtered by technology
 - [dbt on Snowflake skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake): skills for building dbt data products on Snowflake
 - [Entropy Data](https://www.entropy-data.com): data product marketplace
 
