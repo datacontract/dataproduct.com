@@ -87,9 +87,9 @@ servers:
     schema: slow_selling_brands_v1
 ```
 
-### Step 2: Skills, the conventions for building data products
+### Step 2: The skill hub for building data products
 
-A Git repository of skills, templates, and hooks that any coding agent reads (Claude Code, OpenAI Codex, GitHub Copilot). Demo: https://github.com/entropy-data/dataproduct-builder-demo · Full version for more platforms: https://github.com/entropy-data/dataproduct-builder-dbt
+Open skill libraries with skills, templates, and hooks that any coding agent reads (Claude Code, OpenAI Codex, GitHub Copilot). Pick one, then adapt it to your conventions. Demo: https://github.com/entropy-data/dataproduct-builder-demo · Full version for more platforms: https://github.com/entropy-data/dataproduct-builder-dbt
 
 #### Routing manifest (`AGENTS.md`)
 
@@ -350,7 +350,8 @@ The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS)
 - [Data Contract CLI](https://github.com/datacontract/datacontract-cli): lint and test data contracts
 - [Data Product CLI](https://github.com/datacontract/dataproduct-cli): lint and publish ODPS data products
 - [Data Contract Editor](https://github.com/datacontract/datacontract-editor): write data contracts visually
-- [dbt Data Product Builder](https://github.com/entropy-data/dataproduct-builder-dbt): skills for coding agents
+- [Skill hub](https://www.dataproduct.com/#hub): skill libraries for coding agents, filtered by technology
+- [dbt on Snowflake skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake): skills for building dbt data products on Snowflake
 - [Entropy Data](https://www.entropy-data.com): data product marketplace
 
 ## Learn more
