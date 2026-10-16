@@ -105,7 +105,7 @@
     nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 24px; }
     .logo { font-size: 20px; font-weight: 600; color: #111827; text-decoration: none; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
     .logo img { height: 32px; width: auto; }
-    .logo .tld { color: #6b7280; font-weight: 500; }
+    @media (max-width: 480px) { nav.top .logo { font-size: 16px; gap: 6px; } nav.top .logo img { height: 26px; } }
     .nav-links { display: flex; gap: 4px; align-items: center; }
     .nav-links { gap: 0; }
     .nav-links a { text-decoration: none; color: #111827; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: color .2s, background .2s; white-space: nowrap; }
@@ -165,6 +165,22 @@
     .hero h1 .grad { background: linear-gradient(90deg, #4f46e5, #c026d3); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hero .lead { margin-top: 24px; }
     .hero-actions { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn.hub { color: #0e7490; border-color: #a5f3fc; background: #ecfeff; }
+    .btn.hub:hover { background: #cffafe; }
+    .hero-fig { position: relative; }
+    .hero-node { cursor: pointer; outline: none; }
+    .hero-node rect { transition: fill .2s, stroke-width .2s; }
+    .hero-node:hover rect, .hero-node:focus-visible rect { stroke-width: 2; }
+    .hero-node[data-tip="tip-dc"]:hover rect, .hero-node[data-tip="tip-dc"]:focus-visible rect { fill: #fffbeb; }
+    .hero-hub:hover rect, .hero-hub:focus-visible rect { fill: #ecfeff; }
+    .hero-node[data-tip="tip-market"]:hover rect, .hero-node[data-tip="tip-market"]:focus-visible rect { fill: #eef2ff; }
+    .hero-tip { position: absolute; z-index: 5; width: min(300px, 80vw); padding: 14px 16px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 20px 40px -12px rgba(17,24,39,.25); font-size: 14px; line-height: 1.55; color: #4b5563; opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .15s, transform .15s, visibility .15s; pointer-events: none; }
+    .hero-tip.on { opacity: 1; visibility: visible; transform: none; }
+    .hero-tip b { display: block; margin-bottom: 4px; font-size: 14px; }
+    .hero-tip span { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #4f46e5; }
+    @media (hover: none) { .hero-tip { display: none; } }
+    .hero-hub .hub-cta { font-family: var(--sans); font-size: 13px; font-weight: 600; fill: #0e7490; }
+    .hero-hub:hover .hub-cta { text-decoration: underline; }
     .hero-svg { width: 100%; height: auto; overflow: visible; }
     .flow { stroke-dasharray: 6 10; animation: flow 1.2s linear infinite; }
     @keyframes flow { to { stroke-dashoffset: -32; } }
@@ -443,7 +459,6 @@
 
     footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
     footer .foot-brand .logo { justify-content: center; font-size: 18px; }
-    footer .foot-brand p { margin: 12px auto 0; max-width: 34rem; font-size: 14px; color: #6b7280; }
     footer .foot-links { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; }
     footer .foot-links a { font-size: 14px; line-height: 1.5; color: #4b5563; text-decoration: none; display: inline-block; padding: 4px 0; }
     footer .foot-links a:hover { color: #111827; }
@@ -468,7 +483,7 @@
 
   <nav class="top" aria-label="Main">
     <div class="wrap">
-      <a class="logo" href="#top"><img src="media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>dataproduct<span class="tld">.com</span></span></a>
+      <a class="logo" href="#top"><img src="media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Building Data Products with AI</span></a>
       <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
       <div class="nav-links" id="navLinks">
         <div class="dd">
@@ -507,9 +522,11 @@
           <div class="hero-actions">
             <a class="btn primary" href="#contract">Scroll the journey <span aria-hidden="true">↓</span></a>
             <a class="btn" href="https://www.youtube.com/watch?v=dq72KvRs7OA" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 20 20" fill="#dc2626" aria-hidden="true" focusable="false"><path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.34-5.89a1.5 1.5 0 0 0 0-2.54L6.3 2.84Z"/></svg>Watch the video (2 min)<span class="sr-only"> on YouTube, opens in a new tab</span></a>
+            <a class="btn hub" href="/skill-hub/"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-skills"/></svg>Skill hub</a>
           </div>
         </div>
-        <svg class="hero-svg" viewBox="0 0 560 440" role="img" aria-label="Three inputs (data contract, skills, data marketplace) flow into a coding agent, which produces a data product">
+        <div class="hero-fig">
+        <svg class="hero-svg" viewBox="0 0 560 440" role="group" aria-label="Three inputs (data contract, skills, data marketplace) flow into a coding agent, which produces a data product">
           <defs>
             <linearGradient id="gAgent" x1="0" x2="1"><stop offset="0" stop-color="#c026d3"/><stop offset="1" stop-color="#4f46e5"/></linearGradient>
             <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -520,12 +537,19 @@
           <path class="flow" d="M380 220 L 430 220" stroke="#059669" stroke-width="2.5" fill="none"/>
           <path class="flow" d="M490 270 C 490 420, 120 430, 95 405" stroke="#059669" stroke-width="1.5" fill="none" opacity=".45"/>
           <g>
+            <a class="hero-node" href="#contract" aria-describedby="tip-dc" data-tip="tip-dc">
             <rect x="10" y="38" width="186" height="64" rx="14" fill="#ffffff" stroke="#d97706"/>
             <use href="#i-dc" x="24" y="58" width="24" height="24" style="color:#d97706"/><text class="node-label" x="60" y="66">Data contract</text><text class="node-sub" x="60" y="86">the what</text>
-            <rect x="10" y="188" width="186" height="64" rx="14" fill="#ffffff" stroke="#0891b2"/>
-            <use href="#i-skills" x="24" y="208" width="24" height="24" style="color:#0891b2"/><text class="node-label" x="60" y="216">Skills</text><text class="node-sub" x="60" y="236">the how</text>
+            </a>
+            <a class="hero-node hero-hub" href="/skill-hub/" aria-describedby="tip-skills" data-tip="tip-skills">
+              <rect x="10" y="188" width="186" height="64" rx="14" fill="#ffffff" stroke="#0891b2"/>
+              <use href="#i-skills" x="24" y="208" width="24" height="24" style="color:#0891b2"/><text class="node-label" x="60" y="216">Skills</text><text class="node-sub" x="60" y="236">the how</text>
+              <text class="hub-cta" x="103" y="276" text-anchor="middle">Browse the skill hub →</text>
+            </a>
+            <a class="hero-node" href="#marketplace" aria-describedby="tip-market" data-tip="tip-market">
             <rect x="10" y="338" width="186" height="64" rx="14" fill="#ffffff" stroke="#4f46e5"/>
             <use href="#i-market" x="24" y="358" width="24" height="24" style="color:#4f46e5"/><text class="node-label" x="60" y="366">Marketplace</text><text class="node-sub" x="60" y="386">the data to build on</text>
+            </a>
           </g>
           <g class="pulse">
             <circle cx="330" cy="220" r="52" fill="url(#gAgent)" opacity=".25" filter="url(#glow)"/>
@@ -543,6 +567,10 @@
             <circle cx="550" cy="220" r="6" fill="#059669"/>
           </g>
         </svg>
+          <div class="hero-tip" id="tip-dc" role="tooltip"><b class="c-what">Data contract · the what</b>A YAML file in the Open Data Contract Standard (ODCS): schema, business semantics, data quality rules, SLA, owner, and terms of use. Agreed with the consumer before any code is written, then used as the test the result must pass.<span>See how a conversation becomes a contract ↓</span></div>
+          <div class="hero-tip" id="tip-skills" role="tooltip"><b class="c-how">Skills · the how</b>Instructions, templates, and hooks that teach the agent your conventions: how to scaffold a dbt project, implement the models, test against the contract, and publish. Pick a library for your platform, then adapt it.<span>Browse the skill hub →</span></div>
+          <div class="hero-tip up" id="tip-market" role="tooltip"><b class="c-data">Data marketplace · the data to build on</b>The existing data products of your organization, each with its data contract. The agent searches it for input data, requests access, and publishes the finished data product back, so the next one can build on it.<span>Explore the marketplace ↓</span></div>
+        </div>
       </div>
     </section>
 
@@ -931,11 +959,11 @@ servers:
         <span class="eyebrow">FAQ</span>
         <h2 class="h2">Questions</h2>
         <div class="faq">
-          <details><summary>What is a data product?</summary><p>A data product is a unit of data, code, and metadata, owned by one team, that offers its data to others through output ports. Each output port is described by a data contract. Data products are defined in the Open Data Product Standard (ODPS).</p></details>
-          <details><summary>What is a data contract?</summary><p>A data contract is a YAML document in the Open Data Contract Standard (ODCS) that states everything guaranteed about a dataset: schema, semantics, data quality rules, SLAs, owner, terms of use, and where the data lives. The open-source Data Contract CLI tests real data against it.</p></details>
+          <details><summary>What is a data product?</summary><p>A data product is a unit of data, code, and metadata, owned by one team, that offers its data to others through output ports. Each output port is described by a data contract. Data products are defined in the <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard (ODPS)</a>.</p></details>
+          <details><summary>What is a data contract?</summary><p>A data contract is a YAML document in the <a href="https://bitol-io.github.io/open-data-contract-standard/">Open Data Contract Standard (ODCS)</a> that states everything guaranteed about a dataset: schema, semantics, data quality rules, SLAs, owner, terms of use, and where the data lives. The open-source <a href="https://cli.datacontract.com">Data Contract CLI</a> tests real data against it.</p></details>
           <details><summary>How do you build a data product with AI?</summary><p>Give a coding agent such as Claude Code three inputs: a data contract that says what to build, a skill library that says how to build it (pick one from the <a href="/skill-hub/">skill hub</a>), and a data marketplace with the data to build on. Then prompt it to implement the data product. The agent requests access to input data products, generates a dbt project, runs the pipeline, tests the data against the contract, and publishes the data product with test results and lineage.</p></details>
           <details><summary>What does contract-first mean?</summary><p>Contract-first means agreeing on the data contract with the business and the consumers before any data is extracted or any pipeline is written. The contract becomes the specification the coding agent implements and the test the result must pass.</p></details>
-          <details><summary>Which standards and tools are used?</summary><p>The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS) from the Linux Foundation, Apache Ossie for semantics, dbt and Snowflake for the pipeline, the Data Contract CLI and Data Product CLI for testing and publishing, and Entropy Data as the data marketplace.</p></details>
+          <details><summary>Which standards and tools are used?</summary><p>The <a href="https://bitol-io.github.io/open-data-contract-standard/">Open Data Contract Standard (ODCS)</a> and the <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard (ODPS)</a> from the Linux Foundation, <a href="https://www.entropy-data.com/learn/what-is-apache-ossie">Apache Ossie</a> for semantics, <a href="https://www.getdbt.com">dbt</a> and <a href="https://www.snowflake.com">Snowflake</a> for the pipeline, the <a href="https://cli.datacontract.com">Data Contract CLI</a> and <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a> for testing and publishing, and <a href="https://www.entropy-data.com">Entropy Data</a> as the data marketplace.</p></details>
         </div>
       </div>
     </section>
@@ -943,23 +971,9 @@ servers:
 
   <footer>
     <div class="wrap">
-      <div class="foot-brand"><a class="logo" href="https://www.entropy-data.com"><img src="media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Entropy Data</span></a>
-        <p>Based on the talks by Simon Harrer and Jochen Christ, and on the Entropy Explains episode on building data products with AI.</p></div>
+      <div class="foot-brand"><a class="logo" href="https://www.entropy-data.com"><img src="media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Entropy Data</span></a></div>
       <nav class="foot-links" aria-label="Footer">
-        <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
-        <a href="https://www.entropy-data.com/learn/what-is-a-data-contract">What is a Data Contract?</a>
-        <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
-        <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
-        <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a>
-        <a href="https://www.datamesh-architecture.com/#data-product-types">Data Product Types</a>
-        <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>
-        <a href="https://cli.datacontract.com">Data Contract CLI</a>
-        <a href="https://www.entropy-data.com">Data Product Marketplace</a>
-        <a href="https://github.com/entropy-data/entropy-data-skills">Marketplace Skills</a>
         <a href="/skill-hub/">Skill Hub</a>
-        <a href="https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026">POA Summit 2026 talk</a>
-        <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a>
-        <a href="https://www.youtube.com/watch?v=dq72KvRs7OA">Entropy Explains, episode 4</a>
         <a href="https://www.entropy-data.com/legal-notice">Legal Notice</a>
         <a href="https://www.entropy-data.com/privacy-policy">Privacy Policy</a>
       </nav>
@@ -988,6 +1002,25 @@ servers:
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var clamp = function (v) { return Math.max(0, Math.min(1, v)); };
 
+
+    // ---------- hero tooltips ----------
+    (function () {
+      var fig = document.querySelector('.hero-fig');
+      if (!fig) return;
+      fig.querySelectorAll('.hero-node').forEach(function (node) {
+        var tip = document.getElementById(node.dataset.tip);
+        function show() {
+          var f = fig.getBoundingClientRect(), r = node.querySelector('rect').getBoundingClientRect();
+          tip.style.left = (r.left - f.left) + 'px';
+          if (tip.classList.contains('up')) { tip.style.top = ''; tip.style.bottom = (f.bottom - r.top + 10) + 'px'; }
+          else { tip.style.bottom = ''; tip.style.top = (r.bottom - f.top + 10) + 'px'; }
+          tip.classList.add('on');
+        }
+        function hide() { tip.classList.remove('on'); }
+        node.addEventListener('mouseenter', show); node.addEventListener('mouseleave', hide);
+        node.addEventListener('focus', show); node.addEventListener('blur', hide);
+      });
+    })();
 
     // ---------- nav ----------
     var menuBtn = document.getElementById('menuBtn'), navLinks = document.getElementById('navLinks');

@@ -75,7 +75,7 @@
     nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 24px; }
     .logo { font-size: 20px; font-weight: 600; color: #111827; text-decoration: none; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
     .logo img { height: 32px; width: auto; }
-    .logo .tld { color: #6b7280; font-weight: 500; }
+    @media (max-width: 480px) { nav.top .logo { font-size: 16px; gap: 6px; } nav.top .logo img { height: 26px; } }
     .nav-links { display: flex; gap: 4px; align-items: center; }
     .nav-links { gap: 0; }
     .nav-links a { text-decoration: none; color: #111827; font-size: 14px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: color .2s, background .2s; white-space: nowrap; }
@@ -140,7 +140,6 @@
     footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
     footer { border-top: 1px solid #f3f4f6; padding: 80px 0 96px; text-align: center; }
     footer .foot-brand .logo { justify-content: center; font-size: 18px; }
-    footer .foot-brand p { margin: 12px auto 0; max-width: 34rem; font-size: 14px; color: #6b7280; }
     footer .foot-links { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; }
     footer .foot-links a { font-size: 14px; line-height: 1.5; color: #4b5563; text-decoration: none; display: inline-block; padding: 4px 0; }
     footer .foot-links a:hover { color: #111827; }
@@ -151,7 +150,7 @@
   <a class="skip" href="#top">Skip to content</a>
   <nav class="top" aria-label="Main">
     <div class="wrap">
-      <a class="logo" href="/"><img src="/media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>dataproduct<span class="tld">.com</span></span></a>
+      <a class="logo" href="/"><img src="/media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Building Data Products with AI</span></a>
       <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
       <div class="nav-links" id="navLinks">
         <div class="dd">
@@ -239,23 +238,9 @@ claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s proje
 
   <footer>
     <div class="wrap">
-      <div class="foot-brand"><a class="logo" href="https://www.entropy-data.com"><img src="/media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Entropy Data</span></a>
-        <p>Based on the talks by Simon Harrer and Jochen Christ, and on the Entropy Explains episode on building data products with AI.</p></div>
+      <div class="foot-brand"><a class="logo" href="https://www.entropy-data.com"><img src="/media/logo_fuchsia_v2.svg" alt="" width="530" height="587"><span>Entropy Data</span></a></div>
       <nav class="foot-links" aria-label="Footer">
-        <a href="https://www.entropy-data.com/learn/what-is-a-data-product">What is a Data Product?</a>
-        <a href="https://www.entropy-data.com/learn/what-is-a-data-contract">What is a Data Contract?</a>
-        <a href="https://www.entropy-data.com/learn/open-data-product-standard">Open Data Product Standard</a>
-        <a href="https://www.datamesh-architecture.com/data-product-heuristics">Data Product Heuristics</a>
-        <a href="https://www.datamesh-architecture.com/data-product-canvas">Data Product Canvas</a>
-        <a href="https://www.datamesh-architecture.com/#data-product-types">Data Product Types</a>
-        <a href="https://github.com/datacontract/dataproduct-cli">Data Product CLI</a>
-        <a href="https://cli.datacontract.com">Data Contract CLI</a>
-        <a href="https://www.entropy-data.com">Data Product Marketplace</a>
-        <a href="https://github.com/entropy-data/entropy-data-skills">Marketplace Skills</a>
         <a href="/skill-hub/">Skill Hub</a>
-        <a href="https://www.entropy-data.com/learn/talk-data-product-builder-poa-summit-2026">POA Summit 2026 talk</a>
-        <a href="https://www.entropy-data.com/learn/talk-data-first-or-contract-first">Data-first or Contract-first?</a>
-        <a href="https://www.youtube.com/watch?v=dq72KvRs7OA">Entropy Explains, episode 4</a>
         <a href="https://www.entropy-data.com/legal-notice">Legal Notice</a>
         <a href="https://www.entropy-data.com/privacy-policy">Privacy Policy</a>
       </nav>
