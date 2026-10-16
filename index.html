@@ -165,8 +165,7 @@
     .hero h1 .grad { background: linear-gradient(90deg, #4f46e5, #c026d3); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hero .lead { margin-top: 24px; }
     .hero-actions { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn.hub { color: #0e7490; border-color: #a5f3fc; background: #ecfeff; }
-    .btn.hub:hover { background: #cffafe; }
+    .hero-actions .btn:not(.primary) svg { color: #6b7280; }
     .hero-fig { position: relative; }
     .hero-node { cursor: pointer; outline: none; }
     .hero-node rect { transition: fill .2s, stroke-width .2s; }
@@ -219,15 +218,10 @@
     .contract-head .h2 { margin-bottom: 8px; }
     .player { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
     .player input { flex: 1; min-width: 0; height: 24px; margin: 0; accent-color: #4f46e5; cursor: pointer; }
-    .play-btn { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e5e7eb; background: #fff; color: #4f46e5; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .play-btn { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; padding: 0 14px; font: inherit; font-size: 13px; font-weight: 600; border-radius: 999px; border: 1px solid #e5e7eb; background: #fff; color: #4f46e5; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
     .play-btn:hover { background: #eef2ff; border-color: #c7d2fe; }
-    .play-btn svg, .play-overlay svg { width: 16px; height: 16px; }
-    .player .player-hint { flex: none; font-size: 13px; font-weight: 600; color: #6b7280; }
-    .play-overlay { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 2; display: inline-flex; align-items: center; gap: 10px; font: inherit; font-size: 15px; font-weight: 600; color: #fff; background: #4f46e5; border: 0; border-radius: 999px; padding: 12px 22px; cursor: pointer; box-shadow: 0 10px 25px -5px rgba(79,70,229,.45); white-space: nowrap; transition: opacity .25s, transform .25s; }
-    .play-overlay:hover { background: #4338ca; transform: translateX(-50%) scale(1.04); }
-    .play-overlay[hidden] { display: none; }
-    .term { position: relative; }
-    @media (max-width: 979px) { .player { margin-top: 8px; gap: 10px; } .player .player-hint { display: none; } .play-btn { width: 32px; height: 32px; } .play-overlay { font-size: 14px; padding: 10px 18px; bottom: 14px; } }
+    .play-btn svg { width: 14px; height: 14px; }
+    @media (max-width: 979px) { .player { margin-top: 8px; gap: 10px; } }
     .contract-lead { font-size: 16px; margin-bottom: 18px; }
     .convo-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
     @media (min-width: 980px) { .convo-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 28px; } }
@@ -521,7 +515,7 @@
           <p class="lead">A coding agent builds it. You give it three inputs: a <b class="c-what">data contract</b> (what), <a class="hub-link c-how" href="/skill-hub/"><b>skills</b></a> (how), and a <b class="c-data">data marketplace</b> (the data to build on).</p>
           <div class="hero-actions">
             <a class="btn primary" href="#contract">Scroll the journey <span aria-hidden="true">↓</span></a>
-            <a class="btn" href="https://www.youtube.com/watch?v=dq72KvRs7OA" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 20 20" fill="#dc2626" aria-hidden="true" focusable="false"><path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.34-5.89a1.5 1.5 0 0 0 0-2.54L6.3 2.84Z"/></svg>Watch the video (2 min)<span class="sr-only"> on YouTube, opens in a new tab</span></a>
+            <a class="btn" href="https://www.youtube.com/watch?v=dq72KvRs7OA" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.34-5.89a1.5 1.5 0 0 0 0-2.54L6.3 2.84Z"/></svg>Watch the video (2 min)<span class="sr-only"> on YouTube, opens in a new tab</span></a>
             <a class="btn hub" href="/skill-hub/"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-skills"/></svg>Skill hub</a>
           </div>
         </div>
@@ -567,7 +561,7 @@
             <circle cx="550" cy="220" r="6" fill="#059669"/>
           </g>
         </svg>
-          <div class="hero-tip" id="tip-dc" role="tooltip"><b class="c-what">Data contract · the what</b>A YAML file in the Open Data Contract Standard (ODCS): schema, business semantics, data quality rules, SLA, owner, and terms of use. Agreed with the consumer before any code is written, then used as the test the result must pass.<span>See how a conversation becomes a contract ↓</span></div>
+          <div class="hero-tip" id="tip-dc" role="tooltip"><b class="c-what">Data contract · the what</b>A YAML file in the Open Data Contract Standard (ODCS): schema, data quality rules, SLA, owner, and terms of use. Its fields are anchored in your business ontology, so <i>brand</i> means the same everywhere. Agreed with the consumer before any code is written, then used as the test the result must pass.<span>See how a conversation becomes a contract ↓</span></div>
           <div class="hero-tip" id="tip-skills" role="tooltip"><b class="c-how">Skills · the how</b>Instructions, templates, and hooks that teach the agent your conventions: how to scaffold a dbt project, implement the models, test against the contract, and publish. Pick a library for your platform, then adapt it.<span>Browse the skill hub →</span></div>
           <div class="hero-tip up" id="tip-market" role="tooltip"><b class="c-data">Data marketplace · the data to build on</b>The existing data products of your organization, each with its data contract. The agent searches it for input data, requests access, and publishes the finished data product back, so the next one can build on it.<span>Explore the marketplace ↓</span></div>
         </div>
@@ -575,16 +569,16 @@
     </section>
 
     <!-- ================= CONTRACT (scrolly) ================= -->
-    <section class="scrolly" id="contract" style="height:380vh" data-scrolly="contract">
+    <section class="scrolly" id="contract" data-scrolly="contract">
       <div class="sticky">
         <div class="wrap">
           <div class="contract-head">
-            <span class="eyebrow c-what"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-dc"/></svg>Input 1 · the what</span>
+            <span class="eyebrow c-what"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-dc"/></svg>Data contract · the what</span>
             <h2 class="h2">From conversation to data contract</h2>
             <p class="lead contract-lead">Maxi (category manager) needs to know which brands barely sell. John owns the sales data. Each answer becomes part of the contract.</p>
           </div>
           <div class="convo-grid">
-            <div class="chat-panel card" id="chatPanel" role="region" aria-label="Conversation between Maxi and John"><button type="button" class="play-overlay"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg>Play the conversation</button><div class="chat-track" id="chatTrack"><div class="bubble right" data-step="0"><span class="who c-data">Maxi · category manager</span>Which of our brands barely sell? I want to talk to them, run a campaign, or take them out of the assortment.</div><div class="bubble left" data-step="0"><span class="who c-how">John · product owner, sales</span>Let's make that a data product with a contract: slow selling brands.<br><span class="adds">+ purpose</span></div><div class="bubble left" data-step="1"><span class="who c-how">John · product owner, sales</span>What do you need to see per brand?</div><div class="bubble right" data-step="1"><span class="who c-data">Maxi · category manager</span>How many of its products sell slowly, and when one of them last sold.<br><span class="adds">+ schema</span></div><div class="bubble left" data-step="2"><span class="who c-how">John · product owner, sales</span>Brand as in our product catalog?</div><div class="bubble right" data-step="2"><span class="who c-data">Maxi · category manager</span>Yes, the brand everyone in the company means.</div><div class="bubble left" data-step="2"><span class="who c-how">John · product owner, sales</span>Then we link it to the Brand concept in our ontology.<br><span class="adds">+ semantics</span></div><div class="bubble left" data-step="3"><span class="who c-how">John · product owner, sales</span>When is a product slow-selling? Do returns count as sales?</div><div class="bubble right" data-step="3"><span class="who c-data">Maxi · category manager</span>No sale in six months. And returns are not sales.<br><span class="adds">+ definition</span></div><div class="bubble right" data-step="4"><span class="who c-data">Maxi · category manager</span>One row per brand, please. No duplicates.<br><span class="adds">+ data quality</span></div><div class="bubble right" data-step="5"><span class="who c-data">Maxi · category manager</span>I look at it every Monday morning.</div><div class="bubble left" data-step="5"><span class="who c-how">John · product owner, sales</span>We refresh it daily.<br><span class="adds">+ SLA</span></div><div class="bubble right" data-step="6"><span class="who c-data">Maxi · category manager</span>Who do I ask when something looks off?</div><div class="bubble left" data-step="6"><span class="who c-how">John · product owner, sales</span>Us, the sales team.<br><span class="adds">+ owner</span></div><div class="bubble left" data-step="7"><span class="who c-how">John · product owner, sales</span>Anything it must not be used for?</div><div class="bubble right" data-step="7"><span class="who c-data">Maxi · category manager</span>It is about brands, not people. Not for rating individual buyers.<br><span class="adds">+ terms of use</span></div><div class="bubble left" data-step="8"><span class="who c-how">John · product owner, sales</span>We serve it from Snowflake. The contract is done, now the agent can build it.<br><span class="adds">+ server</span></div></div></div>
+            <div class="chat-panel card" id="chatPanel" role="region" aria-label="Conversation between Maxi and John"><div class="chat-track" id="chatTrack"><div class="bubble right" data-step="0"><span class="who c-data">Maxi · category manager</span>Which of our brands barely sell? I want to talk to them, run a campaign, or take them out of the assortment.</div><div class="bubble left" data-step="0"><span class="who c-how">John · product owner, sales</span>Let's make that a data product with a contract: slow selling brands.<br><span class="adds">+ purpose</span></div><div class="bubble left" data-step="1"><span class="who c-how">John · product owner, sales</span>What do you need to see per brand?</div><div class="bubble right" data-step="1"><span class="who c-data">Maxi · category manager</span>How many of its products sell slowly, and when one of them last sold.<br><span class="adds">+ schema</span></div><div class="bubble left" data-step="2"><span class="who c-how">John · product owner, sales</span>Brand as in our product catalog?</div><div class="bubble right" data-step="2"><span class="who c-data">Maxi · category manager</span>Yes, the brand everyone in the company means.</div><div class="bubble left" data-step="2"><span class="who c-how">John · product owner, sales</span>Then we link it to the Brand concept in our ontology.<br><span class="adds">+ semantics</span></div><div class="bubble left" data-step="3"><span class="who c-how">John · product owner, sales</span>When is a product slow-selling? Do returns count as sales?</div><div class="bubble right" data-step="3"><span class="who c-data">Maxi · category manager</span>No sale in six months. And returns are not sales.<br><span class="adds">+ definition</span></div><div class="bubble right" data-step="4"><span class="who c-data">Maxi · category manager</span>One row per brand, please. No duplicates.<br><span class="adds">+ data quality</span></div><div class="bubble right" data-step="5"><span class="who c-data">Maxi · category manager</span>I look at it every Monday morning.</div><div class="bubble left" data-step="5"><span class="who c-how">John · product owner, sales</span>We refresh it daily.<br><span class="adds">+ SLA</span></div><div class="bubble right" data-step="6"><span class="who c-data">Maxi · category manager</span>Who do I ask when something looks off?</div><div class="bubble left" data-step="6"><span class="who c-how">John · product owner, sales</span>Us, the sales team.<br><span class="adds">+ owner</span></div><div class="bubble left" data-step="7"><span class="who c-how">John · product owner, sales</span>Anything it must not be used for?</div><div class="bubble right" data-step="7"><span class="who c-data">Maxi · category manager</span>It is about brands, not people. Not for rating individual buyers.<br><span class="adds">+ terms of use</span></div><div class="bubble left" data-step="8"><span class="who c-how">John · product owner, sales</span>We serve it from Snowflake. The contract is done, now the agent can build it.<br><span class="adds">+ server</span></div></div></div>
             <div class="dc-panel card">
               <div class="dc-bar"><div class="seg" role="group" aria-label="View the data contract as"><button type="button" class="on" aria-pressed="true" data-view="diagram">Diagram</button><button type="button" aria-pressed="false" data-view="yaml">YAML</button></div><span class="tag" id="partTag" aria-hidden="true">purpose</span></div>
               <svg class="dc-svg" id="dcSvg" viewBox="10 4 500 478" role="img" aria-label="The data contract slow_selling_brands with three columns; the brand column is linked to the Brand concept of the business ontology">
@@ -680,7 +674,7 @@ servers:
     schema: slow_selling_brands_v1</pre>
             </div>
           </div>
-          <div class="player"><button type="button" class="play-btn" aria-label="Play"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg></button><input type="range" min="0" max="1000" value="0" aria-label="Position in the conversation"><span class="player-hint">or scroll</span></div>
+          <div class="player"><button type="button" class="play-btn"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg></button><input type="range" min="0" max="1000" value="0" aria-label="Position in the conversation"></div>
         </div>
       </div>
     </section>
@@ -689,7 +683,7 @@ servers:
     <section class="block" id="skills">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow c-how"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-skills"/></svg>Input 2 · the how</span>
+          <span class="eyebrow c-how"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-skills"/></svg>Skills · the how</span>
           <h2 class="h2">The skill hub for building data products.</h2>
           <p class="lead">Open skill libraries with skills, templates, and hooks that any coding agent reads. Pick one from the <a href="/skill-hub/">skill hub</a>, then adapt it to your conventions.</p>
         </div>
@@ -718,7 +712,7 @@ servers:
     <section class="block" id="marketplace">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow c-data"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-market"/></svg>Input 3 · the data to build on</span>
+          <span class="eyebrow c-data"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-market"/></svg>Data marketplace · the data to build on</span>
           <h2 class="h2">Build on other data products.</h2>
           <p class="lead">The agent searches the <a href="https://www.entropy-data.com">data marketplace</a> for data products to build on, reads their contracts, and requests access. Search like the agent does.</p>
         </div>
@@ -774,18 +768,18 @@ servers:
     </section>
 
     <!-- ================= AGENT (scrolly) ================= -->
-    <section class="scrolly" id="agent" style="height:420vh" data-scrolly="agent">
+    <section class="scrolly" id="agent" data-scrolly="agent">
       <div class="sticky">
         <div class="wrap">
           <div class="contract-head">
-            <span class="eyebrow c-agent"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-agent"/></svg>Step 4 · the coding agent</span>
+            <span class="eyebrow c-agent"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-agent"/></svg>Coding agent · builds it</span>
             <h2 class="h2">Implement it.</h2>
             <p class="lead contract-lead">One prompt. The agent uses the contract, the skills from <a href="https://github.com/entropy-data/dataproduct-builder-demo"><code>dataproduct-builder-demo</code></a> (one of the libraries in the <a href="/skill-hub/">skill hub</a>), and the marketplace, then runs the pipeline and publishes the result.</p>
           </div>
           <div class="agent-grid">
             <div class="term">
               <div class="editor-bar"><i></i><i></i><i></i><span class="title">claude · slow-selling-brands</span><span class="tag" id="agentClock" style="background:rgba(192,38,211,.12);color:var(--agent)">0:00</span></div>
-              <button type="button" class="play-overlay"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg>Play the agent run</button><div class="term-body" id="termBody" role="log" aria-label="Coding agent session"><div class="term-track" id="termTrack"><div class="l" data-v="prompt" data-t="0:00"><span class="p">❯</span> <span class="wht">Implement the data product slow-selling-brands with its data contract</span></div><div class="l" data-v="prompt" data-t="0:00"><span class="mut">  Don't ask questions. Approve access requests if you have the rights.</span></div><div class="l" data-v="contract" data-t="0:08"><span class="c-what">●</span> Reading data contract slow-selling-brands.odcs.yaml</div><div class="l" data-v="skills" data-t="0:20"><span class="c-how">●</span> Using skill <a class="c-how term-skill" href="https://github.com/entropy-data/dataproduct-builder-demo/blob/main/skills/dataproduct-bootstrap/SKILL.md">dataproduct-builder-demo:dataproduct-bootstrap</a></div><div class="l" data-v="dbt" data-t="0:41">  <span class="mut">created dbt project, dataproduct.odps.yaml</span></div><div class="l" data-v="search" data-t="0:55"><span class="c-data">●</span> <span class="cmd">entropy-data search query "articles sales"</span></div><div class="l" data-v="search" data-t="1:04">  <span class="mut">found</span> articles-latest, shelf-warmers <span class="mut">(join on sku)</span></div><div class="l" data-v="req1" data-t="1:20"><span class="c-data">●</span> Requesting access to <span class="wht">articles-latest</span></div><div class="l" data-v="ok1" data-t="1:26">  <span class="ok">✓ approved</span></div><div class="l" data-v="req2" data-t="1:34"><span class="c-data">●</span> Requesting access to <span class="wht">shelf-warmers</span></div><div class="l" data-v="ok2" data-t="1:40">  <span class="ok">✓ approved</span></div><div class="l" data-v="models" data-t="1:52"><span class="c-how">●</span> Using skill <a class="c-how term-skill" href="https://github.com/entropy-data/dataproduct-builder-demo/blob/main/skills/dataproduct-implement/SKILL.md">dataproduct-builder-demo:dataproduct-implement</a></div><div class="l" data-v="models" data-t="2:38">  <span class="mut">input_ports/ · intermediate/ · output_port/slow_selling_brands.sql</span></div><div class="l" data-v="lint" data-t="3:05"><span class="c-agent">●</span> <span class="cmd">datacontract lint</span>  <span class="ok">✓</span>  <span class="cmd">dataproduct lint</span>  <span class="ok">✓</span></div><div class="l" data-v="run" data-t="3:48"><span class="c-agent">●</span> <span class="cmd">dbt-ol run</span>  <span class="ok">✓ SLOW_SELLING_BRANDS, 41 rows</span></div><div class="l" data-v="tests1" data-t="4:10"><span class="c-agent">●</span> <span class="cmd">dbt test</span>  <span class="ok">✓ 3/3</span></div><div class="l" data-v="tests2" data-t="4:36"><span class="c-agent">●</span> <span class="cmd">datacontract test</span>  <span class="ok">✓ 11/11</span></div><div class="l" data-v="publish" data-t="4:55"><span class="c-product">●</span> <span class="cmd">dataproduct publish dataproduct.odps.yaml</span>  <span class="ok">✓</span></div><div class="l" data-v="results" data-t="5:02"><span class="c-product">●</span> <span class="cmd">datacontract test --publish</span>  <span class="ok">✓ test results published to Entropy Data</span></div><div class="l" data-v="lineage" data-t="5:09"><span class="c-product">●</span> Lineage sent via OpenLineage</div><div class="l" data-v="done" data-t="5:21"><span class="ok">✓ Done. Data product slow-selling-brands is active.</span></div></div></div>
+              <div class="term-body" id="termBody" role="log" aria-label="Coding agent session"><div class="term-track" id="termTrack"><div class="l" data-v="prompt" data-t="0:00"><span class="p">❯</span> <span class="wht">Implement the data product slow-selling-brands with its data contract</span></div><div class="l" data-v="prompt" data-t="0:00"><span class="mut">  Don't ask questions. Approve access requests if you have the rights.</span></div><div class="l" data-v="contract" data-t="0:08"><span class="c-what">●</span> Reading data contract slow-selling-brands.odcs.yaml</div><div class="l" data-v="skills" data-t="0:20"><span class="c-how">●</span> Using skill <a class="c-how term-skill" href="https://github.com/entropy-data/dataproduct-builder-demo/blob/main/skills/dataproduct-bootstrap/SKILL.md">dataproduct-builder-demo:dataproduct-bootstrap</a></div><div class="l" data-v="dbt" data-t="0:41">  <span class="mut">created dbt project, dataproduct.odps.yaml</span></div><div class="l" data-v="search" data-t="0:55"><span class="c-data">●</span> <span class="cmd">entropy-data search query "articles sales"</span></div><div class="l" data-v="search" data-t="1:04">  <span class="mut">found</span> articles-latest, shelf-warmers <span class="mut">(join on sku)</span></div><div class="l" data-v="req1" data-t="1:20"><span class="c-data">●</span> Requesting access to <span class="wht">articles-latest</span></div><div class="l" data-v="ok1" data-t="1:26">  <span class="ok">✓ approved</span></div><div class="l" data-v="req2" data-t="1:34"><span class="c-data">●</span> Requesting access to <span class="wht">shelf-warmers</span></div><div class="l" data-v="ok2" data-t="1:40">  <span class="ok">✓ approved</span></div><div class="l" data-v="models" data-t="1:52"><span class="c-how">●</span> Using skill <a class="c-how term-skill" href="https://github.com/entropy-data/dataproduct-builder-demo/blob/main/skills/dataproduct-implement/SKILL.md">dataproduct-builder-demo:dataproduct-implement</a></div><div class="l" data-v="models" data-t="2:38">  <span class="mut">input_ports/ · intermediate/ · output_port/slow_selling_brands.sql</span></div><div class="l" data-v="lint" data-t="3:05"><span class="c-agent">●</span> <span class="cmd">datacontract lint</span>  <span class="ok">✓</span>  <span class="cmd">dataproduct lint</span>  <span class="ok">✓</span></div><div class="l" data-v="run" data-t="3:48"><span class="c-agent">●</span> <span class="cmd">dbt-ol run</span>  <span class="ok">✓ SLOW_SELLING_BRANDS, 41 rows</span></div><div class="l" data-v="tests1" data-t="4:10"><span class="c-agent">●</span> <span class="cmd">dbt test</span>  <span class="ok">✓ 3/3</span></div><div class="l" data-v="tests2" data-t="4:36"><span class="c-agent">●</span> <span class="cmd">datacontract test</span>  <span class="ok">✓ 11/11</span></div><div class="l" data-v="publish" data-t="4:55"><span class="c-product">●</span> <span class="cmd">dataproduct publish dataproduct.odps.yaml</span>  <span class="ok">✓</span></div><div class="l" data-v="results" data-t="5:02"><span class="c-product">●</span> <span class="cmd">datacontract test --publish</span>  <span class="ok">✓ test results published to Entropy Data</span></div><div class="l" data-v="lineage" data-t="5:09"><span class="c-product">●</span> Lineage sent via OpenLineage</div><div class="l" data-v="done" data-t="5:21"><span class="ok">✓ Done. Data product slow-selling-brands is active.</span></div></div></div>
             </div>
             <div class="card bv-panel">
               <svg class="bv-svg" id="bvSvg" viewBox="0 0 560 470" role="img" aria-label="The coding agent reads the contract and skills, requests access to two data products in the marketplace, builds and runs the dbt pipeline into Snowflake, and publishes the new data product back to the marketplace">
@@ -832,7 +826,7 @@ servers:
               </svg>
             </div>
           </div>
-          <div class="player"><button type="button" class="play-btn" aria-label="Play"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg></button><input type="range" min="0" max="1000" value="0" aria-label="Position in the agent run"><span class="player-hint">or scroll</span></div>
+          <div class="player"><button type="button" class="play-btn"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg></button><input type="range" min="0" max="1000" value="0" aria-label="Position in the agent run"></div>
         </div>
       </div>
     </section>
@@ -841,7 +835,7 @@ servers:
     <section class="block" id="result">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow c-product"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-dp"/></svg>Step 5 · the data product</span>
+          <span class="eyebrow c-product"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-dp"/></svg>Data product · the result</span>
           <h2 class="h2">The fully operationalized data product</h2>
           <p class="lead">The agent produced a complete dbt project, built on <b>articles-latest</b> and <b>shelf-warmers</b>: 41 brands in Snowflake, 3/3 dbt tests and 11/11 contract tests green.</p>
         </div>
@@ -1156,20 +1150,19 @@ servers:
     }
 
     var handlers = { contract: contract, agent: agent };
-    // progress only moves forward with scrolling; the play button plays it on its own, the slider rewinds it
+    // each step shows its finished state; the play button replays it, the slider scrubs through it
     var DURATION = { contract: 16000, agent: 14000 };
     var ICON = {
       play: '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z"/></svg>',
       pause: '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z"/></svg>',
       replay: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 8a5.5 5.5 0 1 0 1.7-4"/><path d="M2.5 2v3.5H6"/></svg>'
     };
+    var LABEL = { play: 'Play', pause: 'Pause', replay: 'Replay' };
     function render(s) {
       s.fn(s.pos);
       s.slider.value = Math.round(s.pos * 1000);
       var state = s.playing ? 'pause' : s.pos >= 1 ? 'replay' : 'play';
-      if (state !== s.state) { s.state = state; s.btn.innerHTML = ICON[state]; s.btn.setAttribute('aria-label', state === 'pause' ? 'Pause' : state === 'replay' ? 'Play again' : 'Play'); }
-      // stays up while the step is just being scrolled into place, so there is time to press it
-      s.overlay.hidden = s.playing || s.pos > 0.06;
+      if (state !== s.state) { s.state = state; s.btn.innerHTML = ICON[state] + LABEL[state]; }
     }
     function play(s) {
       if (s.pos >= 1) s.pos = 0;
@@ -1177,52 +1170,34 @@ servers:
       var last = performance.now();
       (function tick(now) {
         if (!s.playing) return;
-        s.pos = Math.min(1, s.pos + (now - last) / DURATION[s.el.dataset.scrolly]); last = now;
+        s.pos = clamp(s.pos + Math.max(0, now - last) / DURATION[s.el.dataset.scrolly]); last = now;
         if (s.pos >= 1) s.playing = false;
         render(s);
-        if (s.playing) requestAnimationFrame(tick); else if (!s.done) collapse(s);
+        if (s.playing) requestAnimationFrame(tick);
       })(last);
     }
-    function pause(s) { s.playing = false; render(s); }
     var scrollies = Array.prototype.map.call(document.querySelectorAll('[data-scrolly]'), function (el) {
-      var sc = { el: el, fn: handlers[el.dataset.scrolly], pos: reduce ? 1 : 0, done: false, playing: false,
-        slider: el.querySelector('.player input'), btn: el.querySelector('.play-btn'), overlay: el.querySelector('.play-overlay') };
+      var sc = { el: el, fn: handlers[el.dataset.scrolly], pos: 1, playing: false, slider: el.querySelector('.player input'), btn: el.querySelector('.play-btn') };
       sc.slider.addEventListener('input', function () { sc.playing = false; sc.pos = sc.slider.value / 1000; render(sc); });
-      sc.btn.addEventListener('click', function () { if (sc.playing) pause(sc); else play(sc); });
-      sc.overlay.addEventListener('click', function () { play(sc); sc.btn.focus({ preventScroll: true }); });
+      sc.btn.addEventListener('click', function () { if (sc.playing) { sc.playing = false; render(sc); } else play(sc); });
       return sc;
     });
-    // Once a step has played to the end, it shrinks to one screen, so scrolling passes over it in both
-    // directions without pausing. Scrolling never steps it again; only the player rewinds it.
-    function collapse(s) {
-      s.done = true;
-      // read the position before the page gets shorter: the browser clamps its own scroll position right away
-      var from = window.scrollY;
-      var before = s.el.getBoundingClientRect();
-      s.el.style.height = '100vh'; docH = null;
-      var cut = before.height - s.el.getBoundingClientRect().height;
-      // the step starts above the top of the screen: keep the view where it is (pinned to the step if it was playing mid-way)
-      if (cut > 0 && before.top < 0) window.scrollTo({ top: from - Math.min(cut, -before.top), behavior: 'instant' });
-    }
+    function renderAll() { scrollies.forEach(render); }
+    window.addEventListener('resize', renderAll);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderAll);
+    renderAll();
+
     var progressBar = document.getElementById('progress'), docH = null;
     window.addEventListener('resize', function () { docH = null; });
     var ticking = false;
     function onScroll() {
       ticking = false;
-      var vh = window.innerHeight;
-      scrollies.forEach(function (s) {
-        if (s.done) return;
-        var r = s.el.getBoundingClientRect(), p = clamp(-r.top / (r.height - vh));
-        if (p > s.pos) { s.pos = p; render(s); }
-        if (s.pos >= 1 && !s.playing) collapse(s);
-      });
       if (docH === null) docH = document.documentElement.scrollHeight;
-      var h = docH - vh;
+      var h = docH - window.innerHeight;
       progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
     }
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
     window.addEventListener('resize', onScroll);
-    scrollies.forEach(render);
     onScroll();
 
     // ---------- marketplace search ----------
