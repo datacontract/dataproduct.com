@@ -173,10 +173,16 @@
     .hero-node[data-tip="tip-dc"]:hover rect, .hero-node[data-tip="tip-dc"]:focus-visible rect { fill: #fffbeb; }
     .hero-hub:hover rect, .hero-hub:focus-visible rect { fill: #ecfeff; }
     .hero-node[data-tip="tip-market"]:hover rect, .hero-node[data-tip="tip-market"]:focus-visible rect { fill: #eef2ff; }
+    .hero-node[data-tip="tip-agent"]:hover .hit, .hero-node[data-tip="tip-agent"]:focus-visible .hit { fill: #faf5ff; }
+    .hero-node[data-tip="tip-dp"]:hover .hit, .hero-node[data-tip="tip-dp"]:focus-visible .hit { fill: #ecfdf5; stroke-width: 2.5; }
     .hero-tip { position: absolute; z-index: 5; width: min(300px, 80vw); padding: 14px 16px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 20px 40px -12px rgba(17,24,39,.25); font-size: 14px; line-height: 1.55; color: #4b5563; opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .15s, transform .15s, visibility .15s; pointer-events: none; }
-    .hero-tip.on { opacity: 1; visibility: visible; transform: none; }
+    .hero-tip.on { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
     .hero-tip b { display: block; margin-bottom: 4px; font-size: 14px; }
-    .hero-tip span { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #4f46e5; }
+    .hero-tip a.more { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #4f46e5; }
+    .hero-tip a.more:hover { text-decoration: underline; }
+    /* invisible bridge over the gap to the node, so the pointer can move into the card */
+    .hero-tip::before { content: ""; position: absolute; left: 0; right: 0; height: 14px; top: -14px; }
+    .hero-tip.up::before { top: auto; bottom: -14px; }
     @media (hover: none) { .hero-tip { display: none; } }
     .hero-hub .hub-cta { font-family: var(--sans); font-size: 13px; font-weight: 600; fill: #0e7490; }
     .hero-hub:hover .hub-cta { text-decoration: underline; }
@@ -545,25 +551,31 @@
             <use href="#i-market" x="24" y="358" width="24" height="24" style="color:#4f46e5"/><text class="node-label" x="60" y="366">Marketplace</text><text class="node-sub" x="60" y="386">the data to build on</text>
             </a>
           </g>
+          <a class="hero-node" href="#agent" aria-describedby="tip-agent" data-tip="tip-agent">
           <g class="pulse">
             <circle cx="330" cy="220" r="52" fill="url(#gAgent)" opacity=".25" filter="url(#glow)"/>
-            <circle cx="330" cy="220" r="46" fill="#ffffff" stroke="url(#gAgent)" stroke-width="2.5"/>
+            <circle class="hit" cx="330" cy="220" r="46" fill="#ffffff" stroke="url(#gAgent)" stroke-width="2.5"/>
             <use href="#i-agent" x="316" y="186" width="28" height="28" style="color:#c026d3"/>
             <text class="node-label" x="330" y="234" text-anchor="middle">Coding</text>
             <text class="node-label" x="330" y="252" text-anchor="middle">agent</text>
           </g>
+          </a>
+          <a class="hero-node" href="#result" aria-describedby="tip-dp" data-tip="tip-dp">
           <g>
-            <rect x="430" y="170" width="120" height="100" rx="16" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+            <rect class="hit" x="430" y="170" width="120" height="100" rx="16" fill="#ffffff" stroke="#059669" stroke-width="2"/>
             <use href="#i-dp" x="474" y="184" width="32" height="32" style="color:#059669"/>
             <text class="node-label" x="490" y="238" text-anchor="middle">Data</text>
             <text class="node-label" x="490" y="256" text-anchor="middle">product</text>
             <circle cx="430" cy="220" r="6" fill="#059669"/>
             <circle cx="550" cy="220" r="6" fill="#059669"/>
           </g>
+          </a>
         </svg>
-          <div class="hero-tip" id="tip-dc" role="tooltip"><b class="c-what">Data contract · the what</b>A YAML file in the Open Data Contract Standard (ODCS): schema, data quality rules, SLA, owner, and terms of use. Its fields are anchored in your business ontology, so <i>brand</i> means the same everywhere. Agreed with the consumer before any code is written, then used as the test the result must pass.<span>See how a conversation becomes a contract ↓</span></div>
-          <div class="hero-tip" id="tip-skills" role="tooltip"><b class="c-how">Skills · the how</b>Instructions, templates, and hooks that teach the agent your conventions: how to scaffold a dbt project, implement the models, test against the contract, and publish. Pick a library for your platform, then adapt it.<span>Browse the skill hub →</span></div>
-          <div class="hero-tip up" id="tip-market" role="tooltip"><b class="c-data">Data marketplace · the data to build on</b>The existing data products of your organization, each with its data contract. The agent searches it for input data, requests access, and publishes the finished data product back, so the next one can build on it.<span>Explore the marketplace ↓</span></div>
+          <div class="hero-tip" id="tip-dc"><b class="c-what">Data contract · the what</b>A YAML file in the Open Data Contract Standard (ODCS): schema, data quality rules, SLA, owner, and terms of use. Its fields are anchored in your business ontology, so <i>brand</i> means the same everywhere. Agreed with the consumer before any code is written, then used as the test the result must pass.<a class="more" href="#contract">See how a conversation becomes a contract ↓</a></div>
+          <div class="hero-tip" id="tip-skills"><b class="c-how">Skills · the how</b>Instructions, templates, and hooks that teach the agent your conventions: how to scaffold a dbt project, implement the models, test against the contract, and publish. Pick a library for your platform, then adapt it.<a class="more" href="/skill-hub/">Browse the skill hub →</a></div>
+          <div class="hero-tip up" id="tip-market"><b class="c-data">Data marketplace · the data to build on</b>The existing data products of your organization, each with its data contract. The agent searches it for input data, requests access, and publishes the finished data product back, so the next one can build on it.<a class="more" href="#marketplace">Explore the marketplace ↓</a></div>
+          <div class="hero-tip end" id="tip-agent"><b class="c-agent">Coding agent · builds it</b>Claude Code, OpenAI Codex, GitHub Copilot CLI, or any agent that reads skills. It reads the contract, follows the skills, finds and requests the input data in the marketplace, writes and runs the dbt project, and tests the result against the contract.<a class="more" href="#agent">Watch the agent run ↓</a></div>
+          <div class="hero-tip end" id="tip-dp"><b class="c-product">Data product · the result</b>A dbt project with input and output ports, a table on your data platform, passing contract tests, and lineage. Published to the marketplace with its data contract, so others can find it, request access, and build on it.<a class="more" href="#result">See the result ↓</a></div>
         </div>
       </div>
     </section>
@@ -1004,15 +1016,23 @@ servers:
       fig.querySelectorAll('.hero-node').forEach(function (node) {
         var tip = document.getElementById(node.dataset.tip);
         function show() {
-          var f = fig.getBoundingClientRect(), r = node.querySelector('rect').getBoundingClientRect();
-          tip.style.left = (r.left - f.left) + 'px';
+          var f = fig.getBoundingClientRect(), r = (node.querySelector('.hit') || node.querySelector('rect')).getBoundingClientRect();
+          // nodes on the right side open their card towards the left, so it stays on screen
+          if (tip.classList.contains('end')) { tip.style.left = ''; tip.style.right = (f.right - r.right) + 'px'; }
+          else { tip.style.right = ''; tip.style.left = (r.left - f.left) + 'px'; }
           if (tip.classList.contains('up')) { tip.style.top = ''; tip.style.bottom = (f.bottom - r.top + 10) + 'px'; }
           else { tip.style.bottom = ''; tip.style.top = (r.bottom - f.top + 10) + 'px'; }
           tip.classList.add('on');
         }
-        function hide() { tip.classList.remove('on'); }
-        node.addEventListener('mouseenter', show); node.addEventListener('mouseleave', hide);
-        node.addEventListener('focus', show); node.addEventListener('blur', hide);
+        // the card stays open while the pointer or focus is on the node or inside the card, so its link can be clicked
+        var timer;
+        function hideSoon() { clearTimeout(timer); timer = setTimeout(function () { tip.classList.remove('on'); }, 200); }
+        function keep() { clearTimeout(timer); }
+        node.addEventListener('mouseenter', function () { keep(); fig.querySelectorAll('.hero-tip.on').forEach(function (t) { if (t !== tip) t.classList.remove('on'); }); show(); });
+        node.addEventListener('mouseleave', hideSoon);
+        node.addEventListener('focus', show); node.addEventListener('blur', hideSoon);
+        tip.addEventListener('mouseenter', keep); tip.addEventListener('mouseleave', hideSoon);
+        tip.addEventListener('focusin', keep); tip.addEventListener('focusout', hideSoon);
       });
     })();
 
