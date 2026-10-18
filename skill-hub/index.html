@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Skill Hub for Building Data Products | dataproduct.com</title>
-  <meta name="description" content="Open skill libraries that teach coding agents like Claude Code, OpenAI Codex, and GitHub Copilot CLI how to build data products. Filter by technology: dbt, Snowflake, Databricks, AWS Glue.">
+  <meta name="description" content="Open skill libraries that teach coding agents like Claude Code, OpenAI Codex, and GitHub Copilot CLI how to build data products. Filter by technology: dbt, Snowflake, Databricks, BigQuery, AWS Glue.">
   <link rel="canonical" href="https://www.dataproduct.com/skill-hub/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#4f46e5">
@@ -193,6 +193,7 @@
             <button type="button" class="chip" data-filter="dbt" aria-pressed="false"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</button>
             <button type="button" class="chip" data-filter="Snowflake" aria-pressed="false"><img src="/media/icons/snowflake.svg" alt="" width="16" height="16">Snowflake</button>
             <button type="button" class="chip" data-filter="Databricks" aria-pressed="false"><img src="/media/icons/databricks.svg" alt="" width="16" height="16">Databricks</button>
+            <button type="button" class="chip" data-filter="BigQuery" aria-pressed="false"><img src="/media/icons/bigquery.svg" alt="" width="16" height="16">BigQuery</button>
             <button type="button" class="chip" data-filter="AWS Glue" aria-pressed="false"><img src="/media/icons/glue.svg" alt="" width="16" height="16">AWS Glue</button>
           </div>
           <div class="hub-group" role="group" aria-label="Coding agent">
@@ -211,6 +212,22 @@
             <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake
 claude plugin install dataproduct-builder-dbt-snowflake@dataproduct-builder-dbt-snowflake -s project</pre><button type="button" class="copy">Copy</button></div>
           </article>
+          <article class="card hub-item" data-tech="dbt|Databricks" data-repo="dataproduct-skills/dataproduct-builder-dbt-databricks">
+            <h3>dbt on Databricks</h3>
+            <a class="repo" href="https://github.com/dataproduct-skills/dataproduct-builder-dbt-databricks">github.com/dataproduct-skills/dataproduct-builder-dbt-databricks</a>
+            <p>Bootstraps, implements, and tests dbt data products on Databricks with Unity Catalog and Delta tables against their data contracts, and publishes ODPS, ODCS, and OpenLineage to Entropy Data.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</span><span class="tech"><img src="/media/icons/databricks.svg" alt="" width="16" height="16">Databricks</span></div>
+            <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-databricks
+claude plugin install dataproduct-builder-dbt-databricks@dataproduct-builder-dbt-databricks -s project</pre><button type="button" class="copy">Copy</button></div>
+          </article>
+          <article class="card hub-item" data-tech="dbt|BigQuery" data-repo="dataproduct-skills/dataproduct-builder-dbt-bigquery">
+            <h3>dbt on BigQuery</h3>
+            <a class="repo" href="https://github.com/dataproduct-skills/dataproduct-builder-dbt-bigquery">github.com/dataproduct-skills/dataproduct-builder-dbt-bigquery</a>
+            <p>Bootstraps, implements, and tests dbt data products on Google BigQuery against their data contracts, and publishes ODPS, ODCS, and OpenLineage to Entropy Data.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</span><span class="tech"><img src="/media/icons/bigquery.svg" alt="" width="16" height="16">BigQuery</span></div>
+            <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-bigquery
+claude plugin install dataproduct-builder-dbt-bigquery@dataproduct-builder-dbt-bigquery -s project</pre><button type="button" class="copy">Copy</button></div>
+          </article>
           <article class="card hub-item" data-tech="dbt|Snowflake" data-repo="entropy-data/dataproduct-builder-demo">
             <h3>Demo</h3>
             <a class="repo" href="https://github.com/entropy-data/dataproduct-builder-demo">github.com/entropy-data/dataproduct-builder-demo</a>
@@ -220,7 +237,7 @@ claude plugin install dataproduct-builder-dbt-snowflake@dataproduct-builder-dbt-
 claude plugin install dataproduct-builder-demo@dataproduct-builder-demo -s project</pre><button type="button" class="copy">Copy</button></div>
           </article>
           <article class="card hub-item" data-tech="Databricks">
-            <h3>Databricks <span class="soon">Coming soon</span></h3>
+            <h3>Databricks Declarative Automation Bundles <span class="soon">Coming soon</span></h3>
             <p>Declarative Automation Bundles, Delta Live Tables, and Unity Catalog, with data contracts.</p>
             <div class="techs"><span class="tech"><img src="/media/icons/databricks.svg" alt="" width="16" height="16">Databricks</span></div>
           </article>

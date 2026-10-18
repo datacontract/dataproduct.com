@@ -352,6 +352,8 @@ The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS)
 - [Data Contract Editor](https://github.com/datacontract/datacontract-editor): write data contracts visually
 - [Skill hub](https://www.dataproduct.com/skill-hub/): skill libraries for coding agents, filtered by technology
 - [dbt on Snowflake skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake): skills for building dbt data products on Snowflake
+- [dbt on Databricks skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-databricks): skills for building dbt data products on Databricks
+- [dbt on BigQuery skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-bigquery): skills for building dbt data products on Google BigQuery
 - [Entropy Data](https://www.entropy-data.com): data product marketplace
 
 ## Learn more
