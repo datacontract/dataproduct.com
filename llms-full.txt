@@ -89,7 +89,7 @@ servers:
 
 ### Step 2: The skill hub for building data products
 
-Open skill libraries with skills, templates, and hooks that any coding agent reads (Claude Code, OpenAI Codex, GitHub Copilot). Pick one, then adapt it to your conventions. Demo: https://github.com/entropy-data/dataproduct-builder-demo · Full version for more platforms: https://github.com/entropy-data/dataproduct-builder-dbt
+Open skill libraries with skills, templates, and hooks that any coding agent reads (Claude Code, OpenAI Codex, GitHub Copilot). Pick one, then adapt it to your conventions. Full version for more platforms: https://github.com/entropy-data/dataproduct-builder-dbt
 
 #### Routing manifest (`AGENTS.md`)
 
