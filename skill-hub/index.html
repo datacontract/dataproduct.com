@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Skill Hub for Building Data Products | dataproduct.com</title>
-  <meta name="description" content="Open skill libraries that teach coding agents like Claude Code, OpenAI Codex, and GitHub Copilot CLI how to build data products. Filter by technology: dbt, Snowflake, Databricks, BigQuery, Microsoft Fabric, Dagster, Google Dataflow.">
+  <meta name="description" content="Open skill libraries that teach coding agents like Claude Code, OpenAI Codex, and GitHub Copilot CLI how to build data products. Filter by technology: dbt, Snowflake, Databricks, BigQuery, Dremio, Microsoft Fabric, Dagster, Google Dataflow.">
   <link rel="canonical" href="https://www.dataproduct.com/skill-hub/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#4f46e5">
@@ -195,6 +195,7 @@
             <button type="button" class="chip" data-filter="Snowflake" aria-pressed="false"><img src="/media/icons/snowflake.svg" alt="" width="16" height="16">Snowflake</button>
             <button type="button" class="chip" data-filter="Databricks" aria-pressed="false"><img src="/media/icons/databricks.svg" alt="" width="16" height="16">Databricks</button>
             <button type="button" class="chip" data-filter="BigQuery" aria-pressed="false"><img src="/media/icons/bigquery.svg" alt="" width="16" height="16">BigQuery</button>
+            <button type="button" class="chip" data-filter="Dremio" aria-pressed="false"><img src="/media/icons/dremio.svg" alt="" width="16" height="16">Dremio</button>
             <button type="button" class="chip" data-filter="Microsoft Fabric" aria-pressed="false"><img src="/media/icons/fabric.svg" alt="" width="16" height="16">Microsoft Fabric</button>
             <button type="button" class="chip" data-filter="Dagster" aria-pressed="false"><img src="/media/icons/dagster.svg" alt="" width="16" height="16">Dagster</button>
             <button type="button" class="chip" data-filter="Google Dataflow" aria-pressed="false"><img src="/media/icons/dataflow.svg" alt="" width="16" height="16">Google Dataflow</button>
@@ -230,6 +231,14 @@ claude plugin install dataproduct-builder-dbt-databricks@dataproduct-builder-dbt
             <div class="techs"><span class="tech"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</span><span class="tech"><img src="/media/icons/bigquery.svg" alt="" width="16" height="16">BigQuery</span></div>
             <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-bigquery
 claude plugin install dataproduct-builder-dbt-bigquery@dataproduct-builder-dbt-bigquery -s project</pre><button type="button" class="copy">Copy</button></div>
+          </article>
+          <article class="card hub-item" data-tech="dbt|Dremio" data-repo="dataproduct-skills/dataproduct-builder-dbt-dremio">
+            <h3>dbt on Dremio</h3>
+            <a class="repo" href="https://github.com/dataproduct-skills/dataproduct-builder-dbt-dremio">github.com/dataproduct-skills/dataproduct-builder-dbt-dremio</a>
+            <p>Bootstraps, implements, and tests dbt data products on Dremio with Apache Iceberg tables against their data contracts, and publishes ODPS, ODCS, and OpenLineage to Entropy Data.</p>
+            <div class="techs"><span class="tech"><img src="/media/icons/dbt.svg" alt="" width="16" height="16">dbt</span><span class="tech"><img src="/media/icons/dremio.svg" alt="" width="16" height="16">Dremio</span></div>
+            <div class="cmd"><pre>claude plugin marketplace add https://github.com/dataproduct-skills/dataproduct-builder-dbt-dremio
+claude plugin install dataproduct-builder-dbt-dremio@dataproduct-builder-dbt-dremio -s project</pre><button type="button" class="copy">Copy</button></div>
           </article>
           <article class="card hub-item" data-tech="Snowflake">
             <h3>Snowflake Dynamic Tables <span class="soon">Coming soon</span></h3>

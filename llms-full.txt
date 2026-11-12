@@ -354,6 +354,7 @@ The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS)
 - [dbt on Snowflake skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-snowflake): skills for building dbt data products on Snowflake
 - [dbt on Databricks skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-databricks): skills for building dbt data products on Databricks
 - [dbt on BigQuery skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-bigquery): skills for building dbt data products on Google BigQuery
+- [dbt on Dremio skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-dremio): skills for building dbt data products on Dremio
 - [Entropy Data](https://www.entropy-data.com): data product marketplace
 
 ## Learn more
