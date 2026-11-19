@@ -358,6 +358,7 @@ The Open Data Contract Standard (ODCS) and the Open Data Product Standard (ODPS)
 - [dbt on PostgreSQL skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-postgres): skills for building dbt data products on PostgreSQL
 - [dbt on Trino skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-trino): skills for building dbt data products on Trino
 - [dbt on Dremio skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-dremio): skills for building dbt data products on Dremio
+- [dbt on Microsoft Fabric skill library](https://github.com/dataproduct-skills/dataproduct-builder-dbt-fabric): skills for building dbt data products on Microsoft Fabric
 - [Entropy Data](https://www.entropy-data.com): data product marketplace
 
 ## Learn more
