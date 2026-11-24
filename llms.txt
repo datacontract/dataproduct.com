@@ -47,6 +47,7 @@ A category manager wants to know which brands barely sell. The data contract slo
 - [Entropy Explains, explainer videos in 2 minutes](https://www.entropy-data.com/learn/entropy-explains):
   - [Episode 4: Building Data Products with AI](https://www.youtube.com/watch?v=dq72KvRs7OA): How do you build a data product with AI?
   - [Episode 2: Data Contracts and Data Products](https://www.youtube.com/watch?v=np_U1lowwoc): What is a data product, and how does it relate to data contracts?
+  - [Episode 15: The Open Data Product Standard from Bitol](https://www.youtube.com/watch?v=BYYFeixQdmc): What is the Open Data Product Standard?
   - [Episode 1: Data Contracts](https://www.youtube.com/watch?v=Vr5Rq_CLtPQ): What is a data contract, and why do you need one?
   - [Episode 5: Put Your Data Under Contract](https://www.youtube.com/watch?v=eXrH1BCgyBI): How do you put an existing table under a data contract?
   - [Episode 10: Data Contracts with dbt](https://www.youtube.com/watch?v=Ms73kS1OkV4): How do you use data contracts in a dbt project?
